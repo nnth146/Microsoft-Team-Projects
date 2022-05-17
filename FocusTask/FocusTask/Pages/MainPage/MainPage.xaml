@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="FocusTask.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FocusTask.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Controls.SR"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <sr:ResButton
+            x:Name="ResButton_TestButton"
+            BackgroundPointerOver="LightCoral"
+            BackgroundPressed="LightCoral" />
+    </Page.Resources>
+    <StackPanel>
+        <Button Content="TestButton1" Resources="{Binding Source={StaticResource ResButton_TestButton}, Path=Resources}" />
+        <Button Content="TestButton2" Resources="{Binding Source={StaticResource ResButton_TestButton}, Path=Resources}" />
+    </StackPanel>
+</Page>
