@@ -120,9 +120,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Pages\MainPage\MainPageViewModel.cs" />
-    <Compile Include="Pages\MainPage\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="ViewModel\ProjectPageViewModel.cs" />
+    <Compile Include="View\ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +131,15 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\check.png" />
+    <Content Include="Assets\Icons\clock.png" />
+    <Content Include="Assets\Icons\completed.png" />
+    <Content Include="Assets\Icons\myday.png" />
+    <Content Include="Assets\Icons\premium.png" />
+    <Content Include="Assets\Icons\someday.png" />
+    <Content Include="Assets\Icons\sort.png" />
+    <Content Include="Assets\Icons\tomorrow.png" />
+    <Content Include="Assets\Icons\upcoming.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -186,15 +195,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainPage\MainPage.xaml">
+    <Page Include="View\ProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Icons\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,9 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Text color  -->
     <Color x:Key="primaryColor">#6B69D6</Color>
     <Color x:Key="whiteColor">#FFFFFF</Color>
     <Color x:Key="blackCOlor">#111111</Color>
     <Color x:Key="purpleColor">#B146C2</Color>
     <Color x:Key="grayColor">#979696</Color>
+    <Color x:Key="lightgrayColor">#5A5959</Color>
 
     <!--  Priority Color  -->
     <Color x:Key="noColor">#979696</Color>
