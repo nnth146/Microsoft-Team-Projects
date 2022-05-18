@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FocusTask.ViewModel
 {
-    internal class MainPageViewModel
+    public class ProjectPageViewModel
     {
     }
 }
