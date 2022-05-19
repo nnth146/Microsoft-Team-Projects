@@ -41,7 +41,7 @@
                     Loaded="ComboBox_Loaded" />
             </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" MaxHeight="320">
+        <ListView Grid.Row="1">
             <ListView.Items>
                 <ListViewItem Padding="0">
                     <controls:DropShadowPanel
