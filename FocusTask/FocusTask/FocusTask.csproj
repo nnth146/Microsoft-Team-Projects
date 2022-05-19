@@ -132,6 +132,9 @@
     <Compile Include="View\TomorrowPage.xaml.cs">
       <DependentUpon>TomorrowPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UpcomingPage.xaml.cs">
+      <DependentUpon>UpcomingPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -219,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TomorrowPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UpcomingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
