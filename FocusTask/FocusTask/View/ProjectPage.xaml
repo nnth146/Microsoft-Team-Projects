@@ -89,7 +89,7 @@
                 Glyph="&#xE710;" />
             <TextBox
                 Height="60"
-                Padding="48,17,220,21"
+                Padding="48,18,220,21"
                 Background="Transparent"
                 PlaceholderText="Ask to task to &quot;Tasks\&quot;, press [Enter] to save"
                 TextWrapping="Wrap" />
