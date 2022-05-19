@@ -126,6 +126,9 @@
     <Compile Include="View\ProjectPage.xaml.cs">
       <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SomedayPage.xaml.cs">
+      <DependentUpon>SomedayPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StaticPage.xaml.cs">
       <DependentUpon>StaticPage.xaml</DependentUpon>
     </Compile>
@@ -214,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SomedayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
