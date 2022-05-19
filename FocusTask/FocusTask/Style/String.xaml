@@ -13,9 +13,18 @@
     <x:String x:Key="airplayIcon">ms-appx:///Assets/Icons/airplay.png</x:String>
     <x:String x:Key="pauseIcon">ms-appx:///Assets/Icons/pause.png</x:String>
     <x:String x:Key="stopIcon">ms-appx:///Assets/Icons/stop.png</x:String>
+    <x:String x:Key="shopPrimeumIcon">ms-appx:///Assets/Icons/shop_primeum.png</x:String>
+    <x:String x:Key="shopPrimeumSelectedIcon">ms-appx:///Assets/Icons/shop_primeum_selected.png</x:String>
+    <x:String x:Key="aboutIcon">ms-appx:///Assets/Icons/about.png</x:String>
+    <x:String x:Key="aboutSelectedIcon">ms-appx:///Assets/Icons/about_selected.png</x:String>
+    <x:String x:Key="checkPrimeumIcon">ms-appx:///Assets/Icons/check_primeum.png</x:String>
+    <x:String x:Key="bellIcon">ms-appx:///Assets/Icons/bell.png</x:String>
+    <x:String x:Key="androidIcon">ms-appx:///Assets/Icons/android.png</x:String>
+    <x:String x:Key="appleIcon">ms-appx:///Assets/Icons/apple.png</x:String>
+    <x:String x:Key="microsoftIcon">ms-appx:///Assets/Icons/microsoft.png</x:String>
 
     <!--  String  -->
-    <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
+    <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
     <x:String x:Key="estimated">Estimated Time(h)</x:String>
     <x:String x:Key="mission">Mission to be Completed</x:String>
     <x:String x:Key="completed">Completed Mission</x:String>

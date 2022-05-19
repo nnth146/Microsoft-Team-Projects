@@ -6,6 +6,8 @@
     <Color x:Key="purpleColor">#B146C2</Color>
     <Color x:Key="grayColor">#979696</Color>
     <Color x:Key="lightgrayColor">#5A5959</Color>
+    <Color x:Key="linkColor">#2786DE</Color>
+    <Color x:Key="lightPurple">#9190DD</Color>
 
     <!--  Priority Color  -->
     <Color x:Key="noColor">#979696</Color>
