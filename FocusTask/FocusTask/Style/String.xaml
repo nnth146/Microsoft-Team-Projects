@@ -9,6 +9,10 @@
     <x:String x:Key="sortIcon">ms-appx:///Assets/Icons/sort.png</x:String>
     <x:String x:Key="upcommingIcon">ms-appx:///Assets/Icons/upcoming.png</x:String>
     <x:String x:Key="clockIcon">ms-appx:///Assets/Icons/clock.png</x:String>
+    <x:String x:Key="timeIcon">ms-appx:///Assets/Icons/time.png</x:String>
+    <x:String x:Key="airplayIcon">ms-appx:///Assets/Icons/airplay.png</x:String>
+    <x:String x:Key="pauseIcon">ms-appx:///Assets/Icons/pause.png</x:String>
+    <x:String x:Key="stopIcon">ms-appx:///Assets/Icons/stop.png</x:String>
 
     <!--  String  -->
     <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
