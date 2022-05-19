@@ -25,6 +25,7 @@ namespace FocusTask.View
         public StaticPage()
         {
             this.InitializeComponent();
+            contentFrame.Navigate(typeof(MydayPage));
         }
 
         private void Repeat_Loaded(object sender, RoutedEventArgs e)

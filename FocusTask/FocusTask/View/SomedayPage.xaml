@@ -44,36 +44,29 @@
         <ListView Grid.Row="1">
             <ListView.Items>
                 <ListViewItem Padding="0">
-                    <controls:DropShadowPanel
-                        BlurRadius="3"
-                        OffsetX="0"
-                        OffsetY="0"
-                        ShadowOpacity="0.24"
-                        Color="{StaticResource blackColor}">
-                        <Grid
-                            Padding="12,16"
-                            Background="{StaticResource whiteColor}"
-                            ColumnSpacing="24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Button
-                                Padding="0"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <Image
-                                    Width="24"
-                                    Height="24"
-                                    Source="{StaticResource checkIcon}" />
-                            </Button>
-                            <TextBlock
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
-                                TextTrimming="CharacterEllipsis" />
-                        </Grid>
-                    </controls:DropShadowPanel>
+                    <Grid
+                        Padding="12,16"
+                        Background="{StaticResource whiteColor}"
+                        ColumnSpacing="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Padding="0"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="{StaticResource checkIcon}" />
+                        </Button>
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
+                            TextTrimming="CharacterEllipsis" />
+                    </Grid>
                 </ListViewItem>
             </ListView.Items>
         </ListView>

@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
-    <Grid RowSpacing="24">
+    <Grid Margin="0,0,12,0" RowSpacing="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -107,42 +107,35 @@
         <ListView Grid.Row="2" MaxHeight="320">
             <ListView.Items>
                 <ListViewItem Padding="0">
-                    <controls:DropShadowPanel
-                        BlurRadius="3"
-                        OffsetX="0"
-                        OffsetY="0"
-                        ShadowOpacity="0.24"
-                        Color="{StaticResource blackColor}">
-                        <Grid
-                            Padding="12,16"
-                            Background="{StaticResource whiteColor}"
-                            ColumnSpacing="24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Button
-                                Padding="0"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <Image
-                                    Width="24"
-                                    Height="24"
-                                    Source="{StaticResource checkIcon}" />
-                            </Button>
-                            <TextBlock
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
-                                TextTrimming="CharacterEllipsis" />
-                            <TextBlock
-                                Grid.Column="2"
-                                VerticalAlignment="Center"
-                                Foreground="{StaticResource grayColor}"
-                                Text="24 May" />
-                        </Grid>
-                    </controls:DropShadowPanel>
+                    <Grid
+                        Padding="12,16"
+                        Background="{StaticResource whiteColor}"
+                        ColumnSpacing="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Padding="0"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="{StaticResource checkIcon}" />
+                        </Button>
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
+                            TextTrimming="CharacterEllipsis" />
+                        <TextBlock
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Foreground="{StaticResource grayColor}"
+                            Text="24 May" />
+                    </Grid>
                 </ListViewItem>
             </ListView.Items>
         </ListView>
@@ -175,36 +168,29 @@
             <ListView Grid.Row="1">
                 <ListView.Items>
                     <ListViewItem Padding="0">
-                        <controls:DropShadowPanel
-                            BlurRadius="3"
-                            OffsetX="0"
-                            OffsetY="0"
-                            ShadowOpacity="0.24"
-                            Color="{StaticResource blackColor}">
-                            <Grid
-                                Padding="12,16"
-                                Background="{StaticResource whiteColor}"
-                                ColumnSpacing="24">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    Padding="0"
-                                    Background="Transparent"
-                                    BorderThickness="0">
-                                    <Image
-                                        Width="24"
-                                        Height="24"
-                                        Source="{StaticResource completedIcon}" />
-                                </Button>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
-                                    TextTrimming="CharacterEllipsis" />
-                            </Grid>
-                        </controls:DropShadowPanel>
+                        <Grid
+                            Padding="12,16"
+                            Background="{StaticResource whiteColor}"
+                            ColumnSpacing="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                Padding="0"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                <Image
+                                    Width="24"
+                                    Height="24"
+                                    Source="{StaticResource completedIcon}" />
+                            </Button>
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
+                                TextTrimming="CharacterEllipsis" />
+                        </Grid>
                     </ListViewItem>
                 </ListView.Items>
             </ListView>

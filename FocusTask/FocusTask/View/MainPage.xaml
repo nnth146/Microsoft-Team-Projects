@@ -1,0 +1,230 @@
+﻿<Page
+    x:Class="FocusTask.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FocusTask.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Height="900"
+    d:Width="1200"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource primaryColor}">
+            <TextBlock
+                Margin="16,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="{StaticResource whiteColor}"
+                Text="{StaticResource Welcome}" />
+            <StackPanel
+                Margin="0,0,8,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button Background="Transparent" BorderThickness="0">
+                    <Image
+                        Width="20"
+                        Height="20"
+                        Source="{StaticResource premiumIcon}" />
+                </Button>
+                <Button Background="Transparent" BorderThickness="0">
+                    <FontIcon Foreground="{StaticResource whiteColor}" Glyph="&#xEDAC;" />
+                </Button>
+                <Button Background="Transparent" BorderThickness="0">
+                    <FontIcon Foreground="{StaticResource whiteColor}" Glyph="&#xE713;" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="345" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Background="#F3F3F3" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <ListView>
+                    <ListViewItem Padding="12,8">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="20"
+                                    Height="20"
+                                    Source="{StaticResource mydayIcon}" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="My Day" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="" />
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Padding="12,8">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="18"
+                                    Height="18"
+                                    Source="{StaticResource tomorrowIcon}" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Tomorrow" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="0" />
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Padding="12,8">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="20"
+                                    Height="20"
+                                    Source="{StaticResource upcommingIcon}" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Upcoming" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="0" />
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Padding="12,8">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="18"
+                                    Height="18"
+                                    Source="{StaticResource somedayIcon}" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Someday" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="0" />
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Padding="12,8">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="19"
+                                    Height="19"
+                                    Source="{StaticResource completedIcon}" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Completed" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="0" />
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+
+                <Border
+                    Grid.Row="1"
+                    Margin="12,0"
+                    Background="{StaticResource grayColor}" />
+                <ListView Grid.Row="2">
+                    <ListViewItem Padding="12,8" HorizontalContentAlignment="Stretch">
+                        <ListViewItem.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Edit Project" />
+                                <MenuFlyoutItem Text="Delete Project" />
+                            </MenuFlyout>
+                        </ListViewItem.ContextFlyout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="16">
+                                <Grid
+                                    Width="18"
+                                    Height="18"
+                                    Background="{StaticResource color01}"
+                                    CornerRadius="4" />
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Missions" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                FontSize="14"
+                                Text="0" />
+                        </Grid>
+                    </ListViewItem>
+
+                </ListView>
+                <Button
+                    Grid.Row="3"
+                    Padding="8"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="Button_Click">
+                    <Grid
+                        Width="345"
+                        Padding="12,0,0,0"
+                        ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <FontIcon
+                            VerticalAlignment="Center"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource primaryColor}"
+                            Glyph="&#xE710;" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource primaryColor}"
+                            Text="Add Project" />
+                    </Grid>
+                </Button>
+            </Grid>
+            <Frame x:Name="contentFrame" Grid.Column="1" />
+        </Grid>
+
+
+    </Grid>
+</Page>
