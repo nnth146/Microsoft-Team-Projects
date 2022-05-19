@@ -135,6 +135,9 @@
     <Compile Include="View\StaticPage.xaml.cs">
       <DependentUpon>StaticPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimePage.xaml.cs">
+      <DependentUpon>TimePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TomorrowPage.xaml.cs">
       <DependentUpon>TomorrowPage.xaml</DependentUpon>
     </Compile>
@@ -148,13 +151,17 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\airplay.png" />
     <Content Include="Assets\Icons\check.png" />
     <Content Include="Assets\Icons\clock.png" />
     <Content Include="Assets\Icons\completed.png" />
     <Content Include="Assets\Icons\myday.png" />
+    <Content Include="Assets\Icons\pause.png" />
     <Content Include="Assets\Icons\premium.png" />
     <Content Include="Assets\Icons\someday.png" />
     <Content Include="Assets\Icons\sort.png" />
+    <Content Include="Assets\Icons\stop.png" />
+    <Content Include="Assets\Icons\time.png" />
     <Content Include="Assets\Icons\tomorrow.png" />
     <Content Include="Assets\Icons\upcoming.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -232,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StaticPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
