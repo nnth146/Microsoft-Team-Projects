@@ -10,30 +10,30 @@
     <Color x:Key="lightPurple">#9190DD</Color>
 
     <!--  Priority Color  -->
-    <Color x:Key="noColor">#979696</Color>
-    <Color x:Key="lowColor">#07CB03</Color>
-    <Color x:Key="mediumColor">#EF6D0F</Color>
-    <Color x:Key="highColor">#FF0000</Color>
+    <SolidColorBrush x:Key="noColor">#979696</SolidColorBrush>
+    <SolidColorBrush x:Key="lowColor">#07CB03</SolidColorBrush>
+    <SolidColorBrush x:Key="mediumColor">#EF6D0F</SolidColorBrush>
+    <SolidColorBrush x:Key="highColor">#FF0000</SolidColorBrush>
 
     <!--  Project Color  -->
-    <Color x:Key="color01">#AEBDC3</Color>
-    <Color x:Key="color02">#768BFD</Color>
-    <Color x:Key="color03">#67C3E8</Color>
-    <Color x:Key="color04">#F4B357</Color>
-    <Color x:Key="color05">#C540B5</Color>
-    <Color x:Key="color06">#F4658C</Color>
-    <Color x:Key="color07">#F7D550</Color>
-    <Color x:Key="color08">#A0CE62</Color>
-    <Color x:Key="color09">#FF7F55</Color>
-    <Color x:Key="color10">#A66FF0</Color>
-    <Color x:Key="color11">#1EACDC</Color>
-    <Color x:Key="color12">#84E2AE</Color>
-    <Color x:Key="color13">#8D4CE3</Color>
-    <Color x:Key="color14">#4670F6</Color>
-    <Color x:Key="color15">#E95ED3</Color>
-    <Color x:Key="color16">#EC6B66</Color>
-    <Color x:Key="color17">#A4A4A5</Color>
-    <Color x:Key="color18">#B69A8F</Color>
-    <Color x:Key="color19">#62E0C5</Color>
-    <Color x:Key="color20">#4E4E4E</Color>
+    <SolidColorBrush x:Key="color01">#AEBDC3</SolidColorBrush>
+    <SolidColorBrush x:Key="color02">#768BFD</SolidColorBrush>
+    <SolidColorBrush x:Key="color03">#67C3E8</SolidColorBrush>
+    <SolidColorBrush x:Key="color04">#F4B357</SolidColorBrush>
+    <SolidColorBrush x:Key="color05">#C540B5</SolidColorBrush>
+    <SolidColorBrush x:Key="color06">#F4658C</SolidColorBrush>
+    <SolidColorBrush x:Key="color07">#F7D550</SolidColorBrush>
+    <SolidColorBrush x:Key="color08">#A0CE62</SolidColorBrush>
+    <SolidColorBrush x:Key="color09">#FF7F55</SolidColorBrush>
+    <SolidColorBrush x:Key="color10">#A66FF0</SolidColorBrush>
+    <SolidColorBrush x:Key="color11">#1EACDC</SolidColorBrush>
+    <SolidColorBrush x:Key="color12">#84E2AE</SolidColorBrush>
+    <SolidColorBrush x:Key="color13">#8D4CE3</SolidColorBrush>
+    <SolidColorBrush x:Key="color14">#4670F6</SolidColorBrush>
+    <SolidColorBrush x:Key="color15">#E95ED3</SolidColorBrush>
+    <SolidColorBrush x:Key="color16">#EC6B66</SolidColorBrush>
+    <SolidColorBrush x:Key="color17">#A4A4A5</SolidColorBrush>
+    <SolidColorBrush x:Key="color18">#B69A8F</SolidColorBrush>
+    <SolidColorBrush x:Key="color19">#62E0C5</SolidColorBrush>
+    <SolidColorBrush x:Key="color20">#4E4E4E</SolidColorBrush>
 </ResourceDictionary>

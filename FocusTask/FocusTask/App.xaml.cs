@@ -1,4 +1,5 @@
-﻿using FocusTask.View;
+﻿using FocusTask.Models;
+using FocusTask.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,8 @@ namespace FocusTask
             this.Suspending += OnSuspending;
             ApplicationView.PreferredLaunchViewSize = new Size(1200, 900);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
+            Database.initDatabase();
         }
 
         /// <summary>

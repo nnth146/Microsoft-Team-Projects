@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,7 +26,6 @@ namespace FocusTask.View
         public StaticPage()
         {
             this.InitializeComponent();
-            contentFrame.Navigate(typeof(MydayPage));
         }
 
         private void Repeat_Loaded(object sender, RoutedEventArgs e)
@@ -52,6 +52,35 @@ namespace FocusTask.View
             }
             comboBox.ItemsSource = list;
             comboBox.SelectedIndex = 10;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter.ToString() == "Myday")
+            {
+                contentFrame.Navigate(typeof(MydayPage));
+                NameProject.Text = "Myday";
+            }
+            if (e.Parameter.ToString() == "Tomorrow")
+            {
+                contentFrame.Navigate(typeof(TomorrowPage));
+                NameProject.Text = "Tomorrow";
+            }
+            if (e.Parameter.ToString() == "Upcoming")
+            {
+                contentFrame.Navigate(typeof(UpcomingPage));
+                NameProject.Text = "Upcoming";
+            }
+            if (e.Parameter.ToString() == "Someday")
+            {
+                contentFrame.Navigate(typeof(SomedayPage));
+                NameProject.Text = "Someday";
+            }
+            if (e.Parameter.ToString() == "Completed")
+            {
+                contentFrame.Navigate(typeof(CompletedPage));
+                NameProject.Text = "Completed";
+            }
         }
     }
 }

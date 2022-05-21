@@ -8,12 +8,28 @@
     d:Height="900"
     d:Width="1200"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=MainPageViewMode}"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+
+            <XamlUICommand x:Name="EditProjectCommand" Command="{Binding EditProjectCommand}" />
+            <XamlUICommand x:Name="DeleteProjectCommand" Command="{Binding DeleteProjectCommand}" />
+
+            <MenuFlyout x:Name="ListViewProjectContextFlyout">
+                <MenuFlyoutItem
+                    Command="{StaticResource EditProjectCommand}"
+                    CommandParameter="{Binding}"
+                    Text="Edit Project" />
+                <MenuFlyoutItem
+                    Command="{StaticResource DeleteProjectCommand}"
+                    CommandParameter="{Binding}"
+                    Text="Delete Project" />
+            </MenuFlyout>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -59,8 +75,8 @@
                     <RowDefinition />
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
-                <ListView>
-                    <ListViewItem Padding="12,8">
+                <ListView x:Name="ListViewTop" SelectionChanged="ListViewTop_SelectionChanged">
+                    <ListViewItem Padding="12,8" Tag="Myday">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -79,7 +95,7 @@
                             <TextBlock Grid.Column="1" Text="" />
                         </Grid>
                     </ListViewItem>
-                    <ListViewItem Padding="12,8">
+                    <ListViewItem Padding="12,8" Tag="Tomorrow">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -98,7 +114,7 @@
                             <TextBlock Grid.Column="1" Text="0" />
                         </Grid>
                     </ListViewItem>
-                    <ListViewItem Padding="12,8">
+                    <ListViewItem Padding="12,8" Tag="Upcoming">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -117,7 +133,7 @@
                             <TextBlock Grid.Column="1" Text="0" />
                         </Grid>
                     </ListViewItem>
-                    <ListViewItem Padding="12,8">
+                    <ListViewItem Padding="12,8" Tag="Someday">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -136,7 +152,7 @@
                             <TextBlock Grid.Column="1" Text="0" />
                         </Grid>
                     </ListViewItem>
-                    <ListViewItem Padding="12,8">
+                    <ListViewItem Padding="12,8" Tag="Completed">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -161,44 +177,45 @@
                     Grid.Row="1"
                     Margin="12,0"
                     Background="{StaticResource grayColor}" />
-                <ListView Grid.Row="2">
-                    <ListViewItem Padding="12,8" HorizontalContentAlignment="Stretch">
-                        <ListViewItem.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Edit Project" />
-                                <MenuFlyoutItem Text="Delete Project" />
-                            </MenuFlyout>
-                        </ListViewItem.ContextFlyout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" Spacing="16">
-                                <Grid
-                                    Width="18"
-                                    Height="18"
-                                    Background="{StaticResource color01}"
-                                    CornerRadius="4" />
-                                <TextBlock
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Text="Missions" />
-                            </StackPanel>
-                            <TextBlock
-                                Grid.Column="1"
-                                FontSize="14"
-                                Text="0" />
-                        </Grid>
-                    </ListViewItem>
-
+                <ListView
+                    Grid.Row="2"
+                    ContextFlyout="{StaticResource ListViewProjectContextFlyout}"
+                    ItemsSource="{Binding projectModels}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem Padding="12,8" HorizontalContentAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="16">
+                                        <Grid
+                                            Width="18"
+                                            Height="18"
+                                            Background="{Binding color, Converter={StaticResource StringToColorBrush}}"
+                                            CornerRadius="4" />
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding name}" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        FontSize="14"
+                                        Text="0" />
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
                 <Button
                     Grid.Row="3"
                     Padding="8"
                     Background="Transparent"
                     BorderThickness="0"
-                    Click="Button_Click">
+                    Command="{Binding AddProjectCommand}"
+                    CommandParameter="{x:Bind contentFrame}">
                     <Grid
                         Width="345"
                         Padding="12,0,0,0"
@@ -224,7 +241,5 @@
             </Grid>
             <Frame x:Name="contentFrame" Grid.Column="1" />
         </Grid>
-
-
     </Grid>
 </Page>
