@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:Uwp.Core.Converter">
+    <converter:BooleanToVisibility x:Key="BooleanToVisibility" />
+    <converter:DateTimeToString x:Key="DateTimeToString" />
+    <converter:DoubleToString x:Key="DoubleToString" />
+    <converter:StringToColorBrush x:Key="StringToColorBrush" />
+    <converter:BooleanToVisibilityReverse x:Key="BooleanToVisibilityReverse" />
+    <converter:NullToVisibility x:Key="NullToVisibility" />
+    <converter:NullToVisibilityReverse x:Key="NullToVisibilityReverse" />
+</ResourceDictionary>
