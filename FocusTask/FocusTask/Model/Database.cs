@@ -26,10 +26,10 @@ namespace FocusTask.Models
             using (SqliteConnection conn = new SqliteConnection($"Filename={pathDatabase}"))
             {
                 conn.Open();
-                string projectCMD = "CREATE TABLE IF NOT EXISTS Projects (id integer primary key autoincrement, name nvarchar(255) not null unique, color text, create_on timestamp);"
+                string projectCMD = "CREATE TABLE IF NOT EXISTS Projects (id integer primary key autoincrement, name nvarchar(255) not null, color text, create_on timestamp);"
                     + "CREATE TABLE IF NOT EXISTS Tasks(id integer primary key autoincrement, id_project integer not null, name nvarchar(255) not null, workingtime int, due_date timestamp, remender timestamp, repeat integer,"
                     + "type_repeat integer, priority integer, note text, is_completed boolean default false, create_on timestamp);"
-                    + "CREATE TABLE IF NOT EXISTS SubTasks (id integer primary key autoincrement, id_task int not null, name nvarchar(255) not null unique, is_completed boolean default false)";
+                    + "CREATE TABLE IF NOT EXISTS SubTasks (id integer primary key autoincrement, id_task int not null, name nvarchar(255) not null, completed varchar(255))";
                 SqliteCommand CMDCreateTable = new SqliteCommand(projectCMD, conn);
                 CMDCreateTable.ExecuteReader();
                 conn.Close();
@@ -100,11 +100,11 @@ namespace FocusTask.Models
                     SqliteCommand CMD_Insert = new SqliteCommand();
                     CMD_Insert.Connection = conn;
 
-                    CMD_Insert.CommandText = "INSERT INTO SubTasks (id_task, name, is_completed)"
-                        + " values (@id_task, @name, @is_completed);";
+                    CMD_Insert.CommandText = "INSERT INTO SubTasks (id_task, name, completed)"
+                        + " values (@id_task, @name, @completed);";
                     CMD_Insert.Parameters.AddWithValue("@id_task", subTaskModel.id_task);
                     CMD_Insert.Parameters.AddWithValue("@name", subTaskModel.name);
-                    CMD_Insert.Parameters.AddWithValue("@is_completed", subTaskModel.is_completed);
+                    CMD_Insert.Parameters.AddWithValue("@completed", subTaskModel.completed);
                     CMD_Insert.ExecuteReader();
                     conn.Close();
                 }
@@ -132,6 +132,8 @@ namespace FocusTask.Models
                     item.id = render.GetInt32(0);
                     item.name = render.GetString(1);
                     item.color = render.GetString(2);
+                    int amount_task = Database.getTaskByWhere("id_project = " + item.id).Count;
+                    item.amount_task = amount_task;
                     item.create_on = render.GetDateTimeOffset(3);
                     items.Add(item);
                 }
@@ -164,10 +166,11 @@ namespace FocusTask.Models
                     item.due_date = render.GetDateTimeOffset(4);
                     item.remender = render.GetDateTimeOffset(5);
                     item.repeat = render.GetInt32(6);
-                    item.priority = render.GetInt32(7);
-                    item.note = render.GetString(8);
-                    item.is_completed = render.GetBoolean(9);
-                    item.create_on = render.GetDateTimeOffset(10);
+                    item.type_repeat = render.GetString(7);
+                    item.priority = render.GetInt32(8);
+                    item.note = render.GetString(9);
+                    item.is_completed = render.GetBoolean(10);
+                    item.create_on = render.GetDateTimeOffset(11);
                     items.Add(item);
                 }
 
@@ -195,7 +198,7 @@ namespace FocusTask.Models
                     item.id = render.GetInt32(0);
                     item.id_task = render.GetInt32(1);
                     item.name = render.GetString(2);
-                    item.is_completed = render.GetBoolean(3);
+                    item.completed = render.GetString(3);
                     items.Add(item);
                 }
 
@@ -236,6 +239,7 @@ namespace FocusTask.Models
                     item.create_on = render.GetDateTimeOffset(11);
                     items.Add(item);
                 }
+                Debug.WriteLine("Select: " + selectCMD + " - " + items.Count);
 
                 conn.Close();
             }
@@ -258,7 +262,7 @@ namespace FocusTask.Models
                 SqliteDataReader render = CMD_GetData.ExecuteReader();
                 while (render.Read())
                 {
-                    SubTaskModel subTaskModel = new SubTaskModel(render.GetInt32(0), render.GetInt32(1), render.GetString(2), render.GetBoolean(3));
+                    SubTaskModel subTaskModel = new SubTaskModel(render.GetInt32(0), render.GetInt32(1), render.GetString(2), render.GetString(3));
                     items.Add(subTaskModel);
                 }
 
@@ -283,7 +287,8 @@ namespace FocusTask.Models
 
                 SqliteDataReader render = CMD_GetData.ExecuteReader();
                 render.Read();
-                projectModel = new ProjectModel(render.GetInt32(0), render.GetString(1), render.GetString(2), render.GetDateTimeOffset(3));
+                int amount_task = Database.getTaskByWhere("id_project = " + render.GetInt32(0)).Count;
+                projectModel = new ProjectModel(render.GetInt32(0), render.GetString(1), render.GetString(2), amount_task, render.GetDateTimeOffset(3));
 
                 conn.Close();
             }
@@ -326,7 +331,7 @@ namespace FocusTask.Models
 
                 SqliteDataReader render = CMD_GetData.ExecuteReader();
                 render.Read();
-                subTaskModel = new SubTaskModel(render.GetInt32(0), render.GetInt32(1), render.GetString(2), render.GetBoolean(3));
+                subTaskModel = new SubTaskModel(render.GetInt32(0), render.GetInt32(1), render.GetString(2), render.GetString(3));
 
                 conn.Close();
             }
@@ -366,7 +371,7 @@ namespace FocusTask.Models
                 SqliteCommand CMD_Update = new SqliteCommand();
                 CMD_Update.Connection = conn;
                 CMD_Update.CommandText = "UPDATE Tasks SET id_project = @id_project, name = @name, workingtime = @workingtime, due_date = @due_date, remender = @remender," +
-                    " repeat = @repeat, type_repeat = @repeat, priority = @priority, note = @note, is_completed = @is_completed, create_on = @create_on WHERE id = @id";
+                    " repeat = @repeat, type_repeat = @type_repeat, priority = @priority, note = @note, is_completed = @is_completed, create_on = @create_on WHERE id = @id";
                 CMD_Update.Parameters.AddWithValue("@id_project", taskModel.id_project);
                 CMD_Update.Parameters.AddWithValue("@name", taskModel.name);
                 CMD_Update.Parameters.AddWithValue("@workingtime", taskModel.workingtime);
@@ -384,7 +389,7 @@ namespace FocusTask.Models
                 conn.Close();
             }
         }
-        public static void updateSubTasktByID(SubTaskModel subTaskModel, int id)
+        public static void updateSubTaskByID(SubTaskModel subTaskModel, int id)
         {
             string PathToDataBase = Path.Combine(ApplicationData.Current.LocalFolder.Path, "focusTask.db");
 
@@ -394,10 +399,10 @@ namespace FocusTask.Models
 
                 SqliteCommand CMD_Update = new SqliteCommand();
                 CMD_Update.Connection = conn;
-                CMD_Update.CommandText = "UPDATE SubTasks SET id_task = @id_task, name = @name, is_completed = @is_completed WHERE id = @id";
+                CMD_Update.CommandText = "UPDATE SubTasks SET id_task = @id_task, name = @name, completed = @completed WHERE id = @id";
                 CMD_Update.Parameters.AddWithValue("@id_task", subTaskModel.id_task);
                 CMD_Update.Parameters.AddWithValue("@name", subTaskModel.id);
-                CMD_Update.Parameters.AddWithValue("@is_completed", subTaskModel.is_completed);
+                CMD_Update.Parameters.AddWithValue("@completed", subTaskModel.completed);
                 CMD_Update.Parameters.AddWithValue("@id", id);
                 CMD_Update.ExecuteReader();
 

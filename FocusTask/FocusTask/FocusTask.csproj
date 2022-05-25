@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Messenger\Messenger.cs" />
+    <Compile Include="Model\BasicItemModel.cs" />
     <Compile Include="Model\ColorModel.cs" />
     <Compile Include="Model\Database.cs" />
     <Compile Include="Model\PriorityModel.cs" />
@@ -196,8 +197,12 @@
     <Content Include="Assets\Icons\check_primeum.png" />
     <Content Include="Assets\Icons\clock.png" />
     <Content Include="Assets\Icons\completed.png" />
+    <Content Include="Assets\Icons\high_priority.png" />
+    <Content Include="Assets\Icons\low_priority.png" />
+    <Content Include="Assets\Icons\medium_priority.png" />
     <Content Include="Assets\Icons\microsoft.png" />
     <Content Include="Assets\Icons\myday.png" />
+    <Content Include="Assets\Icons\no_priority.png" />
     <Content Include="Assets\Icons\pause.png" />
     <Content Include="Assets\Icons\premium.png" />
     <Content Include="Assets\Icons\shop_primeum_selected.png" />

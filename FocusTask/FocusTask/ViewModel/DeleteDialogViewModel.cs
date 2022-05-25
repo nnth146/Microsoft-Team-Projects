@@ -34,6 +34,10 @@ namespace FocusTask.ViewModel
                     _deleteCommand = new RelayCommand(() =>
                     {
                         projectModels.Remove(projectModel);
+                        if (projectModels.Count == 0)
+                        {
+                            projectModels.Add(new ProjectModel());
+                        }
                     });
                 }
                 return _deleteCommand;

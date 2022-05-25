@@ -28,11 +28,6 @@ namespace FocusTask.View
         public MydayPage()
         {
             this.InitializeComponent();
-            RegisterMessage();
-        }
-
-        private void RegisterMessage()
-        {
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -49,32 +44,6 @@ namespace FocusTask.View
             btn_show.Visibility = Visibility.Visible;
         }
 
-        private void Repeat_Loaded(object sender, RoutedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            List<string> list = new List<string>()
-            {
-                "Days",
-                "Weeks",
-                "Months",
-                "Years"
-            };
-            comboBox.ItemsSource = list;
-            comboBox.SelectedIndex = 1;
-        }
-
-        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            List<string> list = new List<string>();
-            for (int i = 0; i <= 9999; i++)
-            {
-                list.Add(i.ToString());
-            }
-            comboBox.ItemsSource = list;
-            comboBox.SelectedIndex = 10;
-        }
-
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             SplitViewTask.IsPaneOpen = true;
@@ -85,8 +54,14 @@ namespace FocusTask.View
             SplitViewTask.IsPaneOpen= false;
         }
 
-        private void NoteTask_LostFocus(object sender, RoutedEventArgs e)
+        private void CalendarView_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
         {
+            DueDateFlyout.Hide();
+        }
+
+        private void ListViewProject_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FlyoutProject.Hide();
         }
     }
 }

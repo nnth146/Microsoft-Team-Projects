@@ -9,7 +9,7 @@
     xmlns:local="using:FocusTask.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{StaticResource whiteColor}"
     DataContext="{Binding Source={StaticResource VML}, Path=MydayPage}"
     mc:Ignorable="d">
 
@@ -22,10 +22,12 @@
             <XamlUICommand x:Name="UpdateTaskNameCommand" Command="{Binding UpdateTaskNameCommand}" />
             <XamlUICommand x:Name="UpdatePriorityCommand" Command="{Binding UpdatePriorityCommand}" />
             <XamlUICommand x:Name="AddSubTaskCommand" Command="{Binding AddSubTaskCommand}" />
+            <XamlUICommand x:Name="CompletedSubTaskCommand" Command="{Binding CompletedSubTaskCommand}" />
+            <XamlUICommand x:Name="UpdateProjectNameCommand" Command="{Binding UpdateProjectNameCommand}" />
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Padding="16" RowSpacing="12">
+    <Grid Padding="0,16" RowSpacing="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -35,12 +37,14 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <Grid
-                    Width="18"
-                    Height="18"
-                    Background="#C4C4C4"
-                    CornerRadius="4" />
+            <StackPanel
+                Margin="16,0,0,0"
+                Orientation="Horizontal"
+                Spacing="12">
+                <Image
+                    Width="20"
+                    Height="20"
+                    Source="{StaticResource mydayIcon}" />
                 <TextBlock
                     x:Name="NameProject"
                     VerticalAlignment="Center"
@@ -49,6 +53,7 @@
             </StackPanel>
             <Button
                 Grid.Column="1"
+                Margin="0,0,16,0"
                 Padding="0"
                 HorizontalAlignment="Right"
                 Background="Transparent"
@@ -70,6 +75,7 @@
                 <FontIcon Glyph="&#xe8cb;" />
             </Button>
         </Grid>
+
         <SplitView
             x:Name="SplitViewTask"
             Grid.Row="1"
@@ -78,7 +84,13 @@
             OpenPaneLength="364"
             PanePlacement="Right">
             <SplitView.Pane>
-                <Grid Margin="12,0,0,0" RowSpacing="24">
+                <Grid
+                    Padding="12"
+                    Background="{StaticResource paneColor}"
+                    BorderBrush="{StaticResource grayColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    RowSpacing="24">
                     <Grid.Resources>
                         <ResourceDictionary>
                             <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource grayColor}" />
@@ -91,7 +103,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid ColumnSpacing="24">
+                    <Grid ColumnSpacing="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -106,7 +118,7 @@
                             <Image
                                 Width="24"
                                 Height="24"
-                                Source="{StaticResource checkIcon}" />
+                                Source="{Binding IconCheckPriority}" />
                         </Button>
 
                         <TextBox
@@ -139,7 +151,7 @@
                                     <ListView ItemsSource="{Binding priorities}" SelectedItem="{Binding selectedPriority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <interactivity:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding UpdatePriorityCommand}" />
+                                                <core:InvokeCommandAction Command="{StaticResource UpdatePriorityCommand}" />
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
                                         <ListView.ItemTemplate>
@@ -214,10 +226,10 @@
                                     Grid.Column="1"
                                     HorizontalAlignment="Right"
                                     Foreground="{StaticResource grayColor}"
-                                    Text="{Binding Due_Date}" />
+                                    Text="{Binding Due_Date, Converter={StaticResource DateTimeToString}}" />
                             </Grid>
                             <Button.Flyout>
-                                <Flyout>
+                                <Flyout x:Name="DueDateFlyout">
                                     <Grid RowSpacing="20">
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
@@ -228,6 +240,7 @@
                                             IsGroupLabelVisible="True"
                                             IsOutOfScopeEnabled="True"
                                             Language="en"
+                                            SelectedDatesChanged="CalendarView_SelectedDatesChanged"
                                             SelectionMode="Single" />
                                         <Grid Grid.Row="1" ColumnSpacing="8">
                                             <Grid.ColumnDefinitions>
@@ -237,7 +250,7 @@
                                             <Button
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource primaryColor}"
-                                                Content="Remove"
+                                                Content="Save"
                                                 Foreground="{StaticResource whiteColor}">
                                                 <Button.Resources>
                                                     <ResourceDictionary>
@@ -249,7 +262,7 @@
                                             <Button
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
-                                                Content="Cancel" />
+                                                Content="Remove" />
                                         </Grid>
                                     </Grid>
                                 </Flyout>
@@ -283,7 +296,15 @@
                             </Grid>
                             <Button.Flyout>
                                 <Flyout Placement="BottomEdgeAlignedRight">
-                                    <ListView ItemsSource="{Binding projectModels}" SelectedItem="{Binding selectedProject, Mode=TwoWay}">
+                                    <ListView
+                                        ItemsSource="{Binding projectModels}"
+                                        SelectedItem="{Binding taskProject, Mode=TwoWay}"
+                                        SelectionMode="Single">
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                <core:InvokeCommandAction Command="{StaticResource UpdateProjectNameCommand}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <ListViewItem>
@@ -368,7 +389,7 @@
                                             <Button
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource primaryColor}"
-                                                Content="Remove"
+                                                Content="Save"
                                                 Foreground="{StaticResource whiteColor}">
                                                 <Button.Resources>
                                                     <ResourceDictionary>
@@ -380,7 +401,7 @@
                                             <Button
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
-                                                Content="Cancel" />
+                                                Content="Remove" />
                                         </Grid>
                                     </Grid>
                                 </Flyout>
@@ -431,15 +452,16 @@
                                                 <TextBlock VerticalAlignment="Center" Text="Every" />
                                                 <muxc:NumberBox
                                                     Grid.Column="1"
-                                                    Maximum="23"
-                                                    Minimum="0"
+                                                    Maximum="60"
+                                                    Minimum="1"
                                                     SmallChange="1"
-                                                    Value="1" />
+                                                    Value="{Binding RepeatValue}" />
                                             </Grid>
                                             <ComboBox
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
-                                                Loaded="Repeat_Loaded" />
+                                                ItemsSource="{Binding typeRepeats}"
+                                                SelectedItem="{Binding selectedTypeRepeat}" />
                                         </Grid>
                                         <Grid Grid.Row="1" ColumnSpacing="8">
                                             <Grid.ColumnDefinitions>
@@ -449,7 +471,8 @@
                                             <Button
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource primaryColor}"
-                                                Content="Remove"
+                                                Command="{Binding UpdateRepeatCommand}"
+                                                Content="Save"
                                                 Foreground="{StaticResource whiteColor}">
                                                 <Button.Resources>
                                                     <ResourceDictionary>
@@ -461,7 +484,7 @@
                                             <Button
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
-                                                Content="Cancel" />
+                                                Content="Remove" />
                                         </Grid>
                                     </Grid>
                                 </Flyout>
@@ -469,8 +492,10 @@
                         </Button>
                         <TextBox
                             Grid.Row="5"
-                            Height="48"
-                            Padding="12"
+                            Padding="12,8"
+                            BorderBrush="{StaticResource grayColor}"
+                            BorderThickness="1"
+                            CornerRadius="4"
                             PlaceholderForeground="{StaticResource grayColor}"
                             PlaceholderText="Add to Submission"
                             Text="{Binding NewNameSubTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -492,14 +517,24 @@
                                 <DataTemplate>
                                     <ListViewItem Padding="12,0">
                                         <StackPanel Orientation="Horizontal" Spacing="8">
-                                            <FontIcon
-                                                FontSize="14"
-                                                Foreground="{StaticResource grayColor}"
-                                                Glyph="&#xe73a;" />
+                                            <Button
+                                                Padding="4"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Command="{StaticResource CompletedSubTaskCommand}"
+                                                CommandParameter="{Binding}">
+                                                <FontIcon
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Foreground="{StaticResource grayColor}"
+                                                    Glyph="&#xe73a;" />
+                                            </Button>
                                             <TextBlock
                                                 FontSize="14"
                                                 Foreground="{StaticResource grayColor}"
-                                                Text="{Binding name}" />
+                                                Text="{Binding name}"
+                                                TextDecorations="{Binding completed}"
+                                                TextWrapping="Wrap" />
                                         </StackPanel>
                                     </ListViewItem>
                                 </DataTemplate>
@@ -508,8 +543,10 @@
                         <RichEditBox
                             x:Name="NoteTask"
                             Grid.Row="7"
+                            BorderBrush="{StaticResource grayColor}"
+                            BorderThickness="1"
+                            CornerRadius="4"
                             IsSpellCheckEnabled="False"
-                            LostFocus="NoteTask_LostFocus"
                             PlaceholderText="Add to Note" />
                     </Grid>
                     <muxc:ProgressBar
@@ -518,33 +555,52 @@
                         Value="0" />
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Foreground="{StaticResource grayColor}" Text="{Binding CreateOn}" />
                         <Button
+                            Padding="0"
+                            BorderThickness="0"
+                            Click="HideSpitView">
+                            <FontIcon FontSize="16" Glyph="&#xE72b;" />
+                        </Button>
+                        <StackPanel
                             Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <TextBlock Foreground="{StaticResource grayColor}" Text="Create on: " />
+                            <TextBlock Foreground="{StaticResource grayColor}" Text="{Binding CreateOn}" />
+                        </StackPanel>
+                        <Button
+                            Grid.Column="2"
                             Padding="0"
                             HorizontalAlignment="Right"
                             Background="Transparent"
                             BorderThickness="0"
                             Click="HideSpitView"
-                            Command="{StaticResource DeleteTaskCommand}">
-                            <FontIcon Glyph="&#xe74d;" />
+                            Command="{Binding DeleteTaskCommand}">
+                            <FontIcon FontSize="16" Glyph="&#xe74d;" />
                         </Button>
                     </Grid>
                 </Grid>
             </SplitView.Pane>
 
             <!--  Content  -->
-            <Grid RowSpacing="24">
+            <Grid Margin="16,0" RowSpacing="24">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid>
+                <Grid
+                    Padding="4"
+                    BorderBrush="{StaticResource grayColor}"
+                    BorderThickness="1"
+                    CornerRadius="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -616,13 +672,15 @@
                         Foreground="{StaticResource purpleColor}"
                         Glyph="&#xE710;" />
                     <TextBox
-                        Height="60"
-                        Padding="48,18,100,21"
+                        Height="48"
+                        Padding="48,12,180,16"
                         Background="Transparent"
-                        PlaceholderText="Ask to task to &quot;Tasks\&quot;, press [Enter] to save"
+                        BorderBrush="{StaticResource grayColor}"
+                        BorderThickness="1"
+                        PlaceholderText="Ask to task"
                         Text="{Binding NameTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap">
-                        <TextBox.KeyboardAccelerators>
+                        <!--<TextBox.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Enter">
                                 <interactivity:Interaction.Behaviors>
                                     <core:EventTriggerBehavior EventName="Invoked">
@@ -630,7 +688,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </KeyboardAccelerator>
-                        </TextBox.KeyboardAccelerators>
+                        </TextBox.KeyboardAccelerators>-->
                     </TextBox>
                     <StackPanel
                         Margin="12,0"
@@ -650,11 +708,14 @@
                             Command="{Binding GetAllProjectsCommand}"
                             CornerRadius="4">
                             <Button.Flyout>
-                                <Flyout Placement="BottomEdgeAlignedRight">
+                                <Flyout x:Name="FlyoutProject" Placement="BottomEdgeAlignedRight">
                                     <ListView
                                         x:Name="ListViewProject"
+                                        IsItemClickEnabled="True"
+                                        ItemClick="ListViewProject_ItemClick"
                                         ItemsSource="{Binding projectModels}"
-                                        SelectedItem="{Binding selectedProject, Mode=TwoWay}">
+                                        SelectedItem="{Binding selectedProject, Mode=TwoWay}"
+                                        SelectionMode="Single">
                                         <interactivity:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:InvokeCommandAction Command="{Binding SelectedProjectChangeCommand}" />
@@ -678,6 +739,7 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
+                        <Button Command="{Binding AddTaskCommand}" Content="Save" />
                     </StackPanel>
                 </Grid>
                 <!--  ListView Task Uncompleted  -->
@@ -697,9 +759,12 @@
                         <DataTemplate>
                             <ListViewItem Margin="0,0,0,8" Padding="0">
                                 <Grid
-                                    Padding="12,16"
+                                    Padding="12"
                                     Background="{StaticResource whiteColor}"
-                                    ColumnSpacing="24">
+                                    BorderBrush="{StaticResource grayColor}"
+                                    BorderThickness="1"
+                                    ColumnSpacing="24"
+                                    CornerRadius="8">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
@@ -725,18 +790,18 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Grid Grid.Row="3" RowSpacing="8">
+                <Grid Grid.Row="3" RowSpacing="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <ToggleButton
                         Width="305"
-                        Height="28"
-                        Padding="0"
+                        Padding="4"
                         HorizontalAlignment="Center"
                         HorizontalContentAlignment="Stretch"
-                        BorderThickness="0"
+                        BorderBrush="{StaticResource grayColor}"
+                        BorderThickness="1"
                         Checked="ToggleButton_Checked"
                         Unchecked="ToggleButton_Unchecked">
                         <Grid>
@@ -780,9 +845,12 @@
                             <DataTemplate>
                                 <ListViewItem Margin="0,0,0,8" Padding="0">
                                     <Grid
-                                        Padding="12,16"
+                                        Padding="12"
                                         Background="{StaticResource whiteColor}"
-                                        ColumnSpacing="24">
+                                        BorderBrush="{StaticResource grayColor}"
+                                        BorderThickness="1"
+                                        ColumnSpacing="24"
+                                        CornerRadius="8">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition />

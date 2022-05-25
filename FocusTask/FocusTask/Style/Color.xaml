@@ -8,6 +8,9 @@
     <Color x:Key="lightgrayColor">#5A5959</Color>
     <Color x:Key="linkColor">#2786DE</Color>
     <Color x:Key="lightPurple">#9190DD</Color>
+    <Color x:Key="numberTask">#5A5A5A</Color>
+    <Color x:Key="mainColor">#F3F3F3</Color>
+    <Color x:Key="paneColor">#FFFDFD</Color>
 
     <!--  Priority Color  -->
     <SolidColorBrush x:Key="noColor">#979696</SolidColorBrush>

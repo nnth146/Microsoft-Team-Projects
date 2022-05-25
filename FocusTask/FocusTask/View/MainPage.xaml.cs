@@ -45,28 +45,5 @@ namespace FocusTask.View
         {
             ListViewTop.SelectedItem = ListViewTop.Items[0];
         }
-
-        private void ListViewTop_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListViewItem listViewItem = e.AddedItems[0] as ListViewItem;
-            switch (listViewItem.Tag)
-            {
-                case "Myday":
-                    contentFrame.Navigate(typeof(MydayPage));
-                    break;
-                case "Tomorrow":
-                    contentFrame.Navigate(typeof(StaticPage), "Tomorrow");
-                    break;
-                case "Upcoming":
-                    contentFrame.Navigate(typeof(StaticPage), "Upcoming");
-                    break;
-                case "Someday":
-                    contentFrame.Navigate(typeof(StaticPage), "Someday");
-                    break;
-                case "Completed":
-                    contentFrame.Navigate(typeof(StaticPage), "Completed");
-                    break;
-            }
-        }
     }
 }

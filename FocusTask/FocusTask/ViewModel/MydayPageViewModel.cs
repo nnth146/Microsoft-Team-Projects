@@ -22,11 +22,22 @@ namespace FocusTask.ViewModel
             projectModels = Database.getAllProject();
             projectModels.CollectionChanged += ProjectModels_CollectionChanged;
 
-            taskCompletedModels = Database.getTaskByWhere("is_completed = true");
-            taskCompletedModels.CollectionChanged += TaskCompletedModels_CollectionChanged;
+            int hour = DateTimeOffset.Now.LocalDateTime.Hour;
+            int minute = DateTimeOffset.Now.LocalDateTime.Minute;
+            int second = DateTimeOffset.Now.LocalDateTime.Second;
+            DateTimeOffset dateStart = DateTimeOffset.Now.AddHours(-hour + 1).AddMinutes(-minute).AddSeconds(-second);
+            DateTimeOffset dateEnd = DateTimeOffset.Now.AddHours(12 - hour).AddMinutes(-minute).AddSeconds(-second);
 
-            taskUncompletedModels = Database.getTaskByWhere("is_completed = false");
+            ObservableCollection<TaskModel> taskModels = Database.getAllTask();
+            Debug.WriteLine("Count all task: " + taskModels.Count + " -> " + taskModels[0].due_date);
+
+            taskCompletedModels = Database.getTaskByWhere("is_completed = true AND due_date = '" + dateStart + "' AND due_date <= '" + dateEnd + "'");
+            taskCompletedModels.CollectionChanged += TaskCompletedModels_CollectionChanged;
+            Debug.WriteLine("Count task completed: " + taskCompletedCount);
+
+            taskUncompletedModels = Database.getTaskByWhere("is_completed = false AND due_date >= '" + dateStart + "' AND due_date <= '" + dateEnd + "'");
             taskUncompletedModels.CollectionChanged += TaskUncompletedModels_CollectionChanged;
+            Debug.WriteLine("Count task uncompleted: " + taskUncompletedCount);
 
             NameTask = "";
             workingTimes = new ObservableCollection<string>();
@@ -47,6 +58,15 @@ namespace FocusTask.ViewModel
             {
                 selectedProject = projectModels[0];
             }
+            typeRepeats = new ObservableCollection<string>()
+            {
+                "Days",
+                "Weeks",
+                "Months",
+                "Years"
+            };
+            selectedTypeRepeat = "Days";
+            RepeatValue = 1;
         }
 
         private void ProjectModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -60,21 +80,13 @@ namespace FocusTask.ViewModel
             {
                 Database.addNewTask(e.NewItems[0] as TaskModel);
             }
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {
-                TaskModel taskModel = (TaskModel)e.OldItems[0];
-                Database.deleteTaskByID(taskModel.id);
-            }
+            Debug.WriteLine("Count task uncompleted: " + taskUncompletedCount);
             OnPropertyChanged(nameof(taskUncompletedCount));
         }
 
         private void TaskCompletedModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {
-                TaskModel taskModel = (TaskModel)e.OldItems[0];
-                Database.deleteTaskByID(taskModel.id);
-            }
+            Debug.WriteLine("Count task completed: " + taskCompletedCount);
             OnPropertyChanged(nameof(taskCompletedCount));
         }
 
@@ -84,10 +96,13 @@ namespace FocusTask.ViewModel
         public ObservableCollection<TaskModel> taskUncompletedModels { get; set; }
         public ObservableCollection<TaskModel> taskCompletedModels { get; set; }
         public ObservableCollection<SubTaskModel> subTasks { get; set; }
+        public ObservableCollection<string> typeRepeats { get; set; }
 
         public int projectCount { get => projectModels.Count; }
         public int taskUncompletedCount { get => taskUncompletedModels.Count; }
         public int taskCompletedCount { get => taskCompletedModels.Count; }
+        public string selectedTypeRepeat { get; set; }
+        public int RepeatValue { get; set; }
 
         public string NameTask { get; set; }
         public ObservableCollection<string> workingTimes { get; set; }
@@ -96,6 +111,7 @@ namespace FocusTask.ViewModel
         public PriorityModel selectedPriority { get; set; }
         public TaskModel selectedTask { get; set; }
         public ProjectModel selectedProject { get; set; }
+        public ProjectModel taskProject { get; set; }
 
         private string _taskName;
         public string TaskName
@@ -103,7 +119,8 @@ namespace FocusTask.ViewModel
             get { return _taskName; }
             set { _taskName = value; }
         }
-        public string Due_Date { get; set; }
+        public string IconCheckPriority { get; set; }
+        public DateTimeOffset Due_Date { get; set; }
         public string NameProject { get; set; }
         public string Reminder { get; set; }
         public string Repeat { get; set; }
@@ -126,11 +143,11 @@ namespace FocusTask.ViewModel
                         taskModel.id_project = selectedProject.id;
                         taskModel.name = String.IsNullOrEmpty(NameTask) ? "Task..." : NameTask;
                         taskModel.workingtime = Int32.Parse(selectedTime);
+                        taskUncompletedModels.Add(taskModel);
                         NameTask = "";
                         OnPropertyChanged(nameof(NameTask));
                         selectedTime = "10";
                         OnPropertyChanged(selectedTime);
-                        taskUncompletedModels.Add(taskModel);
                     });
                 }
                 return _addTaskCommand;
@@ -148,9 +165,9 @@ namespace FocusTask.ViewModel
                     {
                         TaskModel taskModel = selectedTask;
                         taskModel.is_completed = true;
+                        Database.updateTaskByID(taskModel, taskModel.id);
                         taskCompletedModels.Add(taskModel);
                         taskUncompletedModels.Remove(taskModel);
-                        Database.updateTaskByID(taskModel, taskModel.id);
                     });
                 }
                 return (_completedCommand);
@@ -188,6 +205,7 @@ namespace FocusTask.ViewModel
                     {
                         if(selectedTask != null)
                         {
+                            Database.deleteTaskByID(selectedTask.id);
                             taskUncompletedModels.Remove(selectedTask);
                             taskCompletedModels.Remove(selectedTask);
                         }
@@ -252,22 +270,43 @@ namespace FocusTask.ViewModel
                             OnPropertyChanged(nameof(TaskName));
 
                             if (selectedTask.priority == 0)
+                            {
                                 selectedPriority = priorities[0];
+                                IconCheckPriority = "ms-appx:///Assets/Icons/no_priority.png";
+                            }
                             else if (selectedTask.priority == 1)
+                            {
                                 selectedPriority = priorities[1];
+                                IconCheckPriority = "ms-appx:///Assets/Icons/low_priority.png";
+                            }
                             else if (selectedTask.priority == 2)
+                            {
                                 selectedPriority = priorities[2];
+                                IconCheckPriority = "ms-appx:///Assets/Icons/medium_priority.png";
+                            }
                             else if (selectedTask.priority == 3)
+                            {
                                 selectedPriority = priorities[3];
+                                IconCheckPriority = "ms-appx:///Assets/Icons/high_priority.png";
+                            }
+                            OnPropertyChanged(nameof(IconCheckPriority));
                             OnPropertyChanged(nameof(selectedPriority));
 
-                            NameProject = Database.getProjectByID(selectedTask.id_project).name;
+                            ProjectModel projectModel = Database.getProjectByID(selectedTask.id_project);
+
+                            NameProject = projectModel.name;
                             OnPropertyChanged(nameof(NameProject));
 
-                            Due_Date = selectedTask.due_date.Date.ToString();
+                            taskProject = projectModel;
+                            OnPropertyChanged(nameof(taskProject));
+
+                            Due_Date = selectedTask.due_date;
                             OnPropertyChanged(nameof(Due_Date));
 
-                            Reminder = selectedTask.remender.Date.ToString();
+                            CreateOn = selectedTask.create_on.ToString("dd/MM/yyyy hh:mm.ss");
+                            OnPropertyChanged(CreateOn);
+
+                            Reminder = selectedTask.remender.Date.ToString("dd/MM/yyyy hh:mm.ss");
                             OnPropertyChanged(nameof(Reminder));
 
                             if (selectedTask.repeat == 0)
@@ -292,10 +331,8 @@ namespace FocusTask.ViewModel
                             Note = selectedTask.note;
                             OnPropertyChanged(Note);
 
-                            CreateOn = selectedTask.create_on.ToString();
-                            OnPropertyChanged(CreateOn);
-
                             subTasks = Database.getSubTaskByWhere("id_task = " + selectedTask.id);
+                            Debug.WriteLine("HAH: " + subTasks.Count);
                             OnPropertyChanged(nameof(subTasks));
 
                             OnPropertyChanged(nameof(selectedTask));
@@ -332,10 +369,75 @@ namespace FocusTask.ViewModel
                 {
                     _updatePriorityCommand = new RelayCommand(() =>
                    {
-                       Debug.WriteLine("HAHA: " + selectedPriority.name);
+                       if(selectedPriority != null)
+                       {
+                           if (selectedPriority.name == "No Priority")
+                           {
+                               selectedTask.priority = 0;
+                               IconCheckPriority = "ms-appx:///Assets/Icons/no_priority.png";
+                           }
+                           else if (selectedPriority.name == "Low Priority")
+                           {
+                               selectedTask.priority = 1;
+                               IconCheckPriority = "ms-appx:///Assets/Icons/low_priority.png";
+                           }
+                           else if (selectedPriority.name == "Medium Priority")
+                           {
+                               selectedTask.priority = 2;
+                               IconCheckPriority = "ms-appx:///Assets/Icons/medium_priority.png";
+                           }
+                           else
+                           {
+                               selectedTask.priority = 3;
+                               IconCheckPriority = "ms-appx:///Assets/Icons/high_priority.png";
+                           }
+                           OnPropertyChanged(nameof(IconCheckPriority));
+                           OnPropertyChanged(nameof(selectedPriority));
+                           OnPropertyChanged(nameof(selectedTask));
+                           Database.updateTaskByID(selectedTask, selectedTask.id);
+                       }
                    });
                 }
                 return _updatePriorityCommand;
+            }
+        }
+
+        private RelayCommand _updateDueDateCommand;
+        public RelayCommand UpdateDueDateCommand
+        {
+            get
+            {
+                if(_updateDueDateCommand == null)
+                {
+                    _updateDueDateCommand = new RelayCommand(() =>
+                    {
+
+                    });
+                }
+                return _updateDueDateCommand;
+            }
+        }
+
+        private RelayCommand _updateProjectNameCommand;
+        public RelayCommand UpdateProjectNameCommand
+        {
+            get
+            {
+                if(_updateProjectNameCommand == null)
+                {
+                    _updateProjectNameCommand = new RelayCommand(() =>
+                    {
+                        if(taskProject != null && selectedTask != null)
+                        {
+                            NameProject = taskProject.name;
+                            OnPropertyChanged(nameof(NameProject));
+
+                            selectedTask.id_project = taskProject.id;
+                            Database.updateTaskByID(selectedTask, selectedTask.id);
+                        }
+                    });
+                }
+                return _updateProjectNameCommand;
             }
         }
 
@@ -350,6 +452,7 @@ namespace FocusTask.ViewModel
                     {
                         SubTaskModel subTaskModel = new SubTaskModel();
                         subTaskModel.id_task = selectedTask.id;
+                        Debug.WriteLine("HAHA: " + subTaskModel.id_task);
                         subTaskModel.name = String.IsNullOrEmpty(NewNameSubTask) ? "SubTask..." : NewNameSubTask;
                         NewNameSubTask = "";
                         OnPropertyChanged(nameof(NewNameSubTask));
@@ -359,6 +462,69 @@ namespace FocusTask.ViewModel
                     });
                 }
                 return _addSubTaskCommand;
+            }
+        }
+
+        private RelayCommand<SubTaskModel> _completedSubTaskCommand;
+        public RelayCommand<SubTaskModel> CompletedSubTaskCommand
+        {
+            get
+            {
+                if (_completedSubTaskCommand == null)
+                {
+                    _completedSubTaskCommand = new RelayCommand<SubTaskModel>((selectSubTask) =>
+                    {
+                        if (selectSubTask.completed == "None")
+                            selectSubTask.completed = "Strikethrough";
+                        else selectSubTask.completed = "None";
+                        for (int i = 0; i < subTasks.Count; i++)
+                        {
+                            if (subTasks[i].id == selectSubTask.id)
+                            {
+                                subTasks[i] = selectSubTask;
+                            }
+                        }
+                        Database.updateSubTaskByID(selectSubTask, selectSubTask.id);
+                        OnPropertyChanged(nameof(selectSubTask));
+                    });
+                }
+                return (_completedSubTaskCommand);
+            }
+        }
+
+        private RelayCommand<TaskModel> _uncompletedSubTaskCommand;
+        public RelayCommand<TaskModel> UncompletedSubTaskCommand
+        {
+            get
+            {
+                if (_uncompletedSubTaskCommand == null)
+                {
+                    _uncompletedSubTaskCommand = new RelayCommand<TaskModel>((selectedTask) =>
+                    {
+                        TaskModel taskModel = selectedTask;
+                        taskModel.is_completed = false;
+                        taskCompletedModels.Remove(taskModel);
+                        taskUncompletedModels.Add(taskModel);
+                        Database.updateTaskByID(taskModel, taskModel.id);
+                    });
+                }
+                return (_uncompletedSubTaskCommand);
+            }
+        }
+
+        private RelayCommand _updateRepeatCommand;
+        public RelayCommand UpdateRepeatCommand
+        {
+            get
+            {
+                if(_updateRepeatCommand == null)
+                {
+                    _updateRepeatCommand = new RelayCommand(() =>
+                    {
+
+                    });
+                }
+                return _updateRepeatCommand;
             }
         }
     }

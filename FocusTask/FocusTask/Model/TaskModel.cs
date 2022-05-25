@@ -26,14 +26,14 @@ namespace FocusTask.Models
             this.id_project = 1;
             this.name = "";
             this.workingtime = 10;
-            this.due_date = DateTimeOffset.Now;
-            this.remender = DateTimeOffset.Now;
-            this.repeat = 1;
+            this.due_date = DateTimeOffset.Now.LocalDateTime;
+            this.remender = DateTimeOffset.Now.LocalDateTime;
+            this.repeat = 0;
             this.type_repeat = "days";
             this.priority = 0;
             this.note = "";
             this.is_completed = false;
-            this.create_on = DateTimeOffset.Now;
+            this.create_on = DateTimeOffset.Now.LocalDateTime;
         }
 
         public TaskModel(int id, int id_project, string name, int workingtime, DateTimeOffset duedate, DateTimeOffset remender

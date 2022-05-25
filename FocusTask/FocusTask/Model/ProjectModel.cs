@@ -11,20 +11,23 @@ namespace FocusTask.Models
         public int id { get; set; }
         public string name { get; set; }
         public string color { get; set; }
+        public int amount_task { get; set; }
         public DateTimeOffset create_on { get; set; }
 
         public ProjectModel()
         {
-            this.name = "Name...";
-            this.color = "red";
+            this.name = "Tasks";
+            this.color = "color01";
+            this.amount_task = 0;
             this.create_on = DateTimeOffset.Now;
         }
 
-        public ProjectModel(int id, string name, string color, DateTimeOffset create_on)
+        public ProjectModel(int id, string name, string color, int amount_task, DateTimeOffset create_on)
         {
             this.id = id;
             this.name = name;
             this.color = color;
+            this.amount_task = amount_task;
             this.create_on = create_on;
         }
     }

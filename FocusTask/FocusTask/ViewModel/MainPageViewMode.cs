@@ -1,4 +1,5 @@
-﻿using FocusTask.Models;
+﻿using FocusTask.Model;
+using FocusTask.Models;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
@@ -20,6 +21,27 @@ namespace FocusTask.ViewModel
         {
             projectModels = Database.getAllProject();
             projectModels.CollectionChanged += ProjectModels_CollectionChanged;
+            if (projectCount == 0)
+            {
+                projectModels.Add(new ProjectModel());
+            }
+
+            int hour = DateTimeOffset.Now.LocalDateTime.Hour;
+            int minute = DateTimeOffset.Now.LocalDateTime.Minute;
+            int second = DateTimeOffset.Now.LocalDateTime.Second;
+            DateTimeOffset dateStart = DateTimeOffset.Now.AddHours(-hour + 1).AddMinutes(-minute).AddSeconds(-second);
+            DateTimeOffset dateEnd = DateTimeOffset.Now.AddHours(12-hour).AddMinutes(-minute).AddSeconds(-second);
+            Debug.WriteLine("Date : " + dateStart + " -> " + dateEnd);
+            myDayTaskCount = Database.getTaskByWhere("due_date BETWEEN '" + dateStart + "' AND '" + dateEnd + "'").Count;
+            
+            basicItemModels = new ObservableCollection<BasicItemModel>()
+            {
+                new BasicItemModel("My Day", "ms-appx:///Assets/Icons/myday.png", myDayTaskCount),
+                new BasicItemModel("Tomorrow", "ms-appx:///Assets/Icons/tomorrow.png", 0),
+                new BasicItemModel("Upcoming", "ms-appx:///Assets/Icons/upcoming.png", 0),
+                new BasicItemModel("Someday", "ms-appx:///Assets/Icons/someday.png", 0),
+                new BasicItemModel("Completed", "ms-appx:///Assets/Icons/completed.png", 0)
+            };
         }
 
         // CollectionChanged
@@ -44,8 +66,10 @@ namespace FocusTask.ViewModel
         
         // Variable
         public ObservableCollection<ProjectModel> projectModels { get; set; }
+        public ObservableCollection<BasicItemModel> basicItemModels { get; set; }
         public int projectCount { get => projectModels.Count; }
-
+        public BasicItemModel selectedBasicItemModel { get; set; }
+        public int myDayTaskCount { get; set; }
 
         // RelayCommand
         private RelayCommand _addProjectCommand;
@@ -117,6 +141,26 @@ namespace FocusTask.ViewModel
                     });
                 }
                 return _deleteProjectCommand;
+            }
+        }
+
+        private RelayCommand<object> _basicItemChangedCommand;
+        public RelayCommand<object> BasicItemChangedCommand
+        {
+            get
+            {
+                if(_basicItemChangedCommand == null)
+                {
+                    _basicItemChangedCommand = new RelayCommand<object>((frame) =>
+                    {
+                        if(selectedBasicItemModel != null)
+                        {
+                            if(selectedBasicItemModel.Name == "My Day")
+                                navigationService.Navigate(frame, typeof(MydayPageViewModel), myDayTaskCount);
+                        }
+                    });
+                }
+                return _basicItemChangedCommand;
             }
         }
     }

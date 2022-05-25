@@ -11,17 +11,18 @@ namespace FocusTask.Models
         public int id { get; set; }
         public int id_task { get; set; }
         public string name { get; set; }
-        public Boolean is_completed { get; set; }
+        public string completed { get; set; }
         public SubTaskModel()
         {
             this.name = "SubTask...";
+            this.completed = "None";
         }
-        public SubTaskModel(int id, int id_task, string name, Boolean is_completed)
+        public SubTaskModel(int id, int id_task, string name, string completed)
         {
             this.id = id;
             this.id_task = id_task;
             this.name = name;
-            this.is_completed = is_completed;
+            this.completed = completed;
         }
     }
 }
