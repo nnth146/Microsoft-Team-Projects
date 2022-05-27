@@ -1,0 +1,113 @@
+﻿<Page
+    x:Class="NoteForYou.View.AddAddressTypePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:NoteForYou.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="900"
+    d:DesignWidth="600"
+    DataContext="{Binding AddAddressTypePage, Source={StaticResource VML}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="BorderColor"
+            Opacity="0.2"
+            Color="Black" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid
+            Margin="1"
+            Background="White"
+            BorderBrush="{StaticResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                Grid.Row="1"
+                Padding="8"
+                RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <TextBox
+                    Grid.Row="0"
+                    Header="Title (Required)"
+                    PlaceholderText="Enter Title" />
+
+                <TextBox
+                    Grid.Row="1"
+                    Header="Street Address Line 1"
+                    PlaceholderText="Enter Address" />
+
+                <TextBox
+                    Grid.Row="2"
+                    Header="Street Address Line 2"
+                    PlaceholderText="Enter Address" />
+
+                <TextBox
+                    Grid.Row="3"
+                    Header="City"
+                    PlaceholderText="Enter City Name" />
+
+                <TextBox
+                    Grid.Row="4"
+                    Header="Phone"
+                    PlaceholderText="Enter Phone" />
+
+                <TextBox
+                    Grid.Row="5"
+                    Header="State/Province"
+                    PlaceholderText="Enter State/Province" />
+
+                <TextBox
+                    Grid.Row="6"
+                    Header="Zip/Postal Code"
+                    PlaceholderText="Enter Zip/Postal Code" />
+
+                <TextBox
+                    Grid.Row="7"
+                    Header="Country"
+                    PlaceholderText="Enter Country Name" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Padding="8"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource Mint Light}"
+                Content="Save" />
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Content="Cancel" />
+        </Grid>
+    </Grid>
+</Page>

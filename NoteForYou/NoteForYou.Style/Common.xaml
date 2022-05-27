@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:icons="using:Fluent.Icons">
+
+    <!--  Icon  -->
+    <icons:FluentSymbol x:Key="icon_note">Note20</icons:FluentSymbol>
+    <icons:FluentSymbol x:Key="icon_contact">ContactCard20</icons:FluentSymbol>
+    <icons:FluentSymbol x:Key="icon_address">Location20</icons:FluentSymbol>
+    <icons:FluentSymbol x:Key="icon_listnote">TaskListLTR20</icons:FluentSymbol>
+    <icons:FluentSymbol x:Key="icon_securenote">Shield20</icons:FluentSymbol>
+    <icons:FluentSymbol x:Key="icon_imagenote">Image20</icons:FluentSymbol>
+    <!--  NotesPage Resources  -->
+    
+
+</ResourceDictionary>
