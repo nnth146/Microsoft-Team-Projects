@@ -1,6 +1,9 @@
-﻿using Microsoft.Toolkit.Mvvm.Messaging;
+﻿using FocusTask.Models;
+using FocusTask.ViewModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -62,6 +65,53 @@ namespace FocusTask.View
         private void ListViewProject_ItemClick(object sender, ItemClickEventArgs e)
         {
             FlyoutProject.Hide();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            MydayPageViewModel myday = DataContext as MydayPageViewModel;
+            ObservableCollection<TaskModel> taskModels = e.Parameter as ObservableCollection<TaskModel>;
+            if(myday != null)
+            {
+                myday.taskModels = taskModels;
+                ObservableCollection<TaskModel> taskUnCompletedModels = new ObservableCollection<TaskModel>();
+                ObservableCollection<TaskModel> taskCompletedModels = new ObservableCollection<TaskModel>();
+                for (int i = 0; i < taskModels.Count; i++)
+                {
+                    if(taskModels[i].is_completed)
+                        taskCompletedModels.Add(taskModels[i]);
+                    else taskUnCompletedModels.Add(taskModels[i]);
+                }
+                myday.taskCompletedModels = taskCompletedModels;
+                myday.taskUncompletedModels = taskUnCompletedModels;
+            }
+        }
+
+        private void ListViewCompleted_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+            ListViewUnCompleted.SelectedItem = null;
+        }
+
+        private void ListViewUnCompleted_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+            ListViewCompleted.SelectedItem = null;
+        }
+
+        private void HideFlyoutTaskProject(object sender, ItemClickEventArgs e)
+        {
+            FlyoutTaskProject.Hide();
+        }
+
+        private void HideRepeatTaskFlyout(object sender, RoutedEventArgs e)
+        {
+            RepeatTaskFlyout.Hide();
+        }
+
+        private void HidePriorityFlyout(object sender, ItemClickEventArgs e)
+        {
+            PriorityFlyout.Hide();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace FocusTask.Models
                 conn.Open();
                 string projectCMD = "CREATE TABLE IF NOT EXISTS Projects (id integer primary key autoincrement, name nvarchar(255) not null, color text, create_on timestamp);"
                     + "CREATE TABLE IF NOT EXISTS Tasks(id integer primary key autoincrement, id_project integer not null, name nvarchar(255) not null, workingtime int, due_date timestamp, remender timestamp, repeat integer,"
-                    + "type_repeat integer, priority integer, note text, is_completed boolean default false, create_on timestamp);"
+                    + "type_repeat varchar(255), priority integer, note text, is_completed boolean default false, create_on timestamp);"
                     + "CREATE TABLE IF NOT EXISTS SubTasks (id integer primary key autoincrement, id_task int not null, name nvarchar(255) not null, completed varchar(255))";
                 SqliteCommand CMDCreateTable = new SqliteCommand(projectCMD, conn);
                 CMDCreateTable.ExecuteReader();
@@ -209,6 +209,29 @@ namespace FocusTask.Models
         }
 
         // Get item by where
+        public static ProjectModel getProjectByWhere(string wh)
+        {
+            ProjectModel projectModel = new ProjectModel();
+            string PathToDataBase = Path.Combine(ApplicationData.Current.LocalFolder.Path, "focusTask.db");
+
+            using (SqliteConnection conn = new SqliteConnection($"Filename={ PathToDataBase }"))
+            {
+                conn.Open();
+
+                string selectCMD = "SELECT * FROM Projects where " + wh;
+                SqliteCommand CMD_GetData = new SqliteCommand(selectCMD, conn);
+
+                SqliteDataReader render = CMD_GetData.ExecuteReader();
+                render.Read();
+                int amount_task = Database.getTaskByWhere("id_project = " + render.GetInt32(0)).Count;
+                projectModel = new ProjectModel(render.GetInt32(0), render.GetString(1), render.GetString(2), amount_task, render.GetDateTimeOffset(3));
+
+                conn.Close();
+            }
+
+            return projectModel;
+        }
+
         public static ObservableCollection<TaskModel> getTaskByWhere(string wh)
         {
             ObservableCollection<TaskModel> items = new ObservableCollection<TaskModel>();
@@ -239,7 +262,6 @@ namespace FocusTask.Models
                     item.create_on = render.GetDateTimeOffset(11);
                     items.Add(item);
                 }
-                Debug.WriteLine("Select: " + selectCMD + " - " + items.Count);
 
                 conn.Close();
             }

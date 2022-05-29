@@ -24,7 +24,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock
-            FontSize="18"
+            FontSize="24"
             FontWeight="SemiBold"
             Text="Get Primeum"
             TextAlignment="Center" />
@@ -36,11 +36,11 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Spacing="24">
                 <Image
-                    Width="22"
-                    Height="22"
+                    Width="24"
+                    Height="24"
                     VerticalAlignment="Top"
                     Source="{StaticResource checkPrimeumIcon}" />
-                <TextBlock Text="Feature of repeating tasks" />
+                <TextBlock FontSize="16" Text="Feature of repeating tasks" />
             </StackPanel>
             <Grid
                 Grid.Column="1"
@@ -56,7 +56,7 @@
                     Height="22"
                     VerticalAlignment="Top"
                     Source="{StaticResource bellIcon}" />
-                <TextBlock Text="Feature of reminding tasks" />
+                <TextBlock FontSize="16" Text="Feature of reminding tasks" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
@@ -70,6 +70,7 @@
                 HorizontalAlignment="Center"
                 Background="{StaticResource primaryColor}"
                 Content="3 months $3.99"
+                FontSize="16"
                 Foreground="{StaticResource whiteColor}" />
             <Button
                 Grid.Column="1"
@@ -78,6 +79,7 @@
                 HorizontalAlignment="Center"
                 Background="{StaticResource primaryColor}"
                 Content="Lifetime 11.99$"
+                FontSize="16"
                 Foreground="{StaticResource whiteColor}" />
         </Grid>
     </Grid>

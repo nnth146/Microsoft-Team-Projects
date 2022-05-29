@@ -29,7 +29,7 @@ namespace FocusTask.Models
             this.due_date = DateTimeOffset.Now.LocalDateTime;
             this.remender = DateTimeOffset.Now.LocalDateTime;
             this.repeat = 0;
-            this.type_repeat = "days";
+            this.type_repeat = "Days";
             this.priority = 0;
             this.note = "";
             this.is_completed = false;

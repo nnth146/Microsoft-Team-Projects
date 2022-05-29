@@ -1,5 +1,9 @@
-﻿using System;
+﻿using FocusTask.Model;
+using FocusTask.Models;
+using FocusTask.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,16 +31,79 @@ namespace FocusTask.View
             this.InitializeComponent();
         }
 
-        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            List<string> list = new List<string>();
-            for(int i = 0; i <= 9999; i++)
+            btn_show.Visibility = Visibility.Collapsed;
+            btn_hide.Visibility = Visibility.Visible;
+            ListViewCompleted.Visibility = Visibility.Visible;
+        }
+
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ListViewCompleted.Visibility = Visibility.Collapsed;
+            btn_hide.Visibility = Visibility.Collapsed;
+            btn_show.Visibility = Visibility.Visible;
+        }
+
+        private void HideSpitView(object sender, RoutedEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = false;
+        }
+
+        private void CalendarView_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        {
+            DueDateFlyout.Hide();
+        }
+
+        private void ListViewCompleted_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+            ListViewUnCompleted.SelectedItem = null;
+        }
+
+        private void ListViewUnCompleted_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+            ListViewCompleted.SelectedItem = null;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ProjectPageViewModel projectModel = DataContext as ProjectPageViewModel;
+            ProjectTaskModel projectTaskModel = e.Parameter as ProjectTaskModel;
+            ObservableCollection<TaskModel> taskModels = projectTaskModel.taskModels;
+            projectModel.ProjectName = projectTaskModel.nameProject;
+            projectModel.ProjectColor = projectTaskModel.colorProject;
+            if (projectModel != null)
             {
-                list.Add(i.ToString());
+                projectModel.taskModels = taskModels;
+                ObservableCollection<TaskModel> taskUnCompletedModels = new ObservableCollection<TaskModel>();
+                ObservableCollection<TaskModel> taskCompletedModels = new ObservableCollection<TaskModel>();
+                for (int i = 0; i < taskModels.Count; i++)
+                {
+                    if (taskModels[i].is_completed)
+                        taskCompletedModels.Add(taskModels[i]);
+                    else taskUnCompletedModels.Add(taskModels[i]);
+                }
+                projectModel.taskCompletedModels = taskCompletedModels;
+                projectModel.taskUncompletedModels = taskUnCompletedModels;
             }
-            comboBox.ItemsSource = list;
-            comboBox.SelectedIndex = 10;
+        }
+
+        private void HidePriorityFlyout(object sender, ItemClickEventArgs e)
+        {
+            PriorityFlyout.Hide();
+        }
+
+        private void HideFlyoutProject(object sender, ItemClickEventArgs e)
+        {
+            FlyoutProject.Hide();
+            SplitViewTask.IsPaneOpen = false;
+        }
+
+        private void HideRepeatTaskFlyout(object sender, RoutedEventArgs e)
+        {
+            RepeatTaskFlyout.Hide();
         }
     }
 }

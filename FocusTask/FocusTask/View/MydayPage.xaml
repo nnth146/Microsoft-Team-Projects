@@ -22,8 +22,9 @@
             <XamlUICommand x:Name="UpdateTaskNameCommand" Command="{Binding UpdateTaskNameCommand}" />
             <XamlUICommand x:Name="UpdatePriorityCommand" Command="{Binding UpdatePriorityCommand}" />
             <XamlUICommand x:Name="AddSubTaskCommand" Command="{Binding AddSubTaskCommand}" />
-            <XamlUICommand x:Name="CompletedSubTaskCommand" Command="{Binding CompletedSubTaskCommand}" />
+            <XamlUICommand x:Name="IsCompletedSubTaskCommand" Command="{Binding IsCompletedSubTaskCommand}" />
             <XamlUICommand x:Name="UpdateProjectNameCommand" Command="{Binding UpdateProjectNameCommand}" />
+            <XamlUICommand x:Name="RemoveRepeatCommand" Command="{Binding RemoveRepeatCommand}" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -49,7 +50,7 @@
                     x:Name="NameProject"
                     VerticalAlignment="Center"
                     FontSize="20"
-                    Text="Myday" />
+                    Text="My day" />
             </StackPanel>
             <Button
                 Grid.Column="1"
@@ -91,11 +92,13 @@
                     BorderThickness="1"
                     CornerRadius="8"
                     RowSpacing="24">
+
                     <Grid.Resources>
                         <ResourceDictionary>
                             <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource grayColor}" />
                         </ResourceDictionary>
                     </Grid.Resources>
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -103,10 +106,12 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
                     <Grid ColumnSpacing="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Button
@@ -114,7 +119,9 @@
                             Padding="0"
                             VerticalAlignment="Top"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Click="HideSpitView"
+                            Command="{Binding IsCompletedTaskCommand}">
                             <Image
                                 Width="24"
                                 Height="24"
@@ -126,17 +133,16 @@
                             VerticalAlignment="Top"
                             Background="Transparent"
                             BorderThickness="0"
-                            Text="{Binding TaskName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            TextWrapping="Wrap">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="TextChanged">
-                                    <core:InvokeCommandAction Command="{StaticResource UpdateTaskNameCommand}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </TextBox>
-
+                            Text="{Binding selectedTask.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
                         <Button
                             Grid.Column="2"
+                            VerticalAlignment="Top"
+                            Command="{Binding UpdateTaskNameCommand}"
+                            Content="Save" />
+
+                        <Button
+                            Grid.Column="3"
                             Margin="0,4,0,0"
                             Padding="0"
                             VerticalAlignment="Top"
@@ -147,8 +153,12 @@
                                 Foreground="{Binding selectedPriority.color, Converter={StaticResource StringToColorBrush}}"
                                 Glyph="&#xe734;" />
                             <Button.Flyout>
-                                <Flyout Placement="BottomEdgeAlignedRight">
-                                    <ListView ItemsSource="{Binding priorities}" SelectedItem="{Binding selectedPriority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <Flyout x:Name="PriorityFlyout" Placement="BottomEdgeAlignedRight">
+                                    <ListView
+                                        IsItemClickEnabled="True"
+                                        ItemClick="HidePriorityFlyout"
+                                        ItemsSource="{Binding priorities}"
+                                        SelectedItem="{Binding selectedPriority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <interactivity:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:InvokeCommandAction Command="{StaticResource UpdatePriorityCommand}" />
@@ -170,10 +180,12 @@
 
                         </Button>
                     </Grid>
+
                     <muxc:ProgressBar
                         Grid.Row="1"
                         Width="360"
                         Value="0" />
+
                     <Grid Grid.Row="2" RowSpacing="16">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -203,6 +215,7 @@
                                 Foreground="{StaticResource grayColor}"
                                 Text="{Binding selectedTask.workingtime}" />
                         </Grid>
+
                         <Button
                             Grid.Row="1"
                             Padding="0,8"
@@ -268,13 +281,15 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
+
                         <Button
                             Grid.Row="2"
                             Padding="0,8"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Command="{Binding GetAllProjectsCommand}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -295,8 +310,10 @@
                                     TextTrimming="CharacterEllipsis" />
                             </Grid>
                             <Button.Flyout>
-                                <Flyout Placement="BottomEdgeAlignedRight">
+                                <Flyout x:Name="FlyoutTaskProject" Placement="BottomEdgeAlignedRight">
                                     <ListView
+                                        IsItemClickEnabled="True"
+                                        ItemClick="HideFlyoutTaskProject"
                                         ItemsSource="{Binding projectModels}"
                                         SelectedItem="{Binding taskProject, Mode=TwoWay}"
                                         SelectionMode="Single">
@@ -323,6 +340,7 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
+
                         <Button
                             Grid.Row="3"
                             Padding="0,8"
@@ -407,6 +425,7 @@
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
+
                         <Button
                             Grid.Row="4"
                             Padding="0,8"
@@ -433,7 +452,7 @@
                                     Text="{Binding Repeat}" />
                             </Grid>
                             <Button.Flyout>
-                                <Flyout Placement="BottomEdgeAlignedRight">
+                                <Flyout x:Name="RepeatTaskFlyout" Placement="BottomEdgeAlignedRight">
                                     <Grid Width="297" RowSpacing="20">
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
@@ -455,13 +474,13 @@
                                                     Maximum="60"
                                                     Minimum="1"
                                                     SmallChange="1"
-                                                    Value="{Binding RepeatValue}" />
+                                                    Value="{Binding RepeatValue, Mode=TwoWay}" />
                                             </Grid>
                                             <ComboBox
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
                                                 ItemsSource="{Binding typeRepeats}"
-                                                SelectedItem="{Binding selectedTypeRepeat}" />
+                                                SelectedItem="{Binding selectedTypeRepeat, Mode=TwoWay}" />
                                         </Grid>
                                         <Grid Grid.Row="1" ColumnSpacing="8">
                                             <Grid.ColumnDefinitions>
@@ -471,6 +490,7 @@
                                             <Button
                                                 HorizontalAlignment="Stretch"
                                                 Background="{StaticResource primaryColor}"
+                                                Click="HideRepeatTaskFlyout"
                                                 Command="{Binding UpdateRepeatCommand}"
                                                 Content="Save"
                                                 Foreground="{StaticResource whiteColor}">
@@ -484,12 +504,15 @@
                                             <Button
                                                 Grid.Column="1"
                                                 HorizontalAlignment="Stretch"
+                                                Click="HideRepeatTaskFlyout"
+                                                Command="{StaticResource RemoveRepeatCommand}"
                                                 Content="Remove" />
                                         </Grid>
                                     </Grid>
                                 </Flyout>
                             </Button.Flyout>
                         </Button>
+
                         <TextBox
                             Grid.Row="5"
                             Padding="12,8"
@@ -509,6 +532,7 @@
                                 </KeyboardAccelerator>
                             </TextBox.KeyboardAccelerators>
                         </TextBox>
+
                         <ListView
                             Grid.Row="6"
                             MaxHeight="120"
@@ -521,7 +545,7 @@
                                                 Padding="4"
                                                 Background="Transparent"
                                                 BorderThickness="0"
-                                                Command="{StaticResource CompletedSubTaskCommand}"
+                                                Command="{StaticResource IsCompletedSubTaskCommand}"
                                                 CommandParameter="{Binding}">
                                                 <FontIcon
                                                     VerticalAlignment="Center"
@@ -540,6 +564,7 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+
                         <RichEditBox
                             x:Name="NoteTask"
                             Grid.Row="7"
@@ -624,7 +649,7 @@
                         <TextBlock
                             FontSize="35"
                             Foreground="{StaticResource purpleColor}"
-                            Text="0"
+                            Text="{Binding taskCompletedCount}"
                             TextAlignment="Center" />
                         <TextBlock
                             FontSize="12"
@@ -686,6 +711,7 @@
                                     <core:EventTriggerBehavior EventName="Invoked">
                                         <core:InvokeCommandAction Command="{StaticResource AddTaskCommand}" />
                                     </core:EventTriggerBehavior>
+                                    </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </KeyboardAccelerator>
                         </TextBox.KeyboardAccelerators>-->
@@ -716,11 +742,6 @@
                                         ItemsSource="{Binding projectModels}"
                                         SelectedItem="{Binding selectedProject, Mode=TwoWay}"
                                         SelectionMode="Single">
-                                        <interactivity:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectedProjectChangeCommand}" />
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <ListViewItem>
@@ -744,10 +765,11 @@
                 </Grid>
                 <!--  ListView Task Uncompleted  -->
                 <ListView
+                    x:Name="ListViewUnCompleted"
                     Grid.Row="2"
                     MaxHeight="320"
                     IsItemClickEnabled="True"
-                    ItemClick="ListView_ItemClick"
+                    ItemClick="ListViewUnCompleted_ItemClick"
                     ItemsSource="{Binding taskUncompletedModels}"
                     SelectedItem="{Binding selectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <interactivity:Interaction.Behaviors>
@@ -759,11 +781,11 @@
                         <DataTemplate>
                             <ListViewItem Margin="0,0,0,8" Padding="0">
                                 <Grid
-                                    Padding="12"
+                                    Padding="12,8"
                                     Background="{StaticResource whiteColor}"
                                     BorderBrush="{StaticResource grayColor}"
                                     BorderThickness="1"
-                                    ColumnSpacing="24"
+                                    ColumnSpacing="16"
                                     CornerRadius="8">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -771,8 +793,10 @@
                                     </Grid.ColumnDefinitions>
                                     <Button
                                         Padding="0"
+                                        VerticalAlignment="Center"
                                         Background="Transparent"
                                         BorderThickness="0"
+                                        Click="HideSpitView"
                                         Command="{StaticResource CompletedCommand}"
                                         CommandParameter="{Binding}">
                                         <Image
@@ -838,18 +862,24 @@
                         x:Name="ListViewCompleted"
                         Grid.Row="1"
                         IsItemClickEnabled="True"
-                        ItemClick="ListView_ItemClick"
+                        ItemClick="ListViewCompleted_ItemClick"
                         ItemsSource="{Binding taskCompletedModels}"
+                        SelectedItem="{Binding selectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Visibility="Collapsed">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="SelectionChanged">
+                                <core:InvokeCommandAction Command="{Binding SelectedTaskChangeCommand}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ListViewItem Margin="0,0,0,8" Padding="0">
                                     <Grid
-                                        Padding="12"
+                                        Padding="12,8"
                                         Background="{StaticResource whiteColor}"
                                         BorderBrush="{StaticResource grayColor}"
                                         BorderThickness="1"
-                                        ColumnSpacing="24"
+                                        ColumnSpacing="16"
                                         CornerRadius="8">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -857,8 +887,10 @@
                                         </Grid.ColumnDefinitions>
                                         <Button
                                             Padding="0"
+                                            VerticalAlignment="Center"
                                             Background="Transparent"
                                             BorderThickness="0"
+                                            Click="HideSpitView"
                                             Command="{StaticResource UnCompletedCommand}"
                                             CommandParameter="{Binding}">
                                             <Image

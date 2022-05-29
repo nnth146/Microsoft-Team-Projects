@@ -54,24 +54,95 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <Button Background="Transparent" BorderThickness="0">
+                <Button
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="Premium_Click">
                     <Image
                         Width="20"
                         Height="20"
                         Source="{StaticResource premiumIcon}" />
                 </Button>
-                <Button Background="Transparent" BorderThickness="0">
-                    <FontIcon Foreground="{StaticResource whiteColor}" Glyph="&#xEDAC;" />
-                </Button>
-                <Button Background="Transparent" BorderThickness="0">
-                    <FontIcon Foreground="{StaticResource whiteColor}" Glyph="&#xE713;" />
+                <Grid>
+                    <Grid
+                        Width="16"
+                        Height="16"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="{StaticResource color16}"
+                        CornerRadius="16">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="10"
+                            Foreground="{StaticResource whiteColor}"
+                            Text="1"
+                            TextAlignment="Center" />
+                    </Grid>
+                    <Button Background="Transparent" BorderThickness="0">
+                        <FontIcon Foreground="{StaticResource whiteColor}" Glyph="&#xEDAC;" />
+                        <Button.Flyout>
+                            <Flyout Placement="BottomEdgeAlignedRight">
+                                <Grid Width="300" RowSpacing="12">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        FontSize="16"
+                                        Text="Notifications"
+                                        TextAlignment="Center" />
+                                    <Border
+                                        Grid.Row="1"
+                                        Height="1"
+                                        Background="{StaticResource grayColor}" />
+                                    <ListView Grid.Row="2">
+                                        <ListView.Items>
+                                            <ListViewItem>
+                                                <Grid ColumnSpacing="16">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="Noti asdasdasd das dasdas das dasdasdas dasd ds dasdasdsa"
+                                                        TextWrapping="Wrap" />
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="12"
+                                                        FontStyle="Italic"
+                                                        Foreground="{StaticResource lightgrayColor}"
+                                                        Text="15 seconds ago" />
+                                                </Grid>
+                                            </ListViewItem>
+                                        </ListView.Items>
+                                    </ListView>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+                <Button
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="Setting_Click">
+                    <FontIcon
+                        FontSize="18"
+                        Foreground="{StaticResource whiteColor}"
+                        Glyph="&#xE713;" />
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid
+            x:Name="Content"
+            Grid.Row="1"
+            Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="345" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Background="#F3F3F3" RowSpacing="8">
                 <Grid.RowDefinitions>
@@ -82,6 +153,8 @@
                 </Grid.RowDefinitions>
                 <ListView
                     x:Name="ListViewTop"
+                    IsItemClickEnabled="True"
+                    ItemClick="ItemBasic_Click"
                     ItemsSource="{Binding basicItemModels}"
                     SelectedItem="{Binding selectedBasicItemModel, Mode=TwoWay}">
                     <interactivity:Interaction.Behaviors>
@@ -110,8 +183,7 @@
                                     <TextBlock
                                         Grid.Column="1"
                                         FontSize="15"
-                                        Foreground="{StaticResource numberTask}"
-                                        Text="{Binding TaskCount}" />
+                                        Foreground="{StaticResource numberTask}" />
                                 </Grid>
                             </ListViewItem>
                         </DataTemplate>
@@ -123,9 +195,18 @@
                     Margin="12,0"
                     Background="{StaticResource grayColor}" />
                 <ListView
+                    x:Name="ListViewProject"
                     Grid.Row="2"
                     ContextFlyout="{StaticResource ListViewProjectContextFlyout}"
-                    ItemsSource="{Binding projectModels}">
+                    IsItemClickEnabled="True"
+                    ItemClick="ItemProject_Click"
+                    ItemsSource="{Binding projectModels}"
+                    SelectedItem="{Binding selectedProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding ItemProjectChangedCommand}" CommandParameter="{x:Bind contentFrame}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ListViewItem Padding="12" HorizontalContentAlignment="Stretch">
@@ -149,8 +230,7 @@
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         FontSize="15"
-                                        Foreground="{StaticResource numberTask}"
-                                        Text="{Binding amount_task}" />
+                                        Foreground="{StaticResource numberTask}" />
                                 </Grid>
                             </ListViewItem>
                         </DataTemplate>
@@ -186,7 +266,90 @@
             <Frame
                 x:Name="contentFrame"
                 Grid.Column="1"
+                Grid.ColumnSpan="2"
                 CornerRadius="8 0 8 8" />
+        </Grid>
+        <Grid
+            x:Name="Setting"
+            Grid.Row="1"
+            Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView
+                x:Name="ListViewSetting"
+                HorizontalAlignment="Center"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.IsHorizontalRailEnabled="True"
+                SelectionChanged="ListViewSetting_SelectionChanged">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.Items>
+                    <ListViewItem
+                        MinWidth="330"
+                        Padding="0"
+                        CornerRadius="0"
+                        Tag="ShopPrimeum">
+                        <Grid
+                            Padding="0,8"
+                            BorderBrush="#DDDDDD"
+                            BorderThickness="0,0,1,1"
+                            CornerRadius="0">
+                            <Image
+                                x:Name="shopPrimeum"
+                                Width="60"
+                                Height="60"
+                                Source="{StaticResource shopPrimeumIcon}" />
+                            <Image
+                                x:Name="shopPrimeumSelected"
+                                Width="60"
+                                Height="60"
+                                Source="{StaticResource shopPrimeumSelectedIcon}"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem
+                        MinWidth="330"
+                        Padding="0"
+                        Tag="About">
+                        <Grid
+                            Padding="0,8"
+                            BorderBrush="#DDDDDD"
+                            BorderThickness="1,1,0,1">
+                            <Image
+                                x:Name="about"
+                                Width="60"
+                                Height="60"
+                                Source="{StaticResource aboutIcon}" />
+                            <Image
+                                x:Name="aboutSelected"
+                                Width="60"
+                                Height="60"
+                                Source="{StaticResource aboutSelectedIcon}"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </ListViewItem>
+                </ListView.Items>
+            </ListView>
+            <Frame x:Name="settingFrame" Grid.Row="1" />
+            <Button
+                Grid.Row="2"
+                Margin="0,0,0,16"
+                HorizontalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="Close_Click">
+                <Grid>
+                    <FontIcon FontSize="48" Glyph="&#xea3f;" />
+                    <FontIcon FontSize="20" Glyph="&#xef2c;" />
+                </Grid>
+            </Button>
         </Grid>
     </Grid>
 </Page>

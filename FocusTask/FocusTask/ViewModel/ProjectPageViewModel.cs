@@ -5,19 +5,19 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UWP.Core.Helper;
 using UWP.Core.Service;
-using static FocusTask.Messenger.Messenger;
 
 namespace FocusTask.ViewModel
 {
-    public class MydayPageViewModel : ServiceObservableObject
+    public class ProjectPageViewModel : ServiceObservableObject
     {
-        public MydayPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
+        public ProjectPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
             projectModels = Database.getAllProject();
             projectModels.CollectionChanged += ProjectModels_CollectionChanged;
@@ -28,7 +28,7 @@ namespace FocusTask.ViewModel
 
             NameTask = "";
             workingTimes = new ObservableCollection<string>();
-            for(int i = 0; i <= 9999; i++)
+            for (int i = 0; i <= 9999; i++)
             {
                 workingTimes.Add(i.ToString());
             }
@@ -52,14 +52,13 @@ namespace FocusTask.ViewModel
                 "Months",
                 "Years"
             };
-            selectedTypeRepeat = "Days";
+            DateTimeOffset = DateTimeOffset.Now.LocalDateTime;
         }
 
-        private void ProjectModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void ProjectModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(projectCount));
         }
-
 
         // Variables
         public ObservableCollection<ProjectModel> projectModels { get; set; }
@@ -68,12 +67,15 @@ namespace FocusTask.ViewModel
         public ObservableCollection<TaskModel> taskCompletedModels { get; set; }
         public ObservableCollection<SubTaskModel> subTasks { get; set; }
         public ObservableCollection<string> typeRepeats { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectColor { get; set; }
 
         public int projectCount { get => projectModels.Count; }
         public int taskUncompletedCount { get => taskUncompletedModels.Count; }
         public int taskCompletedCount { get => taskCompletedModels.Count; }
         public string selectedTypeRepeat { get; set; }
         public int RepeatValue { get; set; }
+        public DateTimeOffset DateTimeOffset { get; set; }
 
         public string NameTask { get; set; }
         public ObservableCollection<string> workingTimes { get; set; }
@@ -83,7 +85,6 @@ namespace FocusTask.ViewModel
         public TaskModel selectedTask { get; set; }
         public ProjectModel selectedProject { get; set; }
         public ProjectModel taskProject { get; set; }
-
         public string IconCheckPriority { get; set; }
         public DateTimeOffset Due_Date { get; set; }
         public string NameProject { get; set; }
@@ -102,17 +103,19 @@ namespace FocusTask.ViewModel
         {
             get
             {
-                if(_addTaskCommand == null)
+                if (_addTaskCommand == null)
                 {
                     _addTaskCommand = new RelayCommand(() =>
                     {
                         TaskModel taskModel = new TaskModel();
-                        taskModel.id_project = selectedProject.id;
+                        ProjectModel projectModel = Database.getProjectByWhere("name = '" + ProjectName + "'");
+                        taskModel.id_project = projectModel.id;
                         taskModel.name = String.IsNullOrEmpty(NameTask) ? "Task..." : NameTask;
+                        taskModel.due_date = DateTimeOffset;
                         taskModel.workingtime = Int32.Parse(selectedTime);
 
-                        taskUncompletedModels.Add(taskModel);
                         Database.addNewTask(taskModel);
+                        taskUncompletedModels.Add(taskModel);
                         OnPropertyChanged(nameof(taskUncompletedModels));
 
                         NameTask = "";
@@ -123,7 +126,7 @@ namespace FocusTask.ViewModel
                 }
                 return _addTaskCommand;
             }
-        } // Completed add new task myday
+        }
 
         private RelayCommand<TaskModel> _completedCommand;
         public RelayCommand<TaskModel> CompletedCommand
@@ -134,7 +137,7 @@ namespace FocusTask.ViewModel
                 {
                     _completedCommand = new RelayCommand<TaskModel>((selectedTask) =>
                     {
-                        if(selectedTask != null)
+                        if (selectedTask != null)
                         {
                             TaskModel taskModel = selectedTask;
                             taskModel.is_completed = true;
@@ -149,7 +152,7 @@ namespace FocusTask.ViewModel
                 }
                 return (_completedCommand);
             }
-        } // Completed update taskcompleted myday
+        } // Completed
 
         private RelayCommand<TaskModel> _uncompletedCommand;
         public RelayCommand<TaskModel> UncompletedCommand
@@ -172,36 +175,36 @@ namespace FocusTask.ViewModel
                 }
                 return (_uncompletedCommand);
             }
-        } // Completed update taskuncompleted myday
+        } // Completed
 
         private RelayCommand _deleteTaskCommand;
         public RelayCommand DeleteTaskCommand
         {
             get
             {
-                if(_deleteTaskCommand == null)
+                if (_deleteTaskCommand == null)
                 {
                     _deleteTaskCommand = new RelayCommand(() =>
                     {
-                        if(selectedTask != null)
+                        if (selectedTask != null)
                         {
                             Database.deleteTaskByID(selectedTask.id);
-                            if(selectedTask.is_completed)
+                            if (selectedTask.is_completed)
                             {
                                 taskCompletedModels.Remove(selectedTask);
                                 OnPropertyChanged(nameof(taskCompletedModels));
-                            } else
+                            }
+                            else
                             {
                                 taskUncompletedModels.Remove(selectedTask);
                                 OnPropertyChanged(nameof(taskUncompletedModels));
                             }
-                            OnPropertyChanged(nameof(taskCompletedCount));
                         }
                     });
                 }
                 return _deleteTaskCommand;
             }
-        }  // Completed delete task myday
+        }  // Completed
 
         private RelayCommand _isCompletedTaskCommand;
         public RelayCommand IsCompletedTaskCommand
@@ -237,7 +240,7 @@ namespace FocusTask.ViewModel
 
                 return _isCompletedTaskCommand;
             }
-        } // Completed update iscompleted task myday
+        } // Completed
 
         private RelayCommand _selectedTaskChangeCommand;
         public RelayCommand SelectedTaskChangeCommand
@@ -302,14 +305,15 @@ namespace FocusTask.ViewModel
 
                             renderTaskRepeat();
 
+                            NewNameSubTask = "";
+
                             Note = selectedTask.note;
                             OnPropertyChanged(Note);
+
 
                             // Get SubTask
                             subTasks = Database.getSubTaskByWhere("id_task = " + selectedTask.id);
                             OnPropertyChanged(nameof(subTasks));
-
-                            NewNameSubTask = "";
 
                             OnPropertyChanged(nameof(selectedTask));
                         }
@@ -331,18 +335,19 @@ namespace FocusTask.ViewModel
                         if (selectedTask != null)
                         {
                             TaskModel taskModel = selectedTask;
-                            if(selectedTask.is_completed)
+                            if (selectedTask.is_completed)
                             {
                                 for (int i = 0; i < taskCompletedModels.Count; i++)
                                 {
                                     if (taskCompletedModels[i].id == selectedTask.id)
                                     {
                                         taskCompletedModels[i] = selectedTask;
-                                        Database.updateTaskByID(taskCompletedModels[i], taskCompletedModels[i].id);
+                                        Database.updateTaskByID(taskUncompletedModels[i], taskUncompletedModels[i].id);
                                         break;
                                     }
                                 }
-                            } else
+                            }
+                            else
                             {
                                 for (int i = 0; i < taskUncompletedModels.Count; i++)
                                 {
@@ -354,15 +359,12 @@ namespace FocusTask.ViewModel
                                     }
                                 }
                             }
-                            selectedTask = taskModel;
-                            OnPropertyChanged(nameof(selectedTask));
-                            OnPropertyChanged(nameof(taskModels));
                         }
                     });
                 }
                 return _updateTaskNameCommand;
             }
-        }  // Completed update task name myday
+        } // Completed
 
         private RelayCommand _updatePriorityCommand;
         public RelayCommand UpdatePriorityCommand
@@ -404,7 +406,7 @@ namespace FocusTask.ViewModel
                 }
                 return _updatePriorityCommand;
             }
-        }  // Completed update task priority myday
+        } // Completed
 
         private RelayCommand _updateDueDateCommand;
         public RelayCommand UpdateDueDateCommand
@@ -436,14 +438,27 @@ namespace FocusTask.ViewModel
                             NameProject = taskProject.name;
                             OnPropertyChanged(nameof(NameProject));
 
-                            selectedTask.id_project = taskProject.id;
-                            Database.updateTaskByID(selectedTask, selectedTask.id);
+                            TaskModel taskModel = selectedTask;
+                            /*if (selectedTask.is_completed)
+                            {
+                                taskCompletedModels.Remove(selectedTask);
+                                OnPropertyChanged(nameof(taskCompletedModels));
+                            }
+                            else
+                            {
+                                taskUncompletedModels.Remove(selectedTask);
+                                OnPropertyChanged(nameof(taskUncompletedModels));
+                            }*/
+
+                            taskModel.id_project = taskProject.id;
+                            Database.updateTaskByID(taskModel, taskModel.id);
+
                         }
                     });
                 }
                 return _updateProjectNameCommand;
             }
-        } // Completed update task project myday
+        }
 
         private RelayCommand _updateRepeatCommand;
         public RelayCommand UpdateRepeatCommand
@@ -466,8 +481,7 @@ namespace FocusTask.ViewModel
                 }
                 return _updateRepeatCommand;
             }
-        }  // Completed update task repeate someday
-
+        }  // Completed
         private void renderTaskRepeat()
         {
             if (selectedTask != null)
@@ -512,7 +526,7 @@ namespace FocusTask.ViewModel
                 }
                 return _removeRepeatCommand;
             }
-        } // Completed remove task repeat someday
+        } // Completed 
         // End Task
 
         // Project
@@ -529,9 +543,9 @@ namespace FocusTask.ViewModel
                         ProjectModel taskProjectModel = taskProject;
                         projectModels = Database.getAllProject();
                         OnPropertyChanged(nameof(projectModels));
-                        for(int i = 0; i < projectModels.Count; i++)
+                        for (int i = 0; i < projectModels.Count; i++)
                         {
-                            if(projectModels[i].id == projectModel.id)
+                            if (projectModels[i].id == projectModel.id)
                                 selectedProject = projectModels[i];
                             if (projectModels[i].id == taskProjectModel.id)
                                 taskProject = projectModels[i];
@@ -542,14 +556,14 @@ namespace FocusTask.ViewModel
                 }
                 return _getAllProjectsCommand;
             }
-        } // Completed get all before add new task project myday
+        } // Completed
 
         private RelayCommand _selectedProjectChangeCommand;
         public RelayCommand SelectedProjectChangeCommand
         {
             get
             {
-                if(_selectedProjectChangeCommand == null)
+                if (_selectedProjectChangeCommand == null)
                 {
                     _selectedProjectChangeCommand = new RelayCommand(() =>
                     {
@@ -558,7 +572,7 @@ namespace FocusTask.ViewModel
                 }
                 return _selectedProjectChangeCommand;
             }
-        } // Completed selected change project before add new task myday
+        } // Completed
 
         // SubTask
         public RelayCommand _addSubTaskCommand;
@@ -566,11 +580,11 @@ namespace FocusTask.ViewModel
         {
             get
             {
-                if(_addSubTaskCommand == null)
+                if (_addSubTaskCommand == null)
                 {
                     _addSubTaskCommand = new RelayCommand(() =>
                     {
-                        if(selectedTask != null)
+                        if (selectedTask != null)
                         {
                             SubTaskModel subTaskModel = new SubTaskModel();
                             subTaskModel.id_task = selectedTask.id;

@@ -32,11 +32,30 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Bottom" Text="Dowload" />
-        <TextBlock Grid.Row="1" Text="Help and Feedback" />
-        <TextBlock Grid.Row="2" Text="Official Website" />
-        <TextBlock Grid.Row="3" Text="Vision" />
-        <TextBlock Grid.Row="4" Text="Rate Us" />
+        <TextBlock
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Dowload" />
+        <TextBlock
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Help and Feedback" />
+        <TextBlock
+            Grid.Row="2"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Official Website" />
+        <TextBlock
+            Grid.Row="3"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Vision" />
+        <TextBlock
+            Grid.Row="4"
+            VerticalAlignment="Center"
+            FontSize="16"
+            Text="Rate Us" />
         <Grid
             Grid.RowSpan="5"
             Grid.Column="1"
@@ -44,6 +63,7 @@
             Background="{StaticResource grayColor}" />
         <StackPanel
             Grid.Column="2"
+            VerticalAlignment="Center"
             Orientation="Horizontal"
             Spacing="12">
             <Image
@@ -62,19 +82,29 @@
         <TextBlock
             Grid.Row="1"
             Grid.Column="2"
+            VerticalAlignment="Center"
+            FontSize="16"
             Text="Focustodo@163.com" />
-        <TextBlock Grid.Row="2" Grid.Column="2">
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="2"
+            VerticalAlignment="Center"
+            FontSize="16">
             <Hyperlink Foreground="{StaticResource linkColor}" TextDecorations="None">www.focustodo.com</Hyperlink>
         </TextBlock>
         <TextBlock
             Grid.Row="3"
             Grid.Column="2"
+            VerticalAlignment="Center"
+            FontSize="16"
             Text="6.7" />
         <Button
             Grid.Row="4"
             Grid.Column="2"
+            VerticalAlignment="Center"
             Background="{StaticResource grayColor}"
             Content="Rate now"
+            FontSize="16"
             Foreground="{StaticResource whiteColor}" />
     </Grid>
 </Page>

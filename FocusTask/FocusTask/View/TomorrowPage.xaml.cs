@@ -1,5 +1,8 @@
-﻿using System;
+﻿using FocusTask.Models;
+using FocusTask.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,17 +29,48 @@ namespace FocusTask.View
         {
             this.InitializeComponent();
         }
-
-        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        private void HideSpitView(object sender, RoutedEventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            List<string> list = new List<string>();
-            for (int i = 0; i <= 9999; i++)
+            SplitViewTask.IsPaneOpen = false;
+        }
+
+        private void CalendarView_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        {
+            DueDateFlyout.Hide();
+        }
+
+        private void ListViewProject_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FlyoutProject.Hide();
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            TomorrowPageViewModel tomorrow = DataContext as TomorrowPageViewModel;
+            ObservableCollection<TaskModel> taskModels = e.Parameter as ObservableCollection<TaskModel>;
+            if (tomorrow != null)
             {
-                list.Add(i.ToString());
+                tomorrow.taskModels = taskModels;
             }
-            comboBox.ItemsSource = list;
-            comboBox.SelectedIndex = 10;
+        }
+
+        private void HidePriorityFlyout(object sender, ItemClickEventArgs e)
+        {
+            PriorityFlyout.Hide();
+        }
+
+        private void HideFlyoutTaskProject(object sender, ItemClickEventArgs e)
+        {
+            FlyoutTaskProject.Hide();
+        }
+
+        private void HideRepeatTaskFlyout(object sender, RoutedEventArgs e)
+        {
+            RepeatTaskFlyout.Hide();
         }
     }
 }

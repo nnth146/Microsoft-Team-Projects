@@ -26,21 +26,72 @@ namespace FocusTask.ViewModel
                 projectModels.Add(new ProjectModel());
             }
 
+            getData();
+        }
+
+        private void getData()
+        {
+            taskModels = Database.getAllTask();
+
             int hour = DateTimeOffset.Now.LocalDateTime.Hour;
             int minute = DateTimeOffset.Now.LocalDateTime.Minute;
             int second = DateTimeOffset.Now.LocalDateTime.Second;
-            DateTimeOffset dateStart = DateTimeOffset.Now.AddHours(-hour + 1).AddMinutes(-minute).AddSeconds(-second);
-            DateTimeOffset dateEnd = DateTimeOffset.Now.AddHours(12-hour).AddMinutes(-minute).AddSeconds(-second);
-            Debug.WriteLine("Date : " + dateStart + " -> " + dateEnd);
-            myDayTaskCount = Database.getTaskByWhere("due_date BETWEEN '" + dateStart + "' AND '" + dateEnd + "'").Count;
-            
+            DateTimeOffset mydayStart = DateTimeOffset.Now.AddHours(-hour + 1).AddMinutes(-minute).AddSeconds(-second);
+            DateTimeOffset mydayEnd = DateTimeOffset.Now.AddHours(12 - hour).AddMinutes(-minute).AddSeconds(-second);
+
+            DateTimeOffset tomorrowStart = mydayStart.AddDays(+1);
+            DateTimeOffset tomorrowEnd = mydayEnd.AddDays(+1);
+
+            DateTimeOffset upcomingStart = mydayStart.AddDays(+7);
+            DateTimeOffset upcomingEnd = mydayEnd.AddDays(+7);
+
+            DateTimeOffset somedayStart = DateTimeOffset.Now.AddHours(-hour + 1).AddMinutes(-minute).AddSeconds(-second);
+            DateTimeOffset somedayEnd = DateTimeOffset.Now.AddHours(12 - hour).AddMinutes(-minute).AddSeconds(-second);
+
+            myDayTasks = new ObservableCollection<TaskModel>();
+            tomorrowTasks = new ObservableCollection<TaskModel>();
+            upcomingTasks = new ObservableCollection<TaskModel>();
+            somedayTasks = new ObservableCollection<TaskModel>();
+            completedTasks = new ObservableCollection<TaskModel>();
+
+            for (int i = 0; i < taskModels.Count; i++)
+            {
+                if (taskModels[i].due_date >= mydayStart && taskModels[i].due_date <= mydayEnd)
+                {
+                    myDayTasks.Add(taskModels[i]);
+                }
+                else if (taskModels[i].due_date >= tomorrowStart && taskModels[i].due_date <= tomorrowEnd && taskModels[i].is_completed == false)
+                {
+                    tomorrowTasks.Add(taskModels[i]);
+                }
+                else if (taskModels[i].due_date >= upcomingStart && taskModels[i].due_date <= upcomingEnd && taskModels[i].is_completed == false)
+                {
+                    upcomingTasks.Add(taskModels[i]);
+                }
+                else
+                {
+                    if(taskModels[i].is_completed == false)
+                        upcomingTasks.Add(taskModels[i]);
+                }
+
+                if (taskModels[i].is_completed)
+                    completedTasks.Add(taskModels[i]);
+                
+
+            }
+            int myDayTaskCount = myDayTasks.Count;
+            int tomorrowTaskCount = tomorrowTasks.Count;
+            int upcomingTaskCount = upcomingTasks.Count;
+            int somedayTaskCount = somedayTasks.Count;
+            int completedTaskCount = completedTasks.Count;
+
             basicItemModels = new ObservableCollection<BasicItemModel>()
             {
                 new BasicItemModel("My Day", "ms-appx:///Assets/Icons/myday.png", myDayTaskCount),
-                new BasicItemModel("Tomorrow", "ms-appx:///Assets/Icons/tomorrow.png", 0),
-                new BasicItemModel("Upcoming", "ms-appx:///Assets/Icons/upcoming.png", 0),
-                new BasicItemModel("Someday", "ms-appx:///Assets/Icons/someday.png", 0),
-                new BasicItemModel("Completed", "ms-appx:///Assets/Icons/completed.png", 0)
+                new BasicItemModel("Tomorrow", "ms-appx:///Assets/Icons/tomorrow.png", tomorrowTaskCount),
+                new BasicItemModel("Upcoming", "ms-appx:///Assets/Icons/upcoming.png", upcomingTaskCount),
+                new BasicItemModel("Someday", "ms-appx:///Assets/Icons/someday.png", somedayTaskCount),
+                new BasicItemModel("Completed", "ms-appx:///Assets/Icons/completed.png", completedTaskCount)
             };
         }
 
@@ -66,10 +117,17 @@ namespace FocusTask.ViewModel
         
         // Variable
         public ObservableCollection<ProjectModel> projectModels { get; set; }
+        public ObservableCollection<TaskModel> taskModels { get; set; }
+        public ObservableCollection<TaskModel> myDayTasks { get; set; }
+        public ObservableCollection<TaskModel> tomorrowTasks { get; set; }
+        public ObservableCollection<TaskModel> upcomingTasks { get; set; }
+        public ObservableCollection<TaskModel> somedayTasks { get; set; }
+        public ObservableCollection<TaskModel> completedTasks { get; set; }
+        public ObservableCollection<TaskModel> projectTask { get; set; }
         public ObservableCollection<BasicItemModel> basicItemModels { get; set; }
         public int projectCount { get => projectModels.Count; }
         public BasicItemModel selectedBasicItemModel { get; set; }
-        public int myDayTaskCount { get; set; }
+        public ProjectModel selectedProject { get; set; }
 
         // RelayCommand
         private RelayCommand _addProjectCommand;
@@ -155,12 +213,53 @@ namespace FocusTask.ViewModel
                     {
                         if(selectedBasicItemModel != null)
                         {
-                            if(selectedBasicItemModel.Name == "My Day")
-                                navigationService.Navigate(frame, typeof(MydayPageViewModel), myDayTaskCount);
+                            getData();
+                            if (selectedBasicItemModel.Name == "My Day")
+                                navigationService.Navigate(frame, typeof(MydayPageViewModel), myDayTasks);
+                            if(selectedBasicItemModel.Name == "Tomorrow")
+                                navigationService.Navigate(frame, typeof(TomorrowPageViewModel), tomorrowTasks);
+                            if (selectedBasicItemModel.Name == "Upcoming")
+                                navigationService.Navigate(frame, typeof(UpcomingPageViewModel), upcomingTasks);
+                            if (selectedBasicItemModel.Name == "Someday")
+                                navigationService.Navigate(frame, typeof(SomedayPageViewModel), somedayTasks);
+                            if (selectedBasicItemModel.Name == "Completed")
+                                navigationService.Navigate(frame, typeof(CompletedPageViewModel), completedTasks);
                         }
                     });
                 }
                 return _basicItemChangedCommand;
+            }
+        }
+
+        private RelayCommand<object> _itemProjectChangedCommand;
+        public RelayCommand<object> ItemProjectChangedCommand
+        {
+            get
+            {
+                if (_itemProjectChangedCommand == null)
+                {
+                    _itemProjectChangedCommand = new RelayCommand<object>((frame) =>
+                    {
+                        if (selectedProject != null)
+                        {
+                            taskModels = Database.getAllTask();
+                            projectTask = new ObservableCollection<TaskModel>();
+                            for (int i = 0; i < taskModels.Count; i++)
+                            {
+                                if (taskModels[i].id_project == selectedProject.id)
+                                    projectTask.Add(taskModels[i]);
+                            }
+                            ProjectTaskModel projectTaskModel = new ProjectTaskModel()
+                            {
+                                taskModels = projectTask,
+                                nameProject = selectedProject.name,
+                                colorProject = selectedProject.color,
+                            };
+                            navigationService.Navigate(frame, typeof(ProjectPageViewModel), projectTaskModel);
+                        }
+                    });
+                }
+                return _itemProjectChangedCommand;
             }
         }
     }
