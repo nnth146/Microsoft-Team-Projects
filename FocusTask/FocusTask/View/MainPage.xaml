@@ -97,28 +97,30 @@
                                         Grid.Row="1"
                                         Height="1"
                                         Background="{StaticResource grayColor}" />
-                                    <ListView Grid.Row="2">
-                                        <ListView.Items>
-                                            <ListViewItem>
-                                                <Grid ColumnSpacing="16">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        Text="Noti asdasdasd das dasdas das dasdasdas dasd ds dasdasdsa"
-                                                        TextWrapping="Wrap" />
-                                                    <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="12"
-                                                        FontStyle="Italic"
-                                                        Foreground="{StaticResource lightgrayColor}"
-                                                        Text="15 seconds ago" />
-                                                </Grid>
-                                            </ListViewItem>
-                                        </ListView.Items>
+                                    <ListView Grid.Row="2" ItemsSource="{Binding ReportedTasks}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ListViewItem>
+                                                    <Grid ColumnSpacing="16">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding name}"
+                                                            TextWrapping="Wrap" />
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="12"
+                                                            FontStyle="Italic"
+                                                            Foreground="{StaticResource lightgrayColor}"
+                                                            Text="{Binding remender}" />
+                                                    </Grid>
+                                                </ListViewItem>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
                                     </ListView>
                                 </Grid>
                             </Flyout>

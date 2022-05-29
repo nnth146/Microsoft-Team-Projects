@@ -262,5 +262,30 @@ namespace FocusTask.ViewModel
                 return _itemProjectChangedCommand;
             }
         }
+
+        // Notify
+        public ObservableCollection<TaskModel> ReportedTasks
+        {
+            get
+            {
+                ObservableCollection<TaskModel> tasks = new ObservableCollection<TaskModel>();
+                foreach (ProjectModel project in projectModels)
+                {
+                    ObservableCollection<TaskModel> mainTasks = Database.getTaskByWhere("id_project = " + project.id);
+                    foreach (TaskModel task in mainTasks)
+                    {
+                        if (task.remender != null)
+                        {
+                            TimeSpan time = task.remender - DateTimeOffset.Now;
+                            if (((int)time.TotalDays) > 0)
+                            {
+                                tasks.Add(task);
+                            }
+                        }
+                    }
+                }
+                return tasks;
+            }
+        }
     }
 }

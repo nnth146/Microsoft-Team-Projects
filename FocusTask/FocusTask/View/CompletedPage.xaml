@@ -49,16 +49,17 @@
                 Padding="0"
                 HorizontalAlignment="Right"
                 Background="Transparent"
-                BorderThickness="0">
+                BorderThickness="0"
+                Visibility="Collapsed">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
                         <ListView>
                             <ListView.Items>
                                 <ListViewItem>
-                                    <TextBlock Text="Soft by Project" />
+                                    <TextBlock Text="Sort by Project" />
                                 </ListViewItem>
                                 <ListViewItem>
-                                    <TextBlock Text="Soft by mission priority" />
+                                    <TextBlock Text="Sort by mission priority" />
                                 </ListViewItem>
                             </ListView.Items>
                         </ListView>
@@ -352,7 +353,7 @@
             <!--  Content  -->
             <ListView
                 Grid.Row="1"
-                Padding="16"
+                Padding="16,0,16,16"
                 IsItemClickEnabled="True"
                 ItemClick="ListView_ItemClick"
                 ItemsSource="{Binding taskModels}"

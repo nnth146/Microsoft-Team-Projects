@@ -51,16 +51,17 @@
                 Padding="0"
                 HorizontalAlignment="Right"
                 Background="Transparent"
-                BorderThickness="0">
+                BorderThickness="0"
+                Visibility="Collapsed">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
                         <ListView>
                             <ListView.Items>
                                 <ListViewItem>
-                                    <TextBlock Text="Soft by Project" />
+                                    <TextBlock Text="Sort by Project" />
                                 </ListViewItem>
                                 <ListViewItem>
-                                    <TextBlock Text="Soft by mission priority" />
+                                    <TextBlock Text="Sort by mission priority" />
                                 </ListViewItem>
                             </ListView.Items>
                         </ListView>
@@ -601,7 +602,7 @@
             </SplitView.Pane>
 
             <!--  Content  -->
-            <Grid Padding="16" RowSpacing="24">
+            <Grid Padding="16,0,16,16" RowSpacing="24">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
