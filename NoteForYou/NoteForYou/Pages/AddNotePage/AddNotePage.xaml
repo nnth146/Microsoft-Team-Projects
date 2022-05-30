@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="NoteForYou.View.AddNotePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:NoteForYou.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:interactivity="using:Microsoft.Xaml.Interactivity" xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    d:DesignHeight="900"
+    d:DesignWidth="600"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddNotePage, Source={StaticResource VML}}"
+    mc:Ignorable="d">
+
+    <Grid Padding="32" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            FontSize="18"
+            FontWeight="SemiBold"
+            Text="Add Note" />
+
+        <Grid Grid.Row="1">
+            <ComboBox
+                HorizontalAlignment="Stretch"
+                Header="Note type"
+                ItemsSource="{Binding NoteTypes}"
+                SelectedItem="{Binding SelectedNoteType, Mode=TwoWay}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding TypeSelectionChangedCommand}" CommandParameter="{x:Bind MainFrame}"/>
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Padding="4"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <icons:FluentSymbolIcon
+                                x:Name="FluentIcon"
+                                Foreground="{Binding IconColor, Converter={StaticResource StringToColorBrush}}"
+                                Symbol="{Binding Icon, Converter={StaticResource StringToFluentIcon}}" />
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+
+        <Frame Grid.Row="2" x:Name="MainFrame" Loaded="MainFrame_Loaded"/>
+        
+        
+    </Grid>
+</Page>

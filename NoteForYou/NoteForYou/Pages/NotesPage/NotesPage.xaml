@@ -1,0 +1,243 @@
+﻿<Page
+    x:Class="NoteForYou.View.NotesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:NoteForYou.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Controls.SR"
+    d:DesignHeight="900"
+    d:DesignWidth="900"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding NotesPage, Source={StaticResource VML}}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <Style x:Key="NoPaddingFlyoutStyle" TargetType="FlyoutPresenter">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+
+        <Flyout
+            x:Key="FilterNotesFlyout"
+            FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}"
+            Placement="BottomEdgeAlignedRight">
+            <StackPanel Margin="8,4,8,4">
+                <CheckBox
+                    Command="{Binding IsSelectAllCheckedCommand}"
+                    Content="Select all"
+                    IsChecked="{Binding IsSelectAllChecked, Mode=TwoWay}" />
+                <CheckBox
+                    Command="{Binding IsOtherCheckedCommand}"
+                    Content="Note"
+                    IsChecked="{Binding IsNoteChecked, Mode=TwoWay}" />
+                <CheckBox
+                    Command="{Binding IsOtherCheckedCommand}"
+                    Content="Address"
+                    IsChecked="{Binding IsAddressChecked, Mode=TwoWay}" />
+                <CheckBox
+                    Command="{Binding IsOtherCheckedCommand}"
+                    Content="Contact"
+                    IsChecked="{Binding IsContactChecked, Mode=TwoWay}" />
+                <CheckBox
+                    Command="{Binding IsOtherCheckedCommand}"
+                    Content="List"
+                    IsChecked="{Binding IsListChecked, Mode=TwoWay}" />
+            </StackPanel>
+        </Flyout>
+
+        <XamlUICommand x:Name="DeleteNoteCommand" Command="{Binding DeleteNoteCommand}" />
+        <XamlUICommand x:Name="ChosenSuggestionCommand" Command="{Binding ChosenSuggestionCommand}" />
+
+        <MenuFlyout x:Key="CommandNoteContextFlyout">
+            <MenuFlyoutItem
+                Command="{StaticResource DeleteNoteCommand}"
+                CommandParameter="{Binding}"
+                Icon="Delete"
+                Text="Delete" />
+        </MenuFlyout>
+
+        <SolidColorBrush
+            x:Key="ListViewBackgroundColorBrush"
+            Opacity="0.037"
+            Color="Black" />
+        <SolidColorBrush x:Key="ListViewForegroundColorBrush" Color="Black" />
+        <sr:ResListView
+            x:Name="ResListView"
+            BackgroundPointerOver="{StaticResource ListViewBackgroundColorBrush}"
+            BackgroundPressed="{StaticResource ListViewBackgroundColorBrush}"
+            BackgroundSelected="{StaticResource ListViewBackgroundColorBrush}"
+            BackgroundSelectedPointerOver="{StaticResource ListViewBackgroundColorBrush}"
+            BackgroundSelectedPressed="{StaticResource ListViewBackgroundColorBrush}"
+            ForegroundPointerOver="{StaticResource ListViewForegroundColorBrush}"
+            ForegroundPressed="{StaticResource ListViewForegroundColorBrush}"
+            ForegroundSelected="{StaticResource ListViewForegroundColorBrush}"
+            ForegroundSelectedPointerOver="{StaticResource ListViewForegroundColorBrush}"
+            ForegroundSelectedPressed="{StaticResource ListViewForegroundColorBrush}" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ListView
+            x:Name="ListNotes"
+            BorderBrush="LightGray"
+            BorderThickness="0,0,1,0"
+            ItemsSource="{Binding Notes}"
+            Resources="{Binding Resources, Source={StaticResource ResListView}}"
+            SelectedItem="{Binding SelectedNote, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="SelectionChanged">
+                    <core:InvokeCommandAction Command="{Binding SelectionNoteChangedCommand}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <ListView.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <AutoSuggestBox
+                        Margin="12"
+                        ItemsSource="{Binding SearchedNotes}"
+                        PlaceholderText="Search Note"
+                        Text="{Binding SearchedText, Mode=TwoWay}"
+                        UpdateTextOnSelect="False">
+                        <interactivity:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="TextChanged">
+                                <core:InvokeCommandAction Command="{Binding SearchedTextChangedCommand}" />
+                            </core:EventTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                        <AutoSuggestBox.ItemTemplate>
+                            <DataTemplate>
+                                <ListViewItem Style="{StaticResource ListViewItemExpanded}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{StaticResource ChosenSuggestionCommand}" CommandParameter="{Binding}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Grid ColumnSpacing="8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid>
+                                            <Ellipse
+                                                Width="36"
+                                                Height="36"
+                                                Fill="White"
+                                                Stroke="LightGray"
+                                                StrokeThickness="1" />
+                                            <icons:FluentSymbolIcon
+                                                HorizontalAlignment="Center"
+                                                Foreground="{Binding IconColor, Converter={StaticResource StringToColorBrush}}"
+                                                Symbol="{Binding Icon, Converter={StaticResource StringToFluentIcon}}" />
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                        </Grid>
+                                    </Grid>
+                                </ListViewItem>
+                            </DataTemplate>
+                        </AutoSuggestBox.ItemTemplate>
+                    </AutoSuggestBox>
+
+                    <Grid Grid.Row="1" Padding="12,2,12,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            DataContext="{Binding Notes}"
+                            FontSize="16"
+                            FontWeight="SemiBold">
+                            <Span>
+                                <Run Text="Notes" />
+                                <Run Text="(" />
+                                <Run Text="{Binding Count}" />
+                                <Run Text=")" />
+                            </Span>
+                        </TextBlock>
+                        <StackPanel
+                            Grid.Column="1"
+                            Padding="0"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Button
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Flyout="{StaticResource FilterNotesFlyout}">
+                                <icons:FluentSymbolIcon Symbol="TaskListAdd20" />
+                            </Button>
+                            <Button
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding AddNoteCommand}"
+                                ToolTipService.ToolTip="Add note">
+                                <icons:FluentSymbolIcon Symbol="NoteAdd20" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListViewItem
+                        Margin="2"
+                        Padding="12,4,4,4"
+                        ContextFlyout="{StaticResource CommandNoteContextFlyout}"
+                        CornerRadius="4"
+                        Style="{ThemeResource ListViewItemExpanded}">
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Ellipse
+                                    Width="36"
+                                    Height="36"
+                                    Fill="White"
+                                    Stroke="LightGray"
+                                    StrokeThickness="1" />
+                                <icons:FluentSymbolIcon
+                                    Margin="0,0,1,1"
+                                    HorizontalAlignment="Center"
+                                    Foreground="{Binding IconColor, Converter={StaticResource StringToColorBrush}}"
+                                    Symbol="{Binding Icon, Converter={StaticResource StringToFluentIcon}}" />
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock VerticalAlignment="Top" Text="{Binding Title}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    FontSize="12"
+                                    Foreground="{StaticResource Gray Brown}"
+                                    Text="{Binding CreatedOn}" />
+                            </Grid>
+                        </Grid>
+                    </ListViewItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Frame
+            x:Name="MainFrame"
+            Grid.Column="1"
+            Loaded="MainFrame_Loaded" />
+    </Grid>
+</Page>
