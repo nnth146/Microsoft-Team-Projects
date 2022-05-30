@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Edit Project"
     CornerRadius="8"
+    DataContext="{Binding Source={StaticResource VML}, Path=EditDialog}"
+    PrimaryButtonCommand="{Binding EditProject}"
     PrimaryButtonText="Save"
     SecondaryButtonText="Cancel"
     mc:Ignorable="d">
@@ -23,9 +25,10 @@
             Padding="12,8"
             BorderThickness="1"
             CornerRadius="8"
-            PlaceholderText="Mission 01" />
+            PlaceholderText="Mission 01"
+            Text="{Binding Name, Mode=TwoWay}" />
         <Grid>
-            <GridView x:Name="ContentGridView">
+            <GridView ItemsSource="{Binding colorModels}" SelectedItem="{Binding SelectedColor, Mode=TwoWay}">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
                         <Setter Property="Margin" Value="0,0,22,12" />
@@ -36,148 +39,18 @@
                         <ItemsWrapGrid MaximumRowsOrColumns="5" Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
-                <GridView.Items>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color01}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color02}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color03}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color04}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color05}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color06}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color07}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color08}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color09}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color10}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color11}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color12}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color13}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color14}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color15}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color16}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color17}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color18}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color19}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                    <GridViewItem>
-                        <Border
-                            Width="22"
-                            Height="22"
-                            Background="{StaticResource color20}"
-                            CornerRadius="4" />
-                    </GridViewItem>
-                </GridView.Items>
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <GridViewItem>
+                            <Grid
+                                Width="22"
+                                Height="22"
+                                Background="{Binding color, Converter={StaticResource StringToColorBrush}}"
+                                CornerRadius="4"
+                                Tag="{Binding color}" />
+                        </GridViewItem>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
             </GridView>
         </Grid>
     </StackPanel>

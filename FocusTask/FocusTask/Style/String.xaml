@@ -23,6 +23,12 @@
     <x:String x:Key="appleIcon">ms-appx:///Assets/Icons/apple.png</x:String>
     <x:String x:Key="microsoftIcon">ms-appx:///Assets/Icons/microsoft.png</x:String>
 
+    <!--  Priority Icon  -->
+    <x:String x:Key="noPriority">ms-appx:///Assets/Icons/no_priority.png</x:String>
+    <x:String x:Key="lowPriority">ms-appx:///Assets/Icons/low_priority.png</x:String>
+    <x:String x:Key="mediumPriority">ms-appx:///Assets/Icons/medium_priority.png</x:String>
+    <x:String x:Key="highPriority">ms-appx:///Assets/Icons/high_priority.png</x:String>
+
     <!--  String  -->
     <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
     <x:String x:Key="estimated">Estimated Time(h)</x:String>
@@ -31,4 +37,5 @@
     <x:String x:Key="hide_completed">Hide completed Missions</x:String>
     <x:String x:Key="show_completed">Completed Mission</x:String>
     <x:String x:Key="delete_project">Are you sure you want to delete this project? This action cannot be undone.</x:String>
+
 </ResourceDictionary>

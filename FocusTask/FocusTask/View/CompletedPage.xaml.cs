@@ -1,5 +1,8 @@
-﻿using System;
+﻿using FocusTask.Models;
+using FocusTask.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +28,26 @@ namespace FocusTask.View
         public CompletedPage()
         {
             this.InitializeComponent();
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = true;
+        }
+
+        private void HideSpitView(object sender, RoutedEventArgs e)
+        {
+            SplitViewTask.IsPaneOpen = false;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            CompletedPageViewModel completed = DataContext as CompletedPageViewModel;
+            ObservableCollection<TaskModel> taskModels = e.Parameter as ObservableCollection<TaskModel>;
+            if (completed != null)
+            {
+                completed.taskModels = taskModels;
+            }
         }
     }
 }

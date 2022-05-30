@@ -3,46 +3,403 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:FocusTask.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    Background="{StaticResource whiteColor}"
+    DataContext="{Binding Source={StaticResource VML}, Path=CompletedPage}"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <XamlUICommand x:Name="CompletedCommand" Command="{Binding CompletedCommand}" />
+        </ResourceDictionary>
+    </Page.Resources>
 
-    <ListView Grid.Row="1">
-        <ListView.Header>
-            <TextBlock
-                Margin="0,0,0,8"
-                Foreground="{StaticResource grayColor}"
-                Text="Completed on 17 May" />
-        </ListView.Header>
-        <ListView.Items>
-            <ListViewItem Padding="0">
+    <Grid Padding="0,16" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Margin="16,0,0,0"
+                Orientation="Horizontal"
+                Spacing="12">
+                <Image
+                    Width="20"
+                    Height="20"
+                    Source="{StaticResource completedIcon}" />
+                <TextBlock
+                    x:Name="NameProject"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="Completed" />
+            </StackPanel>
+            <Button
+                Grid.Column="1"
+                Margin="0,0,16,0"
+                Padding="0"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                BorderThickness="0"
+                Visibility="Collapsed">
+                <Button.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <ListView>
+                            <ListView.Items>
+                                <ListViewItem>
+                                    <TextBlock Text="Sort by Project" />
+                                </ListViewItem>
+                                <ListViewItem>
+                                    <TextBlock Text="Sort by mission priority" />
+                                </ListViewItem>
+                            </ListView.Items>
+                        </ListView>
+                    </Flyout>
+                </Button.Flyout>
+                <FontIcon Glyph="&#xe8cb;" />
+            </Button>
+        </Grid>
+
+        <SplitView
+            x:Name="SplitViewTask"
+            Grid.Row="1"
+            DisplayMode="Inline"
+            IsPaneOpen="False"
+            OpenPaneLength="364"
+            PanePlacement="Right">
+            <SplitView.Pane>
                 <Grid
-                    Padding="12,16"
-                    Background="{StaticResource whiteColor}"
-                    ColumnSpacing="24">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Button
-                        Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0">
-                        <Image
-                            Width="24"
-                            Height="24"
-                            Source="{StaticResource completedIcon}" />
-                    </Button>
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
-                        TextTrimming="CharacterEllipsis" />
+                    Padding="12"
+                    Background="{StaticResource paneColor}"
+                    BorderBrush="{StaticResource grayColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    RowSpacing="20">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource grayColor}" />
+                        </ResourceDictionary>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Padding="0"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Click="HideSpitView"
+                            Command="{Binding IsCompletedTaskCommand}">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="{Binding IconCheckPriority}" />
+                        </Button>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="{Binding selectedTask.name}"
+                            TextWrapping="Wrap" />
+
+                        <Button
+                            Grid.Column="2"
+                            Padding="0"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            IsEnabled="False">
+                            <FontIcon
+                                FontSize="20"
+                                Foreground="{Binding selectedPriority.color, Converter={StaticResource StringToColorBrush}}"
+                                Glyph="&#xe734;" />
+                        </Button>
+                    </Grid>
+
+                    <muxc:ProgressBar
+                        Grid.Row="1"
+                        Width="360"
+                        Value="0" />
+
+                    <Grid Grid.Row="2" RowSpacing="24">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    Width="20"
+                                    Height="20"
+                                    Source="{StaticResource clockIcon}" />
+                                <TextBlock Foreground="{StaticResource grayColor}" Text="Working Time" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource grayColor}"
+                                Text="{Binding selectedTask.workingtime}" />
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <FontIcon
+                                    FontSize="20"
+                                    Foreground="{StaticResource grayColor}"
+                                    Glyph="&#xed28;" />
+                                <TextBlock Foreground="{StaticResource grayColor}" Text="Due Date" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource grayColor}"
+                                Text="{Binding Due_Date, Converter={StaticResource DateTimeToString}}" />
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <FontIcon
+                                    FontSize="20"
+                                    Foreground="{StaticResource grayColor}"
+                                    Glyph="&#xea42;" />
+                                <TextBlock Foreground="{StaticResource grayColor}" Text="Project Name" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource grayColor}"
+                                Text="{Binding NameProject}"
+                                TextTrimming="CharacterEllipsis" />
+                        </Grid>
+
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <FontIcon
+                                    FontSize="20"
+                                    Foreground="{StaticResource grayColor}"
+                                    Glyph="&#xea8f;" />
+                                <TextBlock Foreground="{StaticResource grayColor}" Text="Reminder" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource grayColor}"
+                                Text="{Binding Reminder}" />
+                        </Grid>
+
+
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <FontIcon
+                                    FontSize="20"
+                                    Foreground="{StaticResource grayColor}"
+                                    Glyph="&#xe8ee;" />
+                                <TextBlock Foreground="{StaticResource grayColor}" Text="Repeat" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Foreground="{StaticResource grayColor}"
+                                Text="{Binding Repeat}" />
+                        </Grid>
+
+                        <muxc:ProgressBar
+                            Grid.Row="5"
+                            Width="360"
+                            Value="0" />
+
+                        <ListView
+                            Grid.Row="6"
+                            MaxHeight="120"
+                            VerticalAlignment="Top"
+                            ItemsSource="{Binding subTasks}">
+                            <ListView.Header>
+                                <TextBlock
+                                    Margin="0,0,0,8"
+                                    FontStyle="Italic"
+                                    Foreground="{StaticResource grayColor}"
+                                    Text="Subtask"
+                                    TextDecorations="Underline" />
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ListViewItem Padding="12,0">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <FontIcon
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="{StaticResource grayColor}"
+                                                Glyph="&#xe73a;" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="{StaticResource grayColor}"
+                                                Text="HAHA"
+                                                TextDecorations="{Binding completed}"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </ListViewItem>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <muxc:ProgressBar
+                            Grid.Row="7"
+                            Width="360"
+                            Value="0" />
+
+                        <StackPanel Grid.Row="8" Spacing="8">
+                            <TextBlock
+                                FontStyle="Italic"
+                                Foreground="{StaticResource grayColor}"
+                                Text="Note"
+                                TextDecorations="Underline" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{StaticResource grayColor}"
+                                MaxLines="5"
+                                Text="{Binding Note}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+                    <muxc:ProgressBar
+                        Grid.Row="3"
+                        Width="360"
+                        Value="0" />
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Padding="0"
+                            BorderThickness="0"
+                            Click="HideSpitView">
+                            <FontIcon FontSize="16" Glyph="&#xE72b;" />
+                        </Button>
+                        <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <TextBlock Foreground="{StaticResource grayColor}" Text="Create on: " />
+                            <TextBlock Foreground="{StaticResource grayColor}" Text="{Binding CreateOn}" />
+                        </StackPanel>
+                        <Button
+                            Grid.Column="2"
+                            Padding="0"
+                            HorizontalAlignment="Right"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Click="HideSpitView"
+                            Command="{Binding DeleteTaskCommand}">
+                            <FontIcon FontSize="16" Glyph="&#xe74d;" />
+                        </Button>
+                    </Grid>
                 </Grid>
-            </ListViewItem>
-        </ListView.Items>
-    </ListView>
+            </SplitView.Pane>
+
+            <!--  Content  -->
+            <ListView
+                Grid.Row="1"
+                Padding="16,0,16,16"
+                IsItemClickEnabled="True"
+                ItemClick="ListView_ItemClick"
+                ItemsSource="{Binding taskModels}"
+                SelectedItem="{Binding selectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding SelectedTaskChangeCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Margin="0,0,0,8" Padding="0">
+                            <Grid
+                                Padding="12,8"
+                                Background="{StaticResource whiteColor}"
+                                BorderBrush="{StaticResource grayColor}"
+                                BorderThickness="1"
+                                ColumnSpacing="16"
+                                CornerRadius="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="HideSpitView"
+                                    Command="{StaticResource CompletedCommand}"
+                                    CommandParameter="{Binding}">
+                                    <Image
+                                        Width="24"
+                                        Height="24"
+                                        Source="{StaticResource completedIcon}" />
+                                </Button>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding name}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </SplitView>
+    </Grid>
 </Page>
