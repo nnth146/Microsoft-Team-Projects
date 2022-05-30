@@ -1,6 +1,0 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!--Viết các đoạn chuỗi hay dùng hoặc cần thay đổi vào đây bao gồm cả url của các icon image-->
-    <x:String x:Key="Icon">ms-appx:///Assets/Icons/icon.png</x:String>
-</ResourceDictionary>
