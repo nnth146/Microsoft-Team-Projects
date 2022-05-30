@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  Fluent Colors  -->
+    <Color x:Key="Yellow Gold">#FFB900</Color>
+    <Color x:Key="Gold">#FF8C00</Color>
+    <Color x:Key="Orange Bright">#F7630C</Color>
+    <Color x:Key="Orange Dark">#CA5010</Color>
+    <Color x:Key="Rust">#DA3B01</Color>
+    <Color x:Key="Pale Rust">#EF6950</Color>
+    <Color x:Key="Brick Red">#D13438</Color>
+    <Color x:Key="Mod Red">#FF4343</Color>
+    <Color x:Key="Pale Red">#E74856</Color>
+    <Color x:Key="Red">#E81123</Color>
+    <Color x:Key="Rose Bright">#EA005E</Color>
+    <Color x:Key="Rose">#EA005E</Color>
+    <Color x:Key="Plum Light">#E3008C</Color>
+    <Color x:Key="Plum">#BF0077</Color>
+    <Color x:Key="Orchid Light">#C239B3</Color>
+    <Color x:Key="Orchid">#9A0089</Color>
+    <Color x:Key="Default Blue">#0078D7</Color>
+    <Color x:Key="Navy Blue">#0063B1</Color>
+    <Color x:Key="Purple Shadow">#8E8CD8</Color>
+    <Color x:Key="Purple ShadowDark">#6B69D6</Color>
+    <Color x:Key="Iris Pastel">#8764B8</Color>
+    <Color x:Key="Iris Spring">#744DA9</Color>
+    <Color x:Key="Violet Red Light">#B146C2</Color>
+    <Color x:Key="Violet Red">#881798</Color>
+    <Color x:Key="Cool Blue Bright">#0099BC</Color>
+    <Color x:Key="Seafoam">#00B7C3</Color>
+    <Color x:Key="SeafoamTeal">#038387</Color>
+    <Color x:Key="Mint Light">#00B294</Color>
+    <Color x:Key="Mint Dark">#018574</Color>
+    <Color x:Key="Turf Green">#00CC6A</Color>
+    <Color x:Key="Gray">#7A7574</Color>
+    <Color x:Key="Gray Brown">#5D5A58</Color>
+    <Color x:Key="Steel Blue">#68768A</Color>
+    <Color x:Key="Metal Blue">#515C6B</Color>
+    <Color x:Key="Pale Moss">#567C73</Color>
+    <Color x:Key="Moss">#486860</Color>
+    <Color x:Key="Meadow Green">#498205</Color>
+    <Color x:Key="Green">#107C10</Color>
+    <Color x:Key="Overcast">#767676</Color>
+    <Color x:Key="Storm">#4C4A48</Color>
+    <Color x:Key="Blue Gray">#69797E</Color>
+    <Color x:Key="Gray Dark">#4A5459</Color>
+    <Color x:Key="Liddy Green">#647C64</Color>
+    <Color x:Key="Sage">#525E54</Color>
+    <Color x:Key="Camouflage Desert">#847545</Color>
+    <Color x:Key="Camouflage">#7E735F</Color>
+
+    <SolidColorBrush x:Key="icon_note_color" Color="{StaticResource Gold}" />
+    <SolidColorBrush x:Key="icon_contact_color" Color="{StaticResource Default Blue}" />
+    <SolidColorBrush x:Key="icon_address_color" Color="{StaticResource Mod Red}" />
+    <SolidColorBrush x:Key="icon_list_color" Color="{StaticResource Orchid Light}" />
+    <SolidColorBrush x:Key="icon_securenote_color" Color="{StaticResource Cool Blue Bright}" />
+    <SolidColorBrush x:Key="icon_imagenote_color" Color="{StaticResource Navy Blue}" />
+</ResourceDictionary>

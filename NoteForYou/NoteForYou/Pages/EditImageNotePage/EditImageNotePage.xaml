@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="NoteForYou.View.EditImageNotePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:NoteForYou.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:icons="using:Fluent.Icons"
+    d:DesignHeight="900"
+    d:DesignWidth=" 900"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=EditImageNotePage}"
+    mc:Ignorable="d">
+
+    <Grid Padding="32" RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="SemiBold"
+                Text="Add Image" />
+
+            <Button
+                Grid.Row="1"
+                Padding="0"
+                HorizontalAlignment="Center"
+                BorderThickness="0"
+                Command="{Binding AddImageCommand}">
+                <Grid>
+                    <Image
+                        x:Name="AddedImage"
+                        Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
+                        Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibility}}" />
+                    <Image Source="ms-appx:///Assets/Images/image_add.png" Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibilityReverse}}" />
+                </Grid>
+            </Button>
+
+            <RichEditBox
+                Grid.Row="2"
+                Header="Note"
+                Tag="{Binding Title, Mode=TwoWay}"
+                Loaded="RichEditBox_Loaded"
+                TextChanged="RichEditBox_TextChanged" />
+        </Grid>
+
+        <Grid Grid.Row="1" ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                HorizontalAlignment="Stretch"
+                Command="{Binding SaveImageNoteCommand}"
+                CommandParameter="{x:Bind Frame}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <icons:FluentSymbolIcon Symbol="Save24" />
+                    <TextBlock VerticalAlignment="Center" Text="Save" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Click="GoBack_Event">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock VerticalAlignment="Center" Text="Cancel" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

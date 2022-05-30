@@ -1,0 +1,162 @@
+﻿<Page
+    x:Class="NoteForYou.View.ContactPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:NoteForYou.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="900"
+    d:DesignWidth="600"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding ContactPage, Source={StaticResource VML}}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="BorderColor"
+            Opacity="0.2"
+            Color="Black" />
+
+        <XamlUICommand x:Name="SaveEditCommand" Command="{Binding SaveEditCommand}" />
+    </Page.Resources>
+    <Grid Padding="32">
+        <Grid
+            x:Name="DropShadow"
+            CornerRadius="8"
+            Loaded="Shadow_Loaded" />
+        <Grid
+            Margin="1"
+            Background="White"
+            BorderBrush="{StaticResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                Padding="6"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                CornerRadius="0,0,12,12"
+                RowSpacing="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="0">
+                    <Grid>
+                        <Ellipse
+                            Width="36"
+                            Height="36"
+                            Fill="White"
+                            Stroke="LightGray"
+                            StrokeThickness="1" />
+                        <icons:FluentSymbolIcon
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource icon_note_color}"
+                            Symbol="{StaticResource icon_contact}" />
+                    </Grid>
+
+                    <TextBox
+                        MaxWidth="400"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        LostFocus="SaveDb_Event"
+                        Text="{Binding SelectedNote.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Padding="8"
+                RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Header="Name"
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="First Name"
+                        Text="{Binding SelectedNote.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom"
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="Middle Name"
+                        Text="{Binding SelectedNote.MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Grid.Column="2"
+                        VerticalAlignment="Bottom"
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="Last Name"
+                        Text="{Binding SelectedNote.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <TextBox
+                    Grid.Row="1"
+                    Header="Company"
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Company Name"
+                    Text="{Binding SelectedNote.Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBox
+                    Grid.Row="2"
+                    Header="Email"
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Email"
+                    Text="{Binding SelectedNote.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBox
+                    Grid.Row="3"
+                    Header="Phone"
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Phone"
+                    Text="{Binding SelectedNote.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <RichEditBox
+                    Grid.Row="4"
+                    Header="Note"
+                    Loaded="RichEditBox_Loaded"
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Description"
+                    Tag="{Binding SelectedNote.Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextChanged="RichEditBox_TextChanged" />
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                Padding="10"
+                BorderBrush="Black"
+                BorderThickness="0,1,0,0">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="BlueViolet">
+                    <Span>
+                        <Run Text="Updated on:" />
+                        <Run Text="{Binding SelectedNote.UpdatedOn}" />
+                    </Span>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

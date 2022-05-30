@@ -1,0 +1,47 @@
+﻿<ContentDialog
+    x:Class="NoteForYou.View.Dialog.EditSecureNoteDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:NoteForYou.View.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Edit Secure Note"
+    Background="White"
+    CornerRadius="4"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    PrimaryButtonText="Save"
+    DataContext="{Binding EditSecureNoteDialog, Source={StaticResource VML}}"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    SecondaryButtonText="Cancel"
+    mc:Ignorable="d">
+
+    <Grid
+        Width="360"
+        Height="460"
+        RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBox
+            Grid.Row="0"
+            Header="Title (Required)"
+            PlaceholderText="Add title" />
+        <PasswordBox
+            Grid.Row="1"
+            Header="Password"
+            PasswordRevealMode="Peek"
+            PlaceholderText="Enter password" />
+        <RichEditBox
+            Grid.Row="2"
+            Header="Secure Note"
+            PlaceholderText="Enter secure note" />
+
+        <RichEditBox
+            Grid.Row="3"
+            Header="Note"
+            PlaceholderText="Enter note" />
+    </Grid>
+</ContentDialog>
