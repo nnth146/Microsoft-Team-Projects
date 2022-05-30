@@ -15,6 +15,7 @@ namespace UWP.Core.Service
         {
             _dialogs = dialogs;
         }
+
         public async Task showAsync(Type dialogViewModelType)
         {
             var dialog = Activator.CreateInstance(Dialogs[dialogViewModelType]) as ContentDialog;
