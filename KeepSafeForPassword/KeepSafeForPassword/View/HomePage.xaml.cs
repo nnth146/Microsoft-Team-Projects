@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KeepSafeForPassword.Messenger;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,23 @@ namespace KeepSafeForPassword.View
         public HomePage()
         {
             this.InitializeComponent();
+
+            WeakReferenceMessenger.Default.Register<HomePageFrameRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(SubFrame);
+            });
+        }
+
+        private void CreateNewItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainSplitView.IsPaneOpen)
+            {
+                MainSplitView.IsPaneOpen = false;
+            }
+            else
+            {
+                MainSplitView.IsPaneOpen = true;
+            }
         }
     }
 }
