@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="5f092c98-cce9-4a18-bb3a-8b5c9110d248"
+    Name="91a9b72c-8a1a-499e-a04f-15409d26c069"
     Publisher="CN=Tuan Hung"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="5f092c98-cce9-4a18-bb3a-8b5c9110d248" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="91a9b72c-8a1a-499e-a04f-15409d26c069" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>KeepSafeForPassword</DisplayName>

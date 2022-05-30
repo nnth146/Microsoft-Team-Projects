@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace KeepSafeForPassword.Views
+namespace KeepSafeForPassword.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -25,9 +25,6 @@ namespace KeepSafeForPassword.Views
         public HomePage()
         {
             this.InitializeComponent();
-            //Image.Navigate(typeof(ImagePage));
-            //newFrame.Navigate(typeof(NewPage));
-            typeFrame.Navigate(typeof(AddDatabasePage));
         }
     }
 }
