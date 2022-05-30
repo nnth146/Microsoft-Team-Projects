@@ -11,14 +11,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="1200"
-    DataContext="{Binding MainPage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding Source={StaticResource VML}, Path=MainPage}"
+    DataContext="{Binding MainPage, Source={StaticResource VML}}"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <XamlUICommand x:Name="NavViewSelectionChangedCommand" Command="{Binding NavViewSelectionChangedCommand}" />
-    </Page.Resources>
 
     <controls:NavigationView
         x:Name="NavView"

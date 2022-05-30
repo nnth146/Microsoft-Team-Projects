@@ -9,4 +9,6 @@
     <converter:BooleanToVisibilityReverse x:Key="BooleanToVisibilityReverse" />
     <converter:NullToVisibility x:Key="NullToVisibility" />
     <converter:NullToVisibilityReverse x:Key="NullToVisibilityReverse" />
+    <converter:ByteToBitmapImageConverter x:Key="ByteToBitmapImageConverter" />
+    <converter:StringToFluentIcon x:Key="StringToFluentIcon"/>
 </ResourceDictionary>

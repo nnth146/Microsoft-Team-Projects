@@ -177,8 +177,13 @@
       <DependentUpon>AddImageNotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AddSecureNoteDialogViewModel.cs" />
+    <Compile Include="Pages\EditImageNotePage\EditImageNotePageViewModel.cs" />
     <Compile Include="ViewModel\EditSecureNoteDialogViewModel.cs" />
     <Compile Include="ViewModel\ShowSecureNoteDialogViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\BlankPage.xaml.cs">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dialog\AddSecureNoteDialog.xaml.cs">
       <DependentUpon>AddSecureNoteDialog.xaml</DependentUpon>
     </Compile>
@@ -187,6 +192,9 @@
     </Compile>
     <Compile Include="View\Dialog\ShowSecureNoteDialog.xaml.cs">
       <DependentUpon>ShowSecureNoteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditImageNotePage\EditImageNotePage.xaml.cs">
+      <DependentUpon>EditImageNotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -236,6 +244,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\NoteForYou.Messenger\NoteForYou.Messenger.csproj">
+      <Project>{5D7BD521-8724-45F0-9B06-B1E560D58686}</Project>
+      <Name>NoteForYou.Messenger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NoteForYou.Model\NoteForYou.Model.csproj">
       <Project>{10d164f0-a35a-46da-8de5-aa5f541058c0}</Project>
       <Name>NoteForYou.Model</Name>
@@ -306,6 +318,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BlankPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Dialog\AddSecureNoteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -315,6 +331,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Dialog\ShowSecureNoteDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EditImageNotePage\EditImageNotePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

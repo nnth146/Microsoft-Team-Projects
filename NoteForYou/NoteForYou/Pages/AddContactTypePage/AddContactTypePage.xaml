@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="600"
-    DataContext="{Binding AddContactTypePage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddContactTypePage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Grid>
@@ -28,7 +28,8 @@
             <TextBox
                 Grid.Row="0"
                 Header="Title (Required)"
-                PlaceholderText="Enter Title" />
+                PlaceholderText="Enter Title"
+                Text="{Binding Title, Mode=TwoWay}"/>
 
             <Grid Grid.Row="1" ColumnSpacing="16">
                 <Grid.ColumnDefinitions>
@@ -36,36 +37,46 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBox Header="Name" PlaceholderText="First Name" />
+                <TextBox
+                    Header="Name"
+                    PlaceholderText="First Name"
+                    Text="{Binding FirstName, Mode=TwoWay}" />
                 <TextBox
                     Grid.Column="1"
                     VerticalAlignment="Bottom"
-                    PlaceholderText="Middle Name" />
+                    PlaceholderText="Middle Name"
+                    Text="{Binding MiddleName, Mode=TwoWay}" />
                 <TextBox
                     Grid.Column="2"
                     VerticalAlignment="Bottom"
-                    PlaceholderText="Last Name" />
+                    PlaceholderText="Last Name"
+                    Text="{Binding LastName, Mode=TwoWay}" />
             </Grid>
 
             <TextBox
                 Grid.Row="2"
                 Header="Company"
-                PlaceholderText="Company Name" />
+                PlaceholderText="Company Name"
+                Text="{Binding Company, Mode=TwoWay}" />
 
             <TextBox
                 Grid.Row="3"
                 Header="Email"
-                PlaceholderText="Enter Email" />
+                PlaceholderText="Enter Email"
+                Text="{Binding Email, Mode=TwoWay}" />
 
             <TextBox
                 Grid.Row="4"
                 Header="Phone"
-                PlaceholderText="Enter Phone" />
+                PlaceholderText="Enter Phone"
+                Text="{Binding Phone, Mode=TwoWay}" />
 
             <RichEditBox
                 Grid.Row="5"
                 Header="Note"
-                PlaceholderText="Description" />
+                PlaceholderText="Description"
+                Tag="{Binding Note, Mode=TwoWay}"
+                TextChanged="RichEditBox_TextChanged" />
         </Grid>
 
         <Grid
@@ -79,11 +90,13 @@
             <Button
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Mint Light}"
+                Command="{Binding SaveNoteCommand}"
                 Content="Save" />
 
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
+                Command="{Binding CancelCommand}"
                 Content="Cancel" />
         </Grid>
     </Grid>

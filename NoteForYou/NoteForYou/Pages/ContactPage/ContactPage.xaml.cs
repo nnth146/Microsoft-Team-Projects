@@ -47,5 +47,25 @@ namespace NoteForYou.View
             visual.Shadow = shadow;
             ElementCompositionPreview.SetElementChildVisual(grid, visual);
         }
+
+        private void SaveDb_Event(object sender, RoutedEventArgs e)
+        {
+            SaveEditCommand.Command.Execute(null);
+        }
+
+        private void RichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            RichEditBox richEditBox = sender as RichEditBox;
+            string value;
+            richEditBox.Document.GetText(Windows.UI.Text.TextGetOptions.UseObjectText, out value);
+            richEditBox.Tag = value;
+        }
+
+        private void RichEditBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RichEditBox richEditBox = sender as RichEditBox;
+            string value = richEditBox.Tag as string;
+            richEditBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, value);
+        }
     }
 }

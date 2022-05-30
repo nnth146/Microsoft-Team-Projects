@@ -27,5 +27,6 @@ namespace NoteForYou.VML
         public AddSecureNoteDialogViewModel AddSecureNoteDialog => Ioc.Default.GetService<AddSecureNoteDialogViewModel>();
         public EditSecureNoteDialogViewModel EditSecureNoteDialog => Ioc.Default.GetService<EditSecureNoteDialogViewModel>();
         public ShowSecureNoteDialogViewModel ShowSecureNoteDialog => Ioc.Default.GetService<ShowSecureNoteDialogViewModel>();
+        public EditImageNotePageViewModel EditImageNotePage => Ioc.Default.GetService<EditImageNotePageViewModel>();
     }
 }

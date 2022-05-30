@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="600"
-    DataContext="{Binding AddNoteTypePage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddNoteTypePage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Grid>
@@ -21,12 +21,18 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Header="Title (Required)" PlaceholderText="Enter Title" />
+            <TextBox
+                Header="Title (Required)"
+                PlaceholderText="Enter Title"
+                Text="{Binding Title, Mode=TwoWay}" />
 
             <RichEditBox
+                x:Name="NoteField"
                 Grid.Row="1"
                 Header="Note"
-                PlaceholderText="Description" />
+                PlaceholderText="Description"
+                Tag="{Binding Note, Mode=TwoWay}"
+                TextChanged="NoteField_TextChanged" />
         </Grid>
 
         <Grid
@@ -40,11 +46,13 @@
             <Button
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Mint Light}"
+                Command="{Binding SaveNoteCommand}"
                 Content="Save" />
 
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
+                Command="{Binding CancelCommand}"
                 Content="Cancel" />
         </Grid>
     </Grid>

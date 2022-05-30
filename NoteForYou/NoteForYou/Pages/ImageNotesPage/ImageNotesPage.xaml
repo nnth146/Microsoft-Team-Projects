@@ -8,14 +8,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="900"
-    DataContext="{Binding ImageNotesPage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding ImageNotesPage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Page.Resources>
+        <XamlUICommand x:Name="RemoveImageNoteCommand" Command="{Binding RemoveImageNoteCommand}" />
+
         <MenuFlyout x:Name="ImageNoteFlyoutContext">
-            <MenuFlyoutItem Icon="Delete" Text="Delete" />
-            <MenuFlyoutItem Icon="Edit" Text="Edit" />
+            <MenuFlyoutItem
+                Command="{StaticResource RemoveImageNoteCommand}"
+                CommandParameter="{Binding}"
+                Icon="Delete"
+                Text="Delete" />
         </MenuFlyout>
     </Page.Resources>
 
@@ -33,22 +38,22 @@
             </Grid.ColumnDefinitions>
             <TextBlock
                 VerticalAlignment="Center"
+                DataContext="{Binding ImageNotes}"
                 FontSize="18"
                 FontWeight="SemiBold">
                 <Span>
                     <Run Text="Image Notes" />
-                    <Run Text="(10)" />
+                    <Run Text="(" />
+                    <Run Text="{Binding Count}" />
+                    <Run Text=")" />
                 </Span>
             </TextBlock>
-
-            <AutoSuggestBox
-                Grid.Column="1"
-                MaxWidth="260"
-                PlaceholderText="Search image note" />
 
             <Button
                 Grid.Column="2"
                 HorizontalAlignment="Right"
+                Command="{Binding AddImageNoteCommand}"
+                CommandParameter="{x:Bind Frame}"
                 ToolTipService.ToolTip="Add image note">
                 <icons:FluentSymbolIcon Symbol="ImageAdd24" />
             </Button>
@@ -58,44 +63,49 @@
             Grid.Row="2"
             Margin="32,32,0,0"
             IsItemClickEnabled="True"
+            ItemsSource="{Binding ImageNotes}"
             SelectionMode="None">
-            <GridView.Items>
-                <GridViewItem
-                    MaxWidth="300"
-                    MaxHeight="300"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Stretch"
-                    ContextFlyout="{StaticResource ImageNoteFlyoutContext}"
-                    CornerRadius="8"
-                    Style="{StaticResource GridViewItemExpanded}">
-                    <Grid
-                        Padding="4"
-                        Background="White"
-                        RowSpacing="8">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-                        
-                        <Image VerticalAlignment="Center" Source="ms-appx:///Assets/Images/image_test.jpg" />
-
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <GridViewItem
+                        MaxWidth="300"
+                        MaxHeight="300"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        ContextFlyout="{StaticResource ImageNoteFlyoutContext}"
+                        CornerRadius="8"
+                        Style="{StaticResource GridViewItemExpanded}">
                         <Grid
-                            Grid.Row="1"
-                            Padding="2"
-                            BorderBrush="LightGray"
-                            BorderThickness="0,1,0,0">
-                            <TextBlock
-                                Margin="4,0,4,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                MaxLines="2"
-                                Text="Note"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
+                            Padding="4"
+                            Background="White"
+                            RowSpacing="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <Image VerticalAlignment="Center" Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}" />
+
+                            <Grid
+                                Grid.Row="1"
+                                Padding="2"
+                                BorderBrush="LightGray"
+                                BorderThickness="0,1,0,0">
+                                <TextBlock
+                                    Margin="4,0,4,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    MaxLines="2"
+                                    Text="{Binding Title}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </GridViewItem>
-            </GridView.Items>
+                    </GridViewItem>
+                </DataTemplate>
+            </GridView.ItemTemplate>
         </GridView>
     </Grid>
 </Page>

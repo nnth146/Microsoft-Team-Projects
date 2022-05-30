@@ -34,6 +34,7 @@ namespace Uwp.Core.Helper
 
             for (int i = 0; i < typeViewModelList.Length; i++)
             {
+                if (typeViewModelList[i].Name == "ViewModelBase") continue;
                 services.AddTransient(typeViewModelList[i]);
             }
 

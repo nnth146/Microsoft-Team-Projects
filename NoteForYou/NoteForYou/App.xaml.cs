@@ -1,4 +1,6 @@
-﻿using NoteForYou.View;
+﻿using Microsoft.EntityFrameworkCore;
+using NoteForYou.Model;
+using NoteForYou.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +11,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,6 +35,11 @@ namespace NoteForYou
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (var db = new DataContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

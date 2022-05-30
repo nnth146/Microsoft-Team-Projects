@@ -58,12 +58,6 @@ namespace NoteForYou.View
                 Text = "Image Notes",
                 Page = typeof(ImageNotesPage),
             });
-            NavItems.Add(new NavItem
-            {
-                Icon = new FluentIconElement(FluentSymbol.Shield20),
-                Text = "Secure Notes",
-                Page = typeof(SecureNotesPage),
-            });
         }
 
         private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NoteForYou.Messenger;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,31 @@ namespace NoteForYou.View
         public AddNotePage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            WeakReferenceMessenger.Default.Register<AddNotePageGoBackBeHavior>(this, (r, m) =>
+            {
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                }
+            });
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            WeakReferenceMessenger.Default.UnregisterAll(DataContext);
+        }
+
+        private void MainFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(AddNoteTypePage));
         }
     }
 }

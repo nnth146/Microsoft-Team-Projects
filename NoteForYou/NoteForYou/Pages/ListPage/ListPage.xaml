@@ -2,15 +2,17 @@
     x:Class="NoteForYou.View.ListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:icons="using:Fluent.Icons"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:NoteForYou.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sr="using:Uwp.Controls.SR"
     d:DesignHeight="900"
     d:DesignWidth="600"
-    DataContext="{Binding ListPage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding ListPage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -34,6 +36,10 @@
             ForegroundSelected="{StaticResource ListViewForegroundColorBrush}"
             ForegroundSelectedPointerOver="{StaticResource ListViewForegroundColorBrush}"
             ForegroundSelectedPressed="{StaticResource ListViewForegroundColorBrush}" />
+
+        <XamlUICommand x:Name="DeleteSubNoteCommand" Command="{Binding DeleteSubNoteCommand}" />
+        <XamlUICommand x:Name="AddSubNoteCommand" Command="{Binding AddSubNoteCommand}" />
+        <XamlUICommand x:Name="SaveEditCommand" Command="{Binding SaveEditCommand}" />
     </Page.Resources>
     <Grid Padding="32">
         <Grid
@@ -74,8 +80,8 @@
                             StrokeThickness="1" />
                         <icons:FluentSymbolIcon
                             HorizontalAlignment="Center"
-                            Foreground="{StaticResource icon_address_color}"
-                            Symbol="{StaticResource icon_address}" />
+                            Foreground="{StaticResource icon_list_color}"
+                            Symbol="{StaticResource icon_listnote}" />
                     </Grid>
 
                     <TextBox
@@ -85,58 +91,83 @@
                         BorderThickness="0"
                         FontSize="18"
                         FontWeight="SemiBold"
-                        IsReadOnly="True"
-                        Text="Name of note" />
+                        LostFocus="SaveDb_Event"
+                        Text="{Binding SelectedNote.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Row="1" Padding="8">
-                <ListView SelectionMode="None">
+                <ListView ItemsSource="{Binding SelectedNote.SubNotes}" SelectionMode="None">
                     <ListView.Header>
-                        <TextBlock FontSize="16" FontWeight="SemiBold">
+                        <TextBlock
+                            DataContext="{Binding SelectedNote.SubNotes}"
+                            FontSize="16"
+                            FontWeight="SemiBold">
                             <Span>
                                 <Run Text="List Note" />
-                                <Run Text="(1)" />
+                                <Run Text="(" />
+                                <Run Text="{Binding Count}" />
+                                <Run Text=")" />
                             </Span>
                         </TextBlock>
                     </ListView.Header>
 
-                    <ListView.Items>
-                        <ListViewItem
-                            Margin="0,2,0,2"
-                            VerticalContentAlignment="Stretch"
-                            Style="{ThemeResource ListViewItemExpanded}">
-                            <Grid ColumnSpacing="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10*" />
-                                    <ColumnDefinition Width="37*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,0,12,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch">
-                                    <TextBox
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem
+                                Margin="0,2,0,2"
+                                VerticalContentAlignment="Stretch"
+                                Style="{ThemeResource ListViewItemExpanded}">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*" />
+                                        <ColumnDefinition Width="37*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,0,12,0"
                                         HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        Checked="SaveDb_Event"
+                                        IsChecked="{Binding IsChecked, Mode=TwoWay}">
+                                        <TextBox
+                                            HorizontalAlignment="Stretch"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            PlaceholderText="Enter note"
+                                            Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </CheckBox>
+                                    <Button
+                                        Grid.Column="2"
+                                        Margin="-8,0,0,0"
+                                        Padding="2"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        PlaceholderText="Enter note" />
-                                </CheckBox>
-                                <Button
-                                    Grid.Column="2"
-                                    Margin="-8,0,0,0"
-                                    Padding="2"
-                                    Background="Transparent"
-                                    BorderThickness="0">
-                                    <icons:FluentSymbolIcon Symbol="Delete20" />
-                                </Button>
-                            </Grid>
-                        </ListViewItem>
-                    </ListView.Items>
+                                        Command="{StaticResource DeleteSubNoteCommand}"
+                                        CommandParameter="{Binding}">
+                                        <icons:FluentSymbolIcon Symbol="Delete20" />
+                                    </Button>
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
                     <ListView.Footer>
-                        <TextBox Margin="0,4,0,0" PlaceholderText="Enter note then press enter to add note" />
+                        <TextBox
+                            Margin="0,4,0,0"
+                            PlaceholderText="Enter note then press enter to add note"
+                            Text="{Binding TitleSubNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Enter">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Invoked">
+                                            <core:InvokeCommandAction Command="{StaticResource AddSubNoteCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </KeyboardAccelerator>
+                            </TextBox.KeyboardAccelerators>
+                        </TextBox>
                     </ListView.Footer>
                 </ListView>
             </Grid>
@@ -149,10 +180,11 @@
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    DataContext="{Binding SelectedNote}"
                     Foreground="BlueViolet">
                     <Span>
                         <Run Text="Updated on:" />
-                        <Run Text="12/02/2022" />
+                        <Run Text="{Binding UpdatedOn}" />
                     </Span>
                 </TextBlock>
             </Grid>

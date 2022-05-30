@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth=" 900"
-    DataContext="{Binding AddImageNotePage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddImageNotePage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Grid Padding="32" RowSpacing="8">
@@ -34,11 +34,22 @@
                 Grid.Row="1"
                 Padding="0"
                 HorizontalAlignment="Center"
-                BorderThickness="0">
-                <Image x:Name="AddedImage" Source="ms-appx:///Assets/Images/image_add.png" />
+                BorderThickness="0"
+                Command="{Binding AddImageCommand}">
+                <Grid>
+                    <Image
+                        x:Name="AddedImage"
+                        Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
+                        Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibility}}" />
+                    <Image Source="ms-appx:///Assets/Images/image_add.png" Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibilityReverse}}" />
+                </Grid>
             </Button>
 
-            <RichEditBox Grid.Row="2" Header="Note" />
+            <RichEditBox
+                Grid.Row="2"
+                Header="Note"
+                Tag="{Binding Title, Mode=TwoWay}"
+                TextChanged="RichEditBox_TextChanged" />
         </Grid>
 
         <Grid Grid.Row="1" ColumnSpacing="8">
@@ -46,14 +57,20 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button HorizontalAlignment="Stretch">
+            <Button
+                HorizontalAlignment="Stretch"
+                Command="{Binding AddImageNoteCommand}"
+                CommandParameter="{x:Bind Frame}">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <icons:FluentSymbolIcon Symbol="ImageAdd24" />
                     <TextBlock VerticalAlignment="Center" Text="Add" />
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="1" HorizontalAlignment="Stretch">
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Click="GoBack_Event">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <TextBlock VerticalAlignment="Center" Text="Cancel" />
                 </StackPanel>

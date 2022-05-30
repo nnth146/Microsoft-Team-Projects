@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NoteForYou.Messenger;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,9 +29,27 @@ namespace NoteForYou.View
             this.InitializeComponent();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            WeakReferenceMessenger.Default.Register<FrameNavigatedRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(MainFrame);
+            });
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            WeakReferenceMessenger.Default.UnregisterAll(DataContext);
+        }
+
         private void MainFrame_Loaded(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(typeof(ContactPage));
+            MainFrame.Navigate(typeof(BlankPage));
         }
     }
 }

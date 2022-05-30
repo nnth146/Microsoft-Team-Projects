@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -46,6 +47,12 @@ namespace NoteForYou.View
 
             visual.Shadow = shadow;
             ElementCompositionPreview.SetElementChildVisual(grid, visual);
+        }
+
+        private void SaveDb_Event(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Saved");
+            SaveEditCommand.Command.Execute(null);
         }
     }
 }

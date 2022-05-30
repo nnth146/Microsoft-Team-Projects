@@ -47,5 +47,10 @@ namespace NoteForYou.View
             visual.Shadow = shadow;
             ElementCompositionPreview.SetElementChildVisual(grid, visual);
         }
+
+        private void SaveDb_Event(object sender, RoutedEventArgs e)
+        {
+            SaveEditCommand.Command.Execute(null);
+        }
     }
 }

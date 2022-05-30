@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -46,6 +47,25 @@ namespace NoteForYou.View
 
             visual.Shadow = shadow;
             ElementCompositionPreview.SetElementChildVisual(grid, visual);
+        }
+
+        private void RichEditBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RichEditBox richEditBox = sender as RichEditBox;
+            richEditBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, richEditBox.Tag as string ?? "");
+        }
+
+        private void RichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            RichEditBox richEditBox = sender as RichEditBox;
+            string value;
+            richEditBox.Document.GetText(Windows.UI.Text.TextGetOptions.UseObjectText, out value);
+            richEditBox.Tag = value;
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SaveEditCommand.Command.Execute(null);
         }
     }
 }

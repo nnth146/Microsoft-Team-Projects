@@ -26,5 +26,13 @@ namespace NoteForYou.View
         {
             this.InitializeComponent();
         }
+
+        private void RichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            RichEditBox richEditBox = sender as RichEditBox;
+            string value;
+            richEditBox.Document.GetText(Windows.UI.Text.TextGetOptions.UseObjectText, out value);
+            richEditBox.Tag = value;
+        }
     }
 }

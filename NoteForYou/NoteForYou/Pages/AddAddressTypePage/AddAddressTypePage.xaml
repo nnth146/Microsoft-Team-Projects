@@ -52,42 +52,50 @@
                 <TextBox
                     Grid.Row="0"
                     Header="Title (Required)"
-                    PlaceholderText="Enter Title" />
+                    PlaceholderText="Enter Title" 
+                    Text="{Binding Title, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="1"
                     Header="Street Address Line 1"
-                    PlaceholderText="Enter Address" />
+                    PlaceholderText="Enter Address" 
+                    Text="{Binding StreetAddressLine1, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="2"
                     Header="Street Address Line 2"
-                    PlaceholderText="Enter Address" />
+                    PlaceholderText="Enter Address"
+                    Text="{Binding StreetAddressLine2, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="3"
                     Header="City"
-                    PlaceholderText="Enter City Name" />
+                    PlaceholderText="Enter City Name" 
+                    Text="{Binding City, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="4"
                     Header="Phone"
-                    PlaceholderText="Enter Phone" />
+                    PlaceholderText="Enter Phone" 
+                    Text="{Binding Phone, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="5"
                     Header="State/Province"
-                    PlaceholderText="Enter State/Province" />
+                    PlaceholderText="Enter State/Province" 
+                    Text="{Binding StateProvince, Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="6"
                     Header="Zip/Postal Code"
-                    PlaceholderText="Enter Zip/Postal Code" />
+                    PlaceholderText="Enter Zip/Postal Code" 
+                    Text="{Binding ZipPostalCode,Mode=TwoWay}"/>
 
                 <TextBox
                     Grid.Row="7"
                     Header="Country"
-                    PlaceholderText="Enter Country Name" />
+                    PlaceholderText="Enter Country Name"
+                    Text="{Binding Country, Mode=TwoWay}"/>
             </Grid>
         </Grid>
 
@@ -102,12 +110,14 @@
             <Button
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Mint Light}"
-                Content="Save" />
+                Content="Save" 
+                Command="{Binding SaveNoteCommand}"/>
 
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
-                Content="Cancel" />
+                Content="Cancel" 
+                Command="{Binding CancelCommand}"/>
         </Grid>
     </Grid>
 </Page>

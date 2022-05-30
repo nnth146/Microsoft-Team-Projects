@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="600"
-    DataContext="{Binding AddressPage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding AddressPage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -17,6 +17,8 @@
             x:Key="BorderColor"
             Opacity="0.2"
             Color="Black" />
+
+        <XamlUICommand x:Name="SaveEditCommand" Command="{Binding SaveEditCommand}" />
     </Page.Resources>
     <Grid Padding="32">
         <Grid
@@ -69,7 +71,8 @@
                         FontSize="18"
                         FontWeight="SemiBold"
                         IsReadOnly="True"
-                        Text="Name of note" />
+                        LostFocus="SaveDb_Event"
+                        Text="{Binding SelectedNote.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </Grid>
 
@@ -89,37 +92,50 @@
                 <TextBox
                     Grid.Row="0"
                     Header="Street Address Line 1"
-                    PlaceholderText="Enter Address" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Address"
+                    Text="{Binding SelectedNote.StreetAddressLine1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="1"
                     Header="Street Address Line 2"
-                    PlaceholderText="Enter Address" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Address"
+                    Text="{Binding SelectedNote.StreetAddressLine2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="2"
                     Header="City"
-                    PlaceholderText="Enter City Name" />
+                    PlaceholderText="Enter City Name"
+                    Text="{Binding SelectedNote.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="3"
                     Header="Phone"
-                    PlaceholderText="Enter Phone" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Phone"
+                    Text="{Binding SelectedNote.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="4"
                     Header="State/Province"
-                    PlaceholderText="Enter State/Province" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter State/Province"
+                    Text="{Binding SelectedNote.StateProvince, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="5"
                     Header="Zip/Postal Code"
-                    PlaceholderText="Enter Zip/Postal Code" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Zip/Postal Code"
+                    Text="{Binding SelectedNote.ZipPostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="6"
                     Header="Country"
-                    PlaceholderText="Enter Country Name" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Country Name"
+                    Text="{Binding SelectedNote.Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
             <Grid
@@ -133,7 +149,7 @@
                     Foreground="BlueViolet">
                     <Span>
                         <Run Text="Updated on:" />
-                        <Run Text="12/02/2022" />
+                        <Run Text="{Binding SelectedNote.UpdatedOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Span>
                 </TextBlock>
             </Grid>

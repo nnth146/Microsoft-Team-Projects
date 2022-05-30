@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="600"
-    DataContext="{Binding ContactPage, Source={StaticResource VML}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding ContactPage, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -17,6 +17,8 @@
             x:Key="BorderColor"
             Opacity="0.2"
             Color="Black" />
+
+        <XamlUICommand x:Name="SaveEditCommand" Command="{Binding SaveEditCommand}" />
     </Page.Resources>
     <Grid Padding="32">
         <Grid
@@ -68,8 +70,8 @@
                         BorderThickness="0"
                         FontSize="18"
                         FontWeight="SemiBold"
-                        IsReadOnly="True"
-                        Text="Name of note" />
+                        LostFocus="SaveDb_Event"
+                        Text="{Binding SelectedNote.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </Grid>
 
@@ -90,36 +92,54 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBox Header="Name" PlaceholderText="First Name" />
+                    <TextBox
+                        Header="Name"
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="First Name"
+                        Text="{Binding SelectedNote.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Column="1"
                         VerticalAlignment="Bottom"
-                        PlaceholderText="Middle Name" />
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="Middle Name"
+                        Text="{Binding SelectedNote.MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Column="2"
                         VerticalAlignment="Bottom"
-                        PlaceholderText="Last Name" />
+                        LostFocus="SaveDb_Event"
+                        PlaceholderText="Last Name"
+                        Text="{Binding SelectedNote.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
                 <TextBox
                     Grid.Row="1"
                     Header="Company"
-                    PlaceholderText="Company Name" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Company Name"
+                    Text="{Binding SelectedNote.Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="2"
                     Header="Email"
-                    PlaceholderText="Enter Email" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Email"
+                    Text="{Binding SelectedNote.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox
                     Grid.Row="3"
                     Header="Phone"
-                    PlaceholderText="Enter Phone" />
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Enter Phone"
+                    Text="{Binding SelectedNote.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <RichEditBox
                     Grid.Row="4"
                     Header="Note"
-                    PlaceholderText="Description" />
+                    Loaded="RichEditBox_Loaded"
+                    LostFocus="SaveDb_Event"
+                    PlaceholderText="Description"
+                    Tag="{Binding SelectedNote.Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextChanged="RichEditBox_TextChanged" />
             </Grid>
 
             <Grid
@@ -133,7 +153,7 @@
                     Foreground="BlueViolet">
                     <Span>
                         <Run Text="Updated on:" />
-                        <Run Text="12/02/2022" />
+                        <Run Text="{Binding SelectedNote.UpdatedOn}" />
                     </Span>
                 </TextBlock>
             </Grid>
