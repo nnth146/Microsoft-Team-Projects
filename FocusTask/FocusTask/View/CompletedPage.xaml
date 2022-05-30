@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="FocusTask.View.CompletedPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FocusTask.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+
+    <ListView Grid.Row="1">
+        <ListView.Header>
+            <TextBlock
+                Margin="0,0,0,8"
+                Foreground="{StaticResource grayColor}"
+                Text="Completed on 17 May" />
+        </ListView.Header>
+        <ListView.Items>
+            <ListViewItem Padding="0">
+                <Grid
+                    Padding="12,16"
+                    Background="{StaticResource whiteColor}"
+                    ColumnSpacing="24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Padding="0"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Image
+                            Width="24"
+                            Height="24"
+                            Source="{StaticResource completedIcon}" />
+                    </Button>
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001 Missuion 001Missuion 001Missuion 001 Missuion 001 Missuion 001 Missuion 001 "
+                        TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </ListViewItem>
+        </ListView.Items>
+    </ListView>
+</Page>

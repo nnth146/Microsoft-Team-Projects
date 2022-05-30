@@ -20,11 +20,23 @@ namespace FocusTask.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class TomorrowPage : Page
     {
-        public MainPage()
+        public TomorrowPage()
         {
             this.InitializeComponent();
+        }
+
+        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            List<string> list = new List<string>();
+            for (int i = 0; i <= 9999; i++)
+            {
+                list.Add(i.ToString());
+            }
+            comboBox.ItemsSource = list;
+            comboBox.SelectedIndex = 10;
         }
     }
 }

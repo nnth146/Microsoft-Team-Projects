@@ -1,6 +1,34 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!--Viết các đoạn chuỗi hay dùng hoặc cần thay đổi vào đây bao gồm cả url của các icon image-->
-    <x:String x:Key="Icon">ms-appx:///Assets/Icons/icon.png</x:String>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  icon  -->
+    <x:String x:Key="mydayIcon">ms-appx:///Assets/Icons/myday.png</x:String>
+    <x:String x:Key="completedIcon">ms-appx:///Assets/Icons/completed.png</x:String>
+    <x:String x:Key="checkIcon">ms-appx:///Assets/Icons/check.png</x:String>
+    <x:String x:Key="premiumIcon">ms-appx:///Assets/Icons/premium.png</x:String>
+    <x:String x:Key="somedayIcon">ms-appx:///Assets/Icons/someday.png</x:String>
+    <x:String x:Key="tomorrowIcon">ms-appx:///Assets/Icons/tomorrow.png</x:String>
+    <x:String x:Key="sortIcon">ms-appx:///Assets/Icons/sort.png</x:String>
+    <x:String x:Key="upcommingIcon">ms-appx:///Assets/Icons/upcoming.png</x:String>
+    <x:String x:Key="clockIcon">ms-appx:///Assets/Icons/clock.png</x:String>
+    <x:String x:Key="timeIcon">ms-appx:///Assets/Icons/time.png</x:String>
+    <x:String x:Key="airplayIcon">ms-appx:///Assets/Icons/airplay.png</x:String>
+    <x:String x:Key="pauseIcon">ms-appx:///Assets/Icons/pause.png</x:String>
+    <x:String x:Key="stopIcon">ms-appx:///Assets/Icons/stop.png</x:String>
+    <x:String x:Key="shopPrimeumIcon">ms-appx:///Assets/Icons/shop_primeum.png</x:String>
+    <x:String x:Key="shopPrimeumSelectedIcon">ms-appx:///Assets/Icons/shop_primeum_selected.png</x:String>
+    <x:String x:Key="aboutIcon">ms-appx:///Assets/Icons/about.png</x:String>
+    <x:String x:Key="aboutSelectedIcon">ms-appx:///Assets/Icons/about_selected.png</x:String>
+    <x:String x:Key="checkPrimeumIcon">ms-appx:///Assets/Icons/check_primeum.png</x:String>
+    <x:String x:Key="bellIcon">ms-appx:///Assets/Icons/bell.png</x:String>
+    <x:String x:Key="androidIcon">ms-appx:///Assets/Icons/android.png</x:String>
+    <x:String x:Key="appleIcon">ms-appx:///Assets/Icons/apple.png</x:String>
+    <x:String x:Key="microsoftIcon">ms-appx:///Assets/Icons/microsoft.png</x:String>
+
+    <!--  String  -->
+    <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
+    <x:String x:Key="estimated">Estimated Time(h)</x:String>
+    <x:String x:Key="mission">Mission to be Completed</x:String>
+    <x:String x:Key="completed">Completed Mission</x:String>
+    <x:String x:Key="hide_completed">Hide completed Missions</x:String>
+    <x:String x:Key="show_completed">Completed Mission</x:String>
+    <x:String x:Key="delete_project">Are you sure you want to delete this project? This action cannot be undone.</x:String>
 </ResourceDictionary>
