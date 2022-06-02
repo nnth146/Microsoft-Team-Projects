@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KeepSafeForPassword.Model\KeepSafeForPassword.Model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -14,32 +14,37 @@ namespace KeepSafeForPassword.Model
             new PasswordType
             {
                 Title = "Password",
-                Icon = "ms-appx:///Assets/Icons/lock.png"
+                Icon = "ms-appx:///Assets/Icons/icon_password.png"
             },
             new PasswordType
             {
                 Title = "Contact",
-                Icon = "ms-appx:///Assets/Icons/user.png"
+                Icon = "ms-appx:///Assets/Icons/icon_contact.png"
             },
             new PasswordType
             {
                 Title = "Address",
-                Icon = "ms-appx:///Assets/Icons/map-pin.png"
+                Icon = "ms-appx:///Assets/Icons/icon_address.png"
             },
             new PasswordType
             {
                 Title = "Database",
-                Icon = "ms-appx:///Assets/Icons/database.png"
+                Icon = "ms-appx:///Assets/Icons/icon_database.png"
             },
             new PasswordType
             {
-                Title = "Sever",
-                Icon = "ms-appx:///Assets/Icons/server.png"
+                Title = "Server",
+                Icon = "ms-appx:///Assets/Icons/icon_server.png"
             },
             new PasswordType
             {
                 Title = "Secure Note",
-                Icon = "ms-appx:///Assets/Icons/Clipboard Note.png"
+                Icon = "ms-appx:///Assets/Icons/icon_secure_note.png"
+            },
+            new PasswordType
+            {
+                Title = "Wifi",
+                Icon = "ms-appx:///Assets/Icons/icon_wifi.png"
             },
         };
     }

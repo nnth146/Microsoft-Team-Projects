@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Uwp.Core.Service;
 using UWP.Core.Service;
 
 namespace Uwp.Core.Helper
@@ -27,7 +28,7 @@ namespace Uwp.Core.Helper
             Type[] typeViewModelList = GetTypesInNamespace(Assembly.Load(_projectName), _viewModelNameSpace);
 
             var services = new ServiceCollection()
-                .AddSingleton<IDataService, LiteDBService>()
+                .AddSingleton<IDataService, SQLiteService>()
                 .AddSingleton<INavigationService>(new NavigationService(GetPages(typeViewList, typeViewModelList)))
                 .AddSingleton<IDialogService>(new DialogService(GetDialogs(typeDialogList, typeViewModelList)))
                 .AddSingleton<IMessenger, MessengerService>();

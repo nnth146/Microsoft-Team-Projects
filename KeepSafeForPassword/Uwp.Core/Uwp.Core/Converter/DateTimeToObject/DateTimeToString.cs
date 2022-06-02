@@ -11,7 +11,7 @@ namespace Uwp.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            DateTimeOffset dateTime = (DateTimeOffset)value;
+            DateTime dateTime = (DateTime)value;
             return dateTime.ToString("MMMM, dd yyyy");
         }
 

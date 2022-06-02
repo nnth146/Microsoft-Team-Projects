@@ -1,0 +1,129 @@
+﻿<Page
+    x:Class="KeepSafeForPassword.View.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:KeepSafeForPassword.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Controls.SR"
+    d:Height="900"
+    d:Width="1200"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=HomePage}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <sr:ResButton
+            x:Name="ResButton"
+            BackgroundPointerOver="Transparent"
+            BackgroundPressed="Transparent"
+            ForegroundPointerOver="White"
+            ForegroundPressed="White" />
+
+        <MenuFlyout x:Name="AccountFlyoutSetting" Placement="BottomEdgeAlignedRight">
+            <MenuFlyoutItem Command="{Binding LogOutCommand}" Text="Log out">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="SignOut20" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{Binding DeleteAccountCommand}" Text="Delete Account">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Delete20" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Background="{StaticResource PrimaryColor}">
+            <Grid Padding="20,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource whiteColor}"
+                    Text="Welcome to Remember Pasword" />
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <PersonPicture Height="30" DisplayName="{Binding Account.Username}" />
+                    <Button
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Content="{Binding Account.Username}"
+                        Flyout="{StaticResource AccountFlyoutSetting}"
+                        Foreground="{StaticResource whiteColor}"
+                        Resources="{Binding Source={StaticResource ResButton}, Path=Resources}" />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Background="#F5F5F5">
+            <controls:NavigationView
+                x:Name="NavView"
+                Padding="0,12,0,0"
+                CornerRadius="0 8 8 0"
+                IsBackButtonVisible="Collapsed"
+                IsSettingsVisible="False"
+                MenuItemsSource="{Binding NavViews}"
+                OpenPaneLength="270"
+                SelectionChanged="NavView_SelectionChanged">
+                <controls:NavigationView.MenuItemTemplate>
+                    <DataTemplate>
+                        <controls:NavigationViewItem HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Image
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Center"
+                                        Source="{Binding Icon}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="{Binding Title}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <controls:NavigationViewItem.InfoBadge>
+                                <controls:InfoBadge DataContext="{Binding Passwords}" Value="{Binding Count}" />
+                            </controls:NavigationViewItem.InfoBadge>
+                        </controls:NavigationViewItem>
+                    </DataTemplate>
+                </controls:NavigationView.MenuItemTemplate>
+
+                <Frame x:Name="SubFrame" Loaded="SubFrame_Loaded" />
+
+                <controls:NavigationView.PaneCustomContent>
+                    <Button
+                        Width="{Binding ElementName=NavView, Path=OpenPaneLength}"
+                        Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Source="ms-appx:///Assets/Icons/icon_gift.png" />
+                            <TextBlock VerticalAlignment="Center" Text="Give me a gift" />
+                        </StackPanel>
+                    </Button>
+                </controls:NavigationView.PaneCustomContent>
+            </controls:NavigationView>
+        </Grid>
+
+    </Grid>
+</Page>

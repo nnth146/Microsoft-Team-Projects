@@ -1,42 +1,16 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace KeepSafeForPassword.Model
 {
-    public class NavViewItem
+    public class NavViewItem : ObservableObject
     {
         public string Icon { get; set; }
         public string Title { get; set; }
-        public Type Page { get; set; }
 
-        public static List<NavViewItem> All = new List<NavViewItem>
-        {
-            new NavViewItem
-            {
-                Icon = "ms-appx:///Assets/Icons/lock.png",
-                Title = "All Password",
-            },
-            new NavViewItem
-            {
-                Icon = "/Assets/Icons/user.png",
-                Title = "Contact",
-            },
-            new NavViewItem
-            {
-                Icon = "ms-appx:///Assets/Icons/lock.png",
-                Title = "All Password"
-            },
-            new NavViewItem
-            {
-                Icon = "ms-appx:///Assets/Icons/lock.png",
-                Title = "All Password"
-            },
-            new NavViewItem
-            {
-                Icon = "ms-appx:///Assets/Icons/lock.png",
-                Title = "All Password"
-            },
-        };
+        public IEnumerable<Password> Passwords { get; set; } = new ObservableCollection<Password>();
     }
 }

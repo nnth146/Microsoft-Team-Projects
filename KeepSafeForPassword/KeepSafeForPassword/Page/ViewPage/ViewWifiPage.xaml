@@ -1,0 +1,239 @@
+﻿<Page
+    x:Class="KeepSafeForPassword.View.ViewWifiPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:KeepSafeForPassword.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Controls.SR"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=ViewWifiPage}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <sr:ResButton
+            x:Name="ResButton"
+            BackgroundPointerOver="{StaticResource PrimaryColor60}"
+            BackgroundPressed="{StaticResource PrimaryColor}"
+            ForegroundPointerOver="White"
+            ForegroundPressed="White" />
+
+        <MenuFlyout x:Name="ContextFlyoutOfPassword" Placement="Bottom">
+            <MenuFlyoutItem
+                Command="{StaticResource RemovePasswordCommand}"
+                CommandParameter="{Binding}"
+                Icon="Delete"
+                Text="Delete" />
+        </MenuFlyout>
+
+        <XamlUICommand x:Name="SuggestionChosenCommand" Command="{Binding SuggestionChosenCommand}" />
+        <XamlUICommand x:Name="PasswordsItemClickCommand" Command="{Binding PasswordsItemClickCommand}" />
+        <XamlUICommand x:Name="RemovePasswordCommand" Command="{Binding RemovePasswordCommand}" />
+    </Page.Resources>
+
+    <Grid Grid.Column="1" Background="{StaticResource whiteColor}">
+        <SplitView
+            x:Name="AddSplitView"
+            IsPaneOpen="{Binding IsAddSplitViewOpen, Mode=TwoWay}"
+            OpenPaneLength="620"
+            PanePlacement="Right">
+
+            <SplitView.Pane>
+                <Grid Padding="26">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock
+                            Margin="0,0,0,16"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="New Password" />
+                    </Grid>
+
+                    <Frame x:Name="AddPasswordFrame" Grid.Row="2" />
+
+                </Grid>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <SplitView
+                    x:Name="EditSplitView"
+                    IsPaneOpen="{Binding IsEditSplitViewOpen, Mode=TwoWay}"
+                    OpenPaneLength="620"
+                    PanePlacement="Right">
+                    <SplitView.Content>
+                        <Grid Padding="16">
+                            <!--  TODO  -->
+                            <ListView
+                                x:Name="ListPassword"
+                                Grid.Row="1"
+                                IsItemClickEnabled="True"
+                                ItemsSource="{Binding FilterPasswords}"
+                                SelectedItem="{Binding SelectedPassword, Mode=TwoWay}"
+                                SelectionMode="None">
+                                <ListView.Header>
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid RowSpacing="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <Image
+                                                    Width="24"
+                                                    Height="24"
+                                                    Source="/Assets/Icons/icon_wifi.png" />
+
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    FontWeight="SemiBold"
+                                                    Text="Wifi" />
+                                            </StackPanel>
+
+                                            <AutoSuggestBox
+                                                Grid.Row="1"
+                                                Width="260"
+                                                MaxWidth="260"
+                                                HorizontalAlignment="Left"
+                                                ItemsSource="{Binding SearchedPasswords}"
+                                                PlaceholderText="Search"
+                                                QueryIcon="Find"
+                                                Text="{Binding SearchedText, Mode=TwoWay}"
+                                                UpdateTextOnSelect="False">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="TextChanged">
+                                                        <core:InvokeCommandAction Command="{Binding SearchedTextChangeddCommand}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                                <AutoSuggestBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <ListViewItem
+                                                            HorizontalContentAlignment="Stretch"
+                                                            VerticalContentAlignment="Stretch"
+                                                            CornerRadius="4"
+                                                            Style="{StaticResource ListViewItemExpanded}">
+                                                            <interactivity:Interaction.Behaviors>
+                                                                <core:EventTriggerBehavior EventName="Tapped">
+                                                                    <core:InvokeCommandAction Command="{StaticResource SuggestionChosenCommand}" CommandParameter="{Binding}" />
+                                                                </core:EventTriggerBehavior>
+                                                            </interactivity:Interaction.Behaviors>
+                                                            <Grid VerticalAlignment="Center">
+                                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                                    <Image Height="20" Source="{Binding Icon}" />
+                                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </ListViewItem>
+                                                    </DataTemplate>
+                                                </AutoSuggestBox.ItemTemplate>
+                                            </AutoSuggestBox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1" Width="192">
+                                            <Button
+                                                Name="CreateNewItem"
+                                                Height="40"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Bottom"
+                                                Background="{StaticResource PrimaryColor}"
+                                                BorderThickness="0"
+                                                Command="{Binding OpenAddSplitViewCommand}"
+                                                Content="Create New Item"
+                                                CornerRadius="4"
+                                                FontWeight="SemiBold"
+                                                Foreground="White"
+                                                Resources="{Binding Source={StaticResource ResButton}, Path=Resources}" />
+                                        </Grid>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ListViewItem
+                                            Margin="2"
+                                            Padding="12,4,12,6"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Stretch"
+                                            BorderBrush="{StaticResource BorderColor}"
+                                            BorderThickness="1"
+                                            ContextFlyout="{StaticResource ContextFlyoutOfPassword}"
+                                            CornerRadius="4"
+                                            Style="{StaticResource ListViewItemExpanded}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="Tapped">
+                                                    <core:InvokeCommandAction Command="{StaticResource PasswordsItemClickCommand}" CommandParameter="{Binding}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <Grid ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Image Margin="4,0" Source="{Binding Icon}" />
+
+                                                <Grid Grid.Column="1" Padding="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontWeight="SemiBold"
+                                                        Text="{Binding Title}" />
+
+                                                    <TextBlock Grid.Row="1" HorizontalAlignment="Left">
+                                                        <Span>
+                                                            <Run Text="{Binding SubTitle}" />
+                                                        </Span>
+                                                    </TextBlock>
+                                                </Grid>
+
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="Gray"
+                                                    Text="{Binding CreatedOn, Converter={StaticResource DateTimeToString}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </SplitView.Content>
+
+                    <SplitView.Pane>
+                        <Grid Padding="26">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
+
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock
+                                    Margin="0,0,0,16"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="Edit Password" />
+                            </Grid>
+
+                            <Frame x:Name="ShowPasswordFrame" Grid.Row="1" />
+                        </Grid>
+                    </SplitView.Pane>
+                </SplitView>
+            </SplitView.Content>
+        </SplitView>
+
+    </Grid>
+</Page>

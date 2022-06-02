@@ -69,6 +69,7 @@ namespace UWP.Core.Service
         void NavigateOneTimeWithoutSaving(Type page, object parameter, NavigationTransitionInfo animation);
         void NavigateOneTimeWithoutSaving(object subFrame, Type page, NavigationTransitionInfo animation);
         void NavigateOneTimeWithoutSaving(object subFrame, Type page, object parameter, NavigationTransitionInfo animation);
+
         Dictionary<Type, Type> GetPages();
     }
 }

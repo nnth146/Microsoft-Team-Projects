@@ -1,4 +1,6 @@
-﻿using KeepSafeForPassword.View;
+﻿using KeepSafeForPassword.Model;
+using KeepSafeForPassword.View;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,6 +34,11 @@ namespace KeepSafeForPassword
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (var db = new DataContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>
@@ -46,6 +53,7 @@ namespace KeepSafeForPassword
 
             //Config Service
             ServiceHelper.ConfigureServices();
+
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -71,7 +79,7 @@ namespace KeepSafeForPassword
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(HomePage), e.Arguments);
+                    rootFrame.Navigate(typeof(LoginPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
