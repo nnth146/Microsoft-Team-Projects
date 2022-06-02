@@ -1,0 +1,50 @@
+﻿<Application
+    x:Class="KeepSafeForPassword.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:helper="using:Uwp.Core.Helper"
+    xmlns:local="using:KeepSafeForPassword"
+    xmlns:sr="using:Uwp.Controls.SR"
+    xmlns:vml="using:KeepSafeForPassword.VML">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <controls:XamlControlsResources />
+                <ResourceDictionary Source="ms-appx:///KeepSafeForPassword.Style/String.xaml" />
+                <ResourceDictionary Source="ms-appx:///KeepSafeForPassword.Style/Color.xaml" />
+                <ResourceDictionary Source="ms-appx:///Uwp.Core/Converter/Converter.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <vml:ViewModelLocator x:Key="VML" />
+
+            <sr:ResTextBox
+                x:Key="ResTextBox"
+                BackgroundFocused="Transparent"
+                BackgroundPointerOver="Transparent"
+                BorderBrushFocused="{StaticResource FocusColor}" />
+
+            <Style x:Name="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+
+            <Style x:Name="PasswordBoxStyle" TargetType="PasswordBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="PasswordRevealMode" Value="Visible" />
+            </Style>
+
+            <Style x:Name="RichEditBoxStyle" TargetType="RichEditBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

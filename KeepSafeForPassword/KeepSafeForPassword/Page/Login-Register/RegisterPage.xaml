@@ -1,0 +1,158 @@
+﻿<Page
+    x:Class="KeepSafeForPassword.View.RegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:KeepSafeForPassword.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=RegisterPage}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Image Source="/Assets/Rectangle 16.png" Stretch="Fill" />
+        <Grid
+            Width="616"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="White"
+            CornerRadius="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,22,0,22"
+                HorizontalAlignment="Center"
+                FontSize="22"
+                FontWeight="ExtraBold"
+                Text="Create an Local Account" />
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                FontWeight="SemiBold"
+                Text="Wellcome to remember pasword" />
+
+            <StackPanel
+                Grid.Row="2"
+                Width="418"
+                Margin="0,4,0,4"
+                HorizontalAlignment="Center"
+                Spacing="6">
+                <TextBox
+                    Width="418"
+                    Height="60"
+                    Header="Username"
+                    PlaceholderText="hello@gmail.com"
+                    Text="{Binding Username, Mode=TwoWay}" />
+                <TextBlock
+                    Margin="12,0,0,0"
+                    Foreground="{StaticResource ErrorColor}"
+                    Text="{Binding ErrorOfUsername.Error}"
+                    Visibility="{Binding ErrorOfUsername.IsError, Converter={StaticResource BooleanToVisibility}}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="3"
+                Width="418"
+                Margin="0,4,0,4"
+                HorizontalAlignment="Center"
+                Spacing="6">
+                <PasswordBox
+                    Width="418"
+                    Height="60"
+                    Header="Password"
+                    Password="{Binding Password, Mode=TwoWay}"
+                    PasswordRevealMode="Peek"
+                    PlaceholderText="Enter password" />
+                <TextBlock
+                    Margin="12,0,0,0"
+                    Foreground="{StaticResource ErrorColor}"
+                    Text="{Binding ErrorOfPassword.Error}"
+                    Visibility="{Binding ErrorOfPassword.IsError, Converter={StaticResource BooleanToVisibility}}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="4"
+                Width="418"
+                Margin="0,4,0,4"
+                HorizontalAlignment="Center"
+                Spacing="6">
+                <PasswordBox
+                    Width="418"
+                    Height="60"
+                    Header="Re-Password"
+                    Password="{Binding RePassword, Mode=TwoWay}"
+                    PasswordRevealMode="Peek"
+                    PlaceholderText="Enter password" />
+                <TextBlock
+                    Margin="12,0,0,0"
+                    Foreground="{StaticResource ErrorColor}"
+                    Text="{Binding ErrorOfRePassword.Error}"
+                    Visibility="{Binding ErrorOfRePassword.IsError, Converter={StaticResource BooleanToVisibility}}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="5"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Already have an account?" />
+                <HyperlinkButton
+                    Name="hyperlinkLogin_btn"
+                    Margin="0,16,0,16"
+                    HorizontalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="Login"
+                    Command="{Binding BackToLoginCommand}"
+                    Foreground="{StaticResource hyperlinkColor}">
+                    <HyperlinkButton.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
+                            <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
+                            <SolidColorBrush
+                                x:Key="HyperlinkButtonForegroundPointerOver"
+                                Opacity="0.8"
+                                Color="{StaticResource hyperlinkColor}" />
+                            <SolidColorBrush
+                                x:Key="HyperlinkButtonForegroundPressed"
+                                Opacity="0.8"
+                                Color="{StaticResource hyperlinkColor}" />
+                        </ResourceDictionary>
+                    </HyperlinkButton.Resources>
+                </HyperlinkButton>
+            </StackPanel>
+
+            <Grid
+                Grid.Row="6"
+                Padding="24"
+                Background="#F3F3F3">
+                <Button
+                    x:Name="create_btn"
+                    Height="32"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource PrimaryColor}"
+                    Content="Create account"
+                    Command="{Binding CreateAccountCommand}"
+                    Foreground="{StaticResource whiteColor}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="ColorHover" />
+                            <!--<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Azure"/>-->
+                            <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="ColorHover" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
+                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

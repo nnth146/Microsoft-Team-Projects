@@ -1,0 +1,103 @@
+﻿<Page
+    x:Class="KeepSafeForPassword.View.AddSecureNotePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:KeepSafeForPassword.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Height="811"
+    d:Width="615"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=AddSecureNotePage}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="DateChangedCommand" Command="{Binding DateChangedCommand}" />
+    </Page.Resources>
+
+    <Grid Margin="0,20,0,0">
+        <Grid RowSpacing="21">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBox
+                    DataContext="{Binding Password}"
+                    Header="Title (Required)"
+                    PlaceholderText="Enter Title"
+                    Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                    Style="{StaticResource TextBoxStyle}"
+                    Text="{Binding Title, Mode=TwoWay}" />
+            </Grid>
+
+
+
+            <Grid Grid.Row="1">
+
+                <TextBox
+                    DataContext="{Binding Password}"
+                    Header="Secure Note"
+                    PlaceholderText="Enter Secure Note"
+                    Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                    Style="{StaticResource TextBoxStyle}"
+                    Text="{Binding SecureNoteAttribute, Mode=TwoWay}" />
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <CalendarDatePicker
+                    Name="DatePicker"
+                    HorizontalAlignment="Stretch"
+                    Header="Date">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="DateChanged">
+                            <core:InvokeCommandAction Command="{StaticResource DateChangedCommand}" CommandParameter="{Binding ElementName=DatePicker, Path=Date}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </CalendarDatePicker>
+            </Grid>
+            <Grid Grid.Row="3">
+                <RichEditBox
+                    x:Name="NoteField"
+                    DataContext="{Binding Password}"
+                    Header="Note"
+                    PlaceholderText="Description"
+                    Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                    Style="{StaticResource RichEditBoxStyle}"
+                    Tag="{Binding Note, Mode=TwoWay}"
+                    TextChanged="NoteField_TextChanged" />
+            </Grid>
+            <Grid Grid.Row="4">
+                <Button
+                    Grid.Column="0"
+                    Height="32"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource PrimaryColor}"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding Password}"
+                    Content="Add"
+                    CornerRadius="4"
+                    Foreground="White">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="ColorHover" />
+                            <!--<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Azure"/>-->
+                            <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="ColorHover" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
+                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

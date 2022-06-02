@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="KeepSafeForPassword.View.EditAddressPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:KeepSafeForPassword.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="900"
+    d:DesignWidth="600"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=EditAddressPage}"
+    mc:Ignorable="d">
+
+    <ScrollViewer Margin="0,20,0,0">
+        <Grid Margin="0,0,12,0" RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBox
+                Grid.Row="0"
+                DataContext="{Binding Password}"
+                Header="Title (Required)"
+                PlaceholderText="Enter Title"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding Title, Mode=TwoWay}" />
+
+            <TextBox
+                Grid.Row="1"
+                DataContext="{Binding Password}"
+                Header="Street Address Line 1"
+                PlaceholderText="Enter Address"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding StreetAddressLine1, Mode=TwoWay}" />
+
+            <TextBox
+                Grid.Row="2"
+                DataContext="{Binding Password}"
+                Header="Street Address Line 2"
+                PlaceholderText="Enter Address"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding StreetAddressLine2, Mode=TwoWay}" />
+            <TextBox
+                Grid.Row="3"
+                DataContext="{Binding Password}"
+                Header="City"
+                PlaceholderText="Enter City Name"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding City, Mode=TwoWay}" />
+
+            <TextBox
+                Grid.Row="4"
+                DataContext="{Binding Password}"
+                Header="State/Province"
+                PlaceholderText="Enter State/Province"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding StateProvince, Mode=TwoWay}" />
+
+            <TextBox
+                Grid.Row="5"
+                DataContext="{Binding Password}"
+                Header="Zip/Postal Code"
+                PlaceholderText="Enter Zip/Postal Code"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding ZipPostalCode, Mode=TwoWay}" />
+
+            <TextBox
+                Grid.Row="6"
+                DataContext="{Binding Password}"
+                Header="Country"
+                PlaceholderText="Enter Country Name"
+                Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding Country, Mode=TwoWay}" />
+
+            <Grid Grid.Row="8">
+                <Button
+                    Grid.Column="0"
+                    Height="32"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource PrimaryColor}"
+                    Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding Password}"
+                    Content="Save"
+                    CornerRadius="4"
+                    Foreground="White">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="ColorHover" />
+                            <!--<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Azure"/>-->
+                            <StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="ColorHover" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White" />
+                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>
