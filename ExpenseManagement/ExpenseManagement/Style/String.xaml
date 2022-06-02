@@ -1,0 +1,3 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <x:String x:Key="deleteTransaction">Are you sure you want to delete this Transactions? This action cannot be undone.</x:String>
+</ResourceDictionary>
