@@ -1,0 +1,31 @@
+﻿<Application
+    x:Class="MoneyLover.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local="using:MoneyLover"
+    xmlns:vml="using:MoneyLover.VML">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <!--  XAML Resources  -->
+                <controls:XamlControlsResources ControlsResourcesVersion="Version2" />
+
+                <!--  Converter Resources  -->
+                <ResourceDictionary Source="ms-appx:///Uwp.Core/Converter/Converter.xaml" />
+
+                <!--  Common Resources  -->
+                <ResourceDictionary Source="ms-appx:///MoneyLover.Style/String.xaml" />
+                <ResourceDictionary Source="ms-appx:///MoneyLover.Style/Color.xaml" />
+                <ResourceDictionary Source="ms-appx:///MoneyLover.Style/Res.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  ViewModelLocator  -->
+            <vml:ViewModelLocator x:Key="VML" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
