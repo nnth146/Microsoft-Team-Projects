@@ -15,6 +15,7 @@ Install-Package Microsoft.UI.Xaml
 Install-Package Microsoft.Toolkit.Mvvm
 
 <-- Uwp.SQLite.Model -->
+Install-Package Microsoft.Toolkit.Mvvm
 Install-Package Microsoft.EntityFrameworkCore.Sqlite -Version 3.1.25
 
 <-- Console --> 

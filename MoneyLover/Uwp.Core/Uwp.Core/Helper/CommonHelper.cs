@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace Uwp.Core.Helper
 {
@@ -35,6 +36,11 @@ namespace Uwp.Core.Helper
             DataPackage data = new DataPackage();
             data.SetText(content);
             Clipboard.SetContent(data);
+        }
+
+        static public object GetAppResources(string key)
+        {
+            return Application.Current.Resources[key];
         }
     }
 }

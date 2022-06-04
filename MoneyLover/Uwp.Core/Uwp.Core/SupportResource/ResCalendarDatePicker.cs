@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Uwp.Controls.SR
+namespace Uwp.Core.SR
 {
 	public class ResCalendarDatePicker : DependencyObject
 	{

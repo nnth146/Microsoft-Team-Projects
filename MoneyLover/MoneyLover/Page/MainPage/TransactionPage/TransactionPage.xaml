@@ -1,0 +1,165 @@
+﻿<Page
+    x:Class="MoneyLover.View.TransactionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:MoneyLover.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="900"
+    d:DesignWidth="900"
+    Background="Transparent"
+    DataContext="{Binding Source={StaticResource VML}, Path=TransactionPage}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <XamlUICommand x:Name="DeleteTransactionCommand" />
+        <XamlUICommand x:Name="AddTransactionCommand" />
+
+        <CollectionViewSource
+            x:Name="Transactions"
+            IsSourceGrouped="True"
+            Source="{Binding Vs}" />
+    </Page.Resources>
+
+    <Grid RowSpacing="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <AutoSuggestBox
+            Height="36"
+            Background="{StaticResource BackgroundPage}"
+            PlaceholderText="Wellcome to Money Lover - Saving Money"
+            QueryIcon="Find" />
+
+        <Grid Grid.Row="1" Background="{StaticResource BackgroundPage}">
+            <ListView
+                Grid.Row="1"
+                IsItemClickEnabled="True"
+                ItemsSource="{Binding Source={StaticResource Transactions}}"
+                SelectionMode="None">
+
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image
+                            Height="60"
+                            Margin="8,8,4,4"
+                            HorizontalAlignment="Left"
+                            Source="{Binding Source={StaticResource RobotTransaction}}" />
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderContainerStyle>
+                            <Style TargetType="ListViewHeaderItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewHeaderItem">
+                                            <ContentPresenter
+                                                x:Name="ContentPresenter"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Background="{TemplateBinding Background}"
+                                                Content="{TemplateBinding Content}"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.HeaderContainerStyle>
+
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Margin="4,8,4,0"
+                                    Padding="12,6,12,6"
+                                    HorizontalAlignment="Stretch"
+                                    Background="{StaticResource Color3}"
+                                    ColumnSpacing="12"
+                                    CornerRadius="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:ImageIcon
+                                        Height="24"
+                                        Margin="0,4,0,0"
+                                        VerticalAlignment="Top"
+                                        Source="{Binding Source={StaticResource Icon Wallet}}" />
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            FontWeight="SemiBold"
+                                            Style="{StaticResource BaseTextBlockStyle}"
+                                            Text="Name of Wallet" />
+                                        <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
+                                            <Run Text="500,000$" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <Button
+                                        Grid.Column="2"
+                                        BorderThickness="0"
+                                        Content="Add Transaction"
+                                        Resources="{Binding Source={StaticResource ResButton1}, Path=Resources}" />
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Style="{StaticResource ListViewItemTransactionStyle}">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <controls:ImageIcon
+                                    Height="24"
+                                    Margin="0,4,0,0"
+                                    VerticalAlignment="Top"
+                                    Source="{Binding Source={StaticResource Icon Eating}}" />
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="SemiBold" Text="Name of transactions" />
+                                    <TextBlock Foreground="{StaticResource Color6}">
+                                        <Italic>
+                                            <Run Text="500,000$" />
+                                        </Italic>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Button
+                                    Grid.Column="2"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="{StaticResource Color4}">
+                                    <icons:FluentSymbolIcon Symbol="Delete24" />
+                                </Button>
+                            </Grid>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

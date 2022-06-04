@@ -29,185 +29,186 @@ namespace Uwp.Core.SR
 			}
 		}
 		private const string _controlName = "Expander";
-		public Brush ExpanderHeaderBackground
+
+		public Brush HeaderBackground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderBackground)];
-			set => _resources[_controlName + nameof(ExpanderHeaderBackground)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderBackground)];
+			set => _resources[_controlName + nameof(HeaderBackground)] = value;
 		}
-		public Brush ExpanderHeaderForeground
+		public Brush HeaderForeground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderForeground)];
-			set => _resources[_controlName + nameof(ExpanderHeaderForeground)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderForeground)];
+			set => _resources[_controlName + nameof(HeaderForeground)] = value;
 		}
-		public Brush ExpanderHeaderForegroundPointerOver
+		public Brush HeaderForegroundPointerOver
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderForegroundPointerOver)];
-			set => _resources[_controlName + nameof(ExpanderHeaderForegroundPointerOver)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderForegroundPointerOver)];
+			set => _resources[_controlName + nameof(HeaderForegroundPointerOver)] = value;
 		}
-		public Brush ExpanderHeaderForegroundPressed
+		public Brush HeaderForegroundPressed
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderForegroundPressed)];
-			set => _resources[_controlName + nameof(ExpanderHeaderForegroundPressed)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderForegroundPressed)];
+			set => _resources[_controlName + nameof(HeaderForegroundPressed)] = value;
 		}
-		public Brush ExpanderHeaderBorderBrush
+		public Brush HeaderBorderBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderBorderBrush)];
-			set => _resources[_controlName + nameof(ExpanderHeaderBorderBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderBorderBrush)];
+			set => _resources[_controlName + nameof(HeaderBorderBrush)] = value;
 		}
-		public Brush ExpanderHeaderBorderPointerOverBrush
+		public Brush HeaderBorderPointerOverBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderBorderPointerOverBrush)];
-			set => _resources[_controlName + nameof(ExpanderHeaderBorderPointerOverBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderBorderPointerOverBrush)];
+			set => _resources[_controlName + nameof(HeaderBorderPointerOverBrush)] = value;
 		}
-		public Brush ExpanderHeaderBorderPressedBrush
+		public Brush HeaderBorderPressedBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderBorderPressedBrush)];
-			set => _resources[_controlName + nameof(ExpanderHeaderBorderPressedBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderBorderPressedBrush)];
+			set => _resources[_controlName + nameof(HeaderBorderPressedBrush)] = value;
 		}
-		public Brush ExpanderHeaderDisabledForeground
+		public Brush HeaderDisabledForeground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderDisabledForeground)];
-			set => _resources[_controlName + nameof(ExpanderHeaderDisabledForeground)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderDisabledForeground)];
+			set => _resources[_controlName + nameof(HeaderDisabledForeground)] = value;
 		}
-		public Brush ExpanderHeaderDisabledBorderBrush
+		public Brush HeaderDisabledBorderBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderHeaderDisabledBorderBrush)];
-			set => _resources[_controlName + nameof(ExpanderHeaderDisabledBorderBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(HeaderDisabledBorderBrush)];
+			set => _resources[_controlName + nameof(HeaderDisabledBorderBrush)] = value;
 		}
-		public Thickness ExpanderHeaderBorderThickness
+		public Thickness HeaderBorderThickness
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderHeaderBorderThickness)];
-			set => _resources[_controlName + nameof(ExpanderHeaderBorderThickness)] = value;
+			get => (Thickness)_resources[_controlName + nameof(HeaderBorderThickness)];
+			set => _resources[_controlName + nameof(HeaderBorderThickness)] = value;
 		}
-		public Brush ExpanderChevronBackground
+		public Brush ChevronBackground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronBackground)];
-			set => _resources[_controlName + nameof(ExpanderChevronBackground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronBackground)];
+			set => _resources[_controlName + nameof(ChevronBackground)] = value;
 		}
-		public Brush ExpanderChevronPointerOverBackground
+		public Brush ChevronPointerOverBackground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronPointerOverBackground)];
-			set => _resources[_controlName + nameof(ExpanderChevronPointerOverBackground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronPointerOverBackground)];
+			set => _resources[_controlName + nameof(ChevronPointerOverBackground)] = value;
 		}
-		public Brush ExpanderChevronPressedBackground
+		public Brush ChevronPressedBackground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronPressedBackground)];
-			set => _resources[_controlName + nameof(ExpanderChevronPressedBackground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronPressedBackground)];
+			set => _resources[_controlName + nameof(ChevronPressedBackground)] = value;
 		}
-		public Brush ExpanderChevronForeground
+		public Brush ChevronForeground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronForeground)];
-			set => _resources[_controlName + nameof(ExpanderChevronForeground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronForeground)];
+			set => _resources[_controlName + nameof(ChevronForeground)] = value;
 		}
-		public Brush ExpanderChevronPointerOverForeground
+		public Brush ChevronPointerOverForeground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronPointerOverForeground)];
-			set => _resources[_controlName + nameof(ExpanderChevronPointerOverForeground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronPointerOverForeground)];
+			set => _resources[_controlName + nameof(ChevronPointerOverForeground)] = value;
 		}
-		public Brush ExpanderChevronPressedForeground
+		public Brush ChevronPressedForeground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronPressedForeground)];
-			set => _resources[_controlName + nameof(ExpanderChevronPressedForeground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronPressedForeground)];
+			set => _resources[_controlName + nameof(ChevronPressedForeground)] = value;
 		}
-		public Brush ExpanderChevronBorderBrush
+		public Brush ChevronBorderBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronBorderBrush)];
-			set => _resources[_controlName + nameof(ExpanderChevronBorderBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronBorderBrush)];
+			set => _resources[_controlName + nameof(ChevronBorderBrush)] = value;
 		}
-		public Brush ExpanderChevronBorderPointerOverBrush
+		public Brush ChevronBorderPointerOverBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronBorderPointerOverBrush)];
-			set => _resources[_controlName + nameof(ExpanderChevronBorderPointerOverBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronBorderPointerOverBrush)];
+			set => _resources[_controlName + nameof(ChevronBorderPointerOverBrush)] = value;
 		}
-		public Brush ExpanderChevronBorderPressedBrush
+		public Brush ChevronBorderPressedBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderChevronBorderPressedBrush)];
-			set => _resources[_controlName + nameof(ExpanderChevronBorderPressedBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(ChevronBorderPressedBrush)];
+			set => _resources[_controlName + nameof(ChevronBorderPressedBrush)] = value;
 		}
-		public Thickness ExpanderChevronBorderThickness
+		public Thickness ChevronBorderThickness
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderChevronBorderThickness)];
-			set => _resources[_controlName + nameof(ExpanderChevronBorderThickness)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ChevronBorderThickness)];
+			set => _resources[_controlName + nameof(ChevronBorderThickness)] = value;
 		}
-		public Brush ExpanderContentBackground
+		public Brush ContentBackground
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderContentBackground)];
-			set => _resources[_controlName + nameof(ExpanderContentBackground)] = value;
+			get => (Brush)_resources[_controlName + nameof(ContentBackground)];
+			set => _resources[_controlName + nameof(ContentBackground)] = value;
 		}
-		public Brush ExpanderContentBorderBrush
+		public Brush ContentBorderBrush
 		{
-			get => (Brush)_resources[_controlName + nameof(ExpanderContentBorderBrush)];
-			set => _resources[_controlName + nameof(ExpanderContentBorderBrush)] = value;
+			get => (Brush)_resources[_controlName + nameof(ContentBorderBrush)];
+			set => _resources[_controlName + nameof(ContentBorderBrush)] = value;
 		}
-		public double ExpanderMinHeight
+		public double MinHeight
 		{
-			get => (double)_resources[_controlName + nameof(ExpanderMinHeight)];
-			set => _resources[_controlName + nameof(ExpanderMinHeight)] = value;
+			get => (double)_resources[_controlName + nameof(MinHeight)];
+			set => _resources[_controlName + nameof(MinHeight)] = value;
 		}
-		public HorizontalAlignment ExpanderHeaderHorizontalContentAlignment
+		public HorizontalAlignment HeaderHorizontalContentAlignment
 		{
-			get => (HorizontalAlignment)_resources[_controlName + nameof(ExpanderHeaderHorizontalContentAlignment)];
-			set => _resources[_controlName + nameof(ExpanderHeaderHorizontalContentAlignment)] = value;
+			get => (HorizontalAlignment)_resources[_controlName + nameof(HeaderHorizontalContentAlignment)];
+			set => _resources[_controlName + nameof(HeaderHorizontalContentAlignment)] = value;
 		}
-		public VerticalAlignment ExpanderHeaderVerticalContentAlignment
+		public VerticalAlignment HeaderVerticalContentAlignment
 		{
-			get => (VerticalAlignment)_resources[_controlName + nameof(ExpanderHeaderVerticalContentAlignment)];
-			set => _resources[_controlName + nameof(ExpanderHeaderVerticalContentAlignment)] = value;
+			get => (VerticalAlignment)_resources[_controlName + nameof(HeaderVerticalContentAlignment)];
+			set => _resources[_controlName + nameof(HeaderVerticalContentAlignment)] = value;
 		}
-		public Thickness ExpanderHeaderPadding
+		public Thickness HeaderPadding
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderHeaderPadding)];
-			set => _resources[_controlName + nameof(ExpanderHeaderPadding)] = value;
+			get => (Thickness)_resources[_controlName + nameof(HeaderPadding)];
+			set => _resources[_controlName + nameof(HeaderPadding)] = value;
 		}
-		public Thickness ExpanderChevronMargin
+		public Thickness ChevronMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderChevronMargin)];
-			set => _resources[_controlName + nameof(ExpanderChevronMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ChevronMargin)];
+			set => _resources[_controlName + nameof(ChevronMargin)] = value;
 		}
-		public string ExpanderChevronUpGlyph
+		public string ChevronUpGlyph
 		{
-			get => (string)_resources[_controlName + nameof(ExpanderChevronUpGlyph)];
-			set => _resources[_controlName + nameof(ExpanderChevronUpGlyph)] = value;
+			get => (string)_resources[_controlName + nameof(ChevronUpGlyph)];
+			set => _resources[_controlName + nameof(ChevronUpGlyph)] = value;
 		}
-		public string ExpanderChevronDownGlyph
+		public string ChevronDownGlyph
 		{
-			get => (string)_resources[_controlName + nameof(ExpanderChevronDownGlyph)];
-			set => _resources[_controlName + nameof(ExpanderChevronDownGlyph)] = value;
+			get => (string)_resources[_controlName + nameof(ChevronDownGlyph)];
+			set => _resources[_controlName + nameof(ChevronDownGlyph)] = value;
 		}
-		public double ExpanderChevronButtonSize
+		public double ChevronButtonSize
 		{
-			get => (double)_resources[_controlName + nameof(ExpanderChevronButtonSize)];
-			set => _resources[_controlName + nameof(ExpanderChevronButtonSize)] = value;
+			get => (double)_resources[_controlName + nameof(ChevronButtonSize)];
+			set => _resources[_controlName + nameof(ChevronButtonSize)] = value;
 		}
-		public double ExpanderChevronGlyphSize
+		public double ChevronGlyphSize
 		{
-			get => (double)_resources[_controlName + nameof(ExpanderChevronGlyphSize)];
-			set => _resources[_controlName + nameof(ExpanderChevronGlyphSize)] = value;
+			get => (double)_resources[_controlName + nameof(ChevronGlyphSize)];
+			set => _resources[_controlName + nameof(ChevronGlyphSize)] = value;
 		}
-		public Thickness ExpanderContentPadding
+		public Thickness ContentPadding
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderContentPadding)];
-			set => _resources[_controlName + nameof(ExpanderContentPadding)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ContentPadding)];
+			set => _resources[_controlName + nameof(ContentPadding)] = value;
 		}
-		public Thickness ExpanderContentDownBorderThickness
+		public Thickness ContentDownBorderThickness
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderContentDownBorderThickness)];
-			set => _resources[_controlName + nameof(ExpanderContentDownBorderThickness)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ContentDownBorderThickness)];
+			set => _resources[_controlName + nameof(ContentDownBorderThickness)] = value;
 		}
-		public Thickness ExpanderContentUpBorderThickness
+		public Thickness ContentUpBorderThickness
 		{
-			get => (Thickness)_resources[_controlName + nameof(ExpanderContentUpBorderThickness)];
-			set => _resources[_controlName + nameof(ExpanderContentUpBorderThickness)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ContentUpBorderThickness)];
+			set => _resources[_controlName + nameof(ContentUpBorderThickness)] = value;
 		}
-		public Style ExpanderHeaderDownStyle
+		public Style HeaderDownStyle
 		{
-			get => (Style)_resources[_controlName + nameof(ExpanderHeaderDownStyle)];
-			set => _resources[_controlName + nameof(ExpanderHeaderDownStyle)] = value;
+			get => (Style)_resources[_controlName + nameof(HeaderDownStyle)];
+			set => _resources[_controlName + nameof(HeaderDownStyle)] = value;
 		}
-		public Style ExpanderHeaderUpStyle
+		public Style HeaderUpStyle
 		{
-			get => (Style)_resources[_controlName + nameof(ExpanderHeaderUpStyle)];
-			set => _resources[_controlName + nameof(ExpanderHeaderUpStyle)] = value;
+			get => (Style)_resources[_controlName + nameof(HeaderUpStyle)];
+			set => _resources[_controlName + nameof(HeaderUpStyle)] = value;
 		}
 	}
 }

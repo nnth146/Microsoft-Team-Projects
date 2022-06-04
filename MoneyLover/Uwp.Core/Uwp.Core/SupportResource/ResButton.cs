@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Uwp.Controls.SR
+namespace Uwp.Core.SR
 {
 	public class ResButton : DependencyObject
 	{
@@ -29,6 +29,13 @@ namespace Uwp.Controls.SR
 			}
 		}
 		private const string _controlName = "Button";
+
+		public Brush Background
+		{
+			get => (Brush)_resources[_controlName + nameof(Background)];
+			set => _resources[_controlName + nameof(Background)] = value;
+		}
+
 		public Brush BackgroundPointerOver
 		{
 			get => (Brush)_resources[_controlName + nameof(BackgroundPointerOver)];
@@ -53,6 +60,12 @@ namespace Uwp.Controls.SR
 			set => _resources[_controlName + nameof(ForegroundPointerOver)] = value;
 		}
 
+		public Brush Foreground
+		{
+			get => (Brush)_resources[_controlName + nameof(Foreground)];
+			set => _resources[_controlName + nameof(Foreground)] = value;
+		}
+
 		public Brush ForegroundPressed
 		{
 			get => (Brush)_resources[_controlName + nameof(ForegroundPressed)];
@@ -65,16 +78,24 @@ namespace Uwp.Controls.SR
 			set => _resources[_controlName + nameof(ForegroundDisabled)] = value;
 		}
 
+		public Brush BorderBrush
+		{
+			get => (Brush)_resources[_controlName + nameof(BorderBrush)];
+			set => _resources[_controlName + nameof(BorderBrush)] = value;
+		}
+
 		public Brush BorderBrushPointerOver
 		{
 			get => (Brush)_resources[_controlName + nameof(BorderBrushPointerOver)];
 			set => _resources[_controlName + nameof(BorderBrushPointerOver)] = value;
 		}
+
 		public Brush BorderBrushPressed
 		{
 			get => (Brush)_resources[_controlName + nameof(BorderBrushPressed)];
 			set => _resources[_controlName + nameof(BorderBrushPressed)] = value;
 		}
+
 		public Brush BorderBrushDisabled
 		{
 			get => (Brush)_resources[_controlName + nameof(BorderBrushDisabled)];
