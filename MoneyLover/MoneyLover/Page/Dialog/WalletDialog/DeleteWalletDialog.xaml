@@ -1,0 +1,58 @@
+﻿<ContentDialog
+    x:Class="MoneyLover.View.Dialog.DeleteWalletDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:MoneyLover.View.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="ContentDialog"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+    </ContentDialog.Resources>
+
+    <Grid MinWidth="358" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Padding="24" RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock FontSize="20" Text="Delete Wallet" />
+
+            <Grid Grid.Row="1">
+                <TextBlock Text="Are you sure deleting this wallet?" />
+            </Grid>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            Background="{StaticResource ContentDialogBackgroundButtonRegion}"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                x:Name="PrimaryButton"
+                HorizontalAlignment="Stretch"
+                Command="{Binding ElementName=ContentDialog, Path=PrimaryButtonCommand}"
+                Content="Delete"
+                Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
+
+            <Button
+                x:Name="SecondaryButton"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
+                Content="Cancel"
+                Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
+        </Grid>
+    </Grid>
+</ContentDialog>

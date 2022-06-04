@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MoneyLover.ViewModel
 {
-    public class MainPageViewModel
+    public class EditWalletDialogViewModel
     {
     }
 }

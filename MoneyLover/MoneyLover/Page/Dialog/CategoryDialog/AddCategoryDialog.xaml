@@ -1,0 +1,107 @@
+﻿<ContentDialog
+    x:Class="MoneyLover.View.Dialog.AddCategoryDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:MoneyLover.View.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    CornerRadius="4"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+        <SolidColorBrush x:Key="TextControlForeground" Color="{StaticResource Color1}" />
+        <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{StaticResource Color1}" />
+    </ContentDialog.Resources>
+
+    <Grid
+        MinWidth="300"
+        Background="White"
+        CornerRadius="4">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Height="54" Background="{StaticResource Linear1}" />
+
+            <Grid
+                Grid.Row="1"
+                Padding="24,0,24,0"
+                RowSpacing="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBox Header="Name Category" PlaceholderText="Enter Name" />
+                <TextBox
+                    Grid.Row="1"
+                    Header="Description"
+                    PlaceholderText="Enter Description" />
+
+
+                <Grid Grid.Row="2" RowSpacing="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Select icon" />
+                    <GridView
+                        Grid.Row="1"
+                        Height="100"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid MaximumRowsOrColumns="4" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.Items>
+                            <GridViewItem
+                                MinWidth="20"
+                                MinHeight="20"
+                                Margin="16"
+                                Style="{StaticResource GridViewItemExpanded}">
+                                <controls:ImageIcon Height="24" Source="{Binding Source={StaticResource Icon Budget}}" />
+                            </GridViewItem>
+                        </GridView.Items>
+                    </GridView>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            Background="{StaticResource ContentDialogBackgroundButtonRegion}"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                x:Name="PrimaryButton"
+                HorizontalAlignment="Stretch"
+                Command="{Binding ElementName=ContentDialog, Path=PrimaryButtonCommand}"
+                Content="Add"
+                Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
+
+            <Button
+                x:Name="SecondaryButton"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
+                Content="Cancel"
+                Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
+        </Grid>
+    </Grid>
+</ContentDialog>

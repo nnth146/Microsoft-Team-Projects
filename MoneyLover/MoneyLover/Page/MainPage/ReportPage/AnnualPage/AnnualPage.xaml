@@ -1,0 +1,106 @@
+﻿<Page
+    x:Class="MoneyLover.View.AnnualPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:MoneyLover.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource BackgroundPage}" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            Grid.Row="1"
+            Padding="6"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Padding="2"
+                Background="Transparent"
+                BorderThickness="0">
+                <FontIcon FontSize="14" Glyph="&#xE76B;" />
+            </Button>
+
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                FontWeight="SemiBold"
+                Text="2022 (01/2022 - 12/2022)" />
+
+            <Button
+                Grid.Column="3"
+                Padding="2"
+                Background="Transparent"
+                BorderThickness="0">
+                <FontIcon FontSize="14" Glyph="&#xE76C;" />
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Chart thêm vào đây" />
+        </Grid>
+
+        <ListView
+            Grid.Row="3"
+            Background="{StaticResource ListViewBackground}"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="4"
+            IsItemClickEnabled="True"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
+            SelectionMode="None">
+            <ListView.Items>
+                <ListViewItem
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    Style="{StaticResource ListViewItemRevealStyle}">
+                    <Grid VerticalAlignment="Center" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:ImageIcon Height="20" Source="{Binding Source={StaticResource Icon Clothes}}" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Name of transaction" />
+                        <TextBlock
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="2000$" />
+                        <TextBlock
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            Text="30%" />
+                    </Grid>
+                </ListViewItem>
+            </ListView.Items>
+        </ListView>
+
+    </Grid>
+</Page>

@@ -12,6 +12,7 @@ namespace Uwp.Core.Service
         private static DataContext _db = new DataContext();
         public static DataContext Db { get { return _db; } }
 
+        //Viết các hàm lấy dữ liệu tại đây
         public void DeleteDataObject(DataObject DataObject)
         {
             throw new NotImplementedException();

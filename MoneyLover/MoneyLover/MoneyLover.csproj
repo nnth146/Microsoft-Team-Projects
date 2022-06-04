@@ -120,9 +120,72 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\MainPageViewModel.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
+    <Compile Include="Page\Dialog\TransactionDialog\AddTransactionDialogViewModel.cs" />
+    <Compile Include="Page\Dialog\WalletDialog\AddWalletDialogViewModel.cs" />
+    <Compile Include="Page\MainPage\BudgetPage\BudgetPageViewModel.cs" />
+    <Compile Include="Page\MainPage\CalendarPage\CalendarPageViewModel.cs" />
+    <Compile Include="Page\Dialog\TransactionDialog\DeleteTransactionDialogViewModel.cs" />
+    <Compile Include="Page\Dialog\WalletDialog\DeleteWalletDialogViewModel.cs" />
+    <Compile Include="Page\Dialog\TransactionDialog\EditTransactionViewModel.cs" />
+    <Compile Include="Page\Dialog\WalletDialog\EditWalletDialogViewModel.cs" />
+    <Compile Include="Page\MainPage\MainPageViewModel.cs" />
+    <Compile Include="Page\MainPage\ReportPage\ReportPageViewModel.cs" />
+    <Compile Include="Page\MainPage\TransactionPage\TransactionPageViewModel.cs" />
+    <Compile Include="Page\MainPage\BudgetPage\BudgetPage.xaml.cs">
+      <DependentUpon>BudgetPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\CalendarPage\CalendarPage.xaml.cs">
+      <DependentUpon>CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\TransactionDialog\AddTransactionDialog.xaml.cs">
+      <DependentUpon>AddTransactionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\WalletDialog\AddWalletDialog.xaml.cs">
+      <DependentUpon>AddWalletDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\TransactionDialog\DeleteTransactionDialog.xaml.cs">
+      <DependentUpon>DeleteTransactionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\WalletDialog\DeleteWalletDialog.xaml.cs">
+      <DependentUpon>DeleteWalletDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\TransactionDialog\EditTransactionDialog.xaml.cs">
+      <DependentUpon>EditTransactionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\WalletDialog\EditWalletDialog.xaml.cs">
+      <DependentUpon>EditWalletDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\ReportPage\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\TransactionPage\TransactionPage.xaml.cs">
+      <DependentUpon>TransactionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\WaitingPage\WaitingPageViewModel.cs" />
+    <Compile Include="Page\MainPage\WaitingPage\WaitingPage.xaml.cs">
+      <DependentUpon>WaitingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\ReportPage\AnnualPage\AnnualPageViewModel.cs" />
+    <Compile Include="Page\MainPage\ReportPage\MonthlyPage\MonthlyPageViewModel.cs" />
+    <Compile Include="Page\MainPage\ReportPage\AnnualPage\AnnualPage.xaml.cs">
+      <DependentUpon>AnnualPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\MainPage\ReportPage\MonthlyPage\MonthlyPage.xaml.cs">
+      <DependentUpon>MonthlyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\CategoryDialog\AddCategoryDialogViewModel.cs" />
+    <Compile Include="Page\Dialog\CategoryDialog\EditCategoryDialogViewModel.cs" />
+    <Compile Include="View\ButtonNavigationView.xaml.cs">
+      <DependentUpon>ButtonNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\CategoryDialog\AddCategoryDialog.xaml.cs">
+      <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Dialog\CategoryDialog\EditCategoryDialog.xaml.cs">
+      <DependentUpon>EditCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -132,6 +195,31 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\Icon Budget.png" />
+    <Content Include="Assets\Icons\Icon Calendar.png" />
+    <Content Include="Assets\Icons\Icon Clothes.png" />
+    <Content Include="Assets\Icons\Icon Cosmetic.png" />
+    <Content Include="Assets\Icons\Icon Daily Spending.png" />
+    <Content Include="Assets\Icons\Icon Eating.png" />
+    <Content Include="Assets\Icons\Icon Exchange Fee.png" />
+    <Content Include="Assets\Icons\Icon Medical.png" />
+    <Content Include="Assets\Icons\Icon Other 1.png" />
+    <Content Include="Assets\Icons\Icon Other 2.png" />
+    <Content Include="Assets\Icons\Icon Other 3.png" />
+    <Content Include="Assets\Icons\Icon Other 4.png" />
+    <Content Include="Assets\Icons\Icon Other 5.png" />
+    <Content Include="Assets\Icons\Icon Other 6.png" />
+    <Content Include="Assets\Icons\Icon Other 7.png" />
+    <Content Include="Assets\Icons\Icon Other 8.png" />
+    <Content Include="Assets\Icons\Icon Report.png" />
+    <Content Include="Assets\Icons\Icon Transaction.png" />
+    <Content Include="Assets\Icons\Icon Wallet.png" />
+    <Content Include="Assets\Images\image_background.png" />
+    <Content Include="Assets\Images\image_banner.png" />
+    <Content Include="Assets\Images\robot_budget.png" />
+    <Content Include="Assets\Images\robot_calendar.png" />
+    <Content Include="Assets\Images\robot_reports.png" />
+    <Content Include="Assets\Images\robot_transactions.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -156,6 +244,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.1.2</Version>
@@ -186,10 +277,78 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\MainPage.xaml">
+    <Page Include="Page\MainPage\BudgetPage\BudgetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Page\MainPage\CalendarPage\CalendarPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\TransactionDialog\AddTransactionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\WalletDialog\AddWalletDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\TransactionDialog\DeleteTransactionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\WalletDialog\DeleteWalletDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\TransactionDialog\EditTransactionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\WalletDialog\EditWalletDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\ReportPage\ReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\TransactionPage\TransactionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\WaitingPage\WaitingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\ReportPage\AnnualPage\AnnualPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\MainPage\ReportPage\MonthlyPage\MonthlyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ButtonNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\CategoryDialog\AddCategoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\Dialog\CategoryDialog\EditCategoryDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
