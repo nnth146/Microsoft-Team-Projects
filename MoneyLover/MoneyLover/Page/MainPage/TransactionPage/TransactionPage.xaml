@@ -15,13 +15,18 @@
 
     <Page.Resources>
 
-        <XamlUICommand x:Name="DeleteTransactionCommand" />
-        <XamlUICommand x:Name="AddTransactionCommand" />
+        <XamlUICommand x:Name="DeleteTransactionCommand" Command="{Binding DeleteTransactionCommand}" />
+        <XamlUICommand x:Name="AddTransactionCommand" Command="{Binding AddNewTransactionCommand}" />
+        <XamlUICommand x:Name="EditTransactionCommand" Command="{Binding EditTransactionCommand}" />
 
         <CollectionViewSource
             x:Name="Transactions"
             IsSourceGrouped="True"
             Source="{Binding Vs}" />
+
+        <MenuFlyout x:Name="CommandFlyout">
+            <MenuFlyoutItem Icon="Edit" Text="Edit" Command="{StaticResource EditTransactionCommand}" CommandParameter="{Binding}" />
+        </MenuFlyout>
     </Page.Resources>
 
     <Grid RowSpacing="4">
@@ -39,7 +44,6 @@
         <Grid Grid.Row="1" Background="{StaticResource BackgroundPage}">
             <ListView
                 Grid.Row="1"
-                IsItemClickEnabled="True"
                 ItemsSource="{Binding Source={StaticResource Transactions}}"
                 SelectionMode="None">
 
@@ -84,6 +88,7 @@
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
                                 <Grid
+                                    DataContext="{Binding Key}"
                                     Margin="4,8,4,0"
                                     Padding="12,6,12,6"
                                     HorizontalAlignment="Stretch"
@@ -102,20 +107,31 @@
                                         VerticalAlignment="Top"
                                         Source="{Binding Source={StaticResource Icon Wallet}}" />
 
-                                    <StackPanel Grid.Column="1">
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
                                         <TextBlock
                                             FontWeight="SemiBold"
                                             Style="{StaticResource BaseTextBlockStyle}"
-                                            Text="Name of Wallet" />
-                                        <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
-                                            <Run Text="500,000$" />
-                                        </TextBlock>
-                                    </StackPanel>
+                                            Text="{Binding Name}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="2" Grid.Row="1">
+                                            <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
+                                                <Run Text="{Binding Money}" />
+                                            </TextBlock>
+                                            <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
+                                                <Run Text="{Binding Curency}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
 
                                     <Button
                                         Grid.Column="2"
                                         BorderThickness="0"
                                         Content="Add Transaction"
+                                        Command="{StaticResource AddTransactionCommand}"
+                                        CommandParameter="{Binding}"
                                         Resources="{Binding Source={StaticResource ResButton1}, Path=Resources}" />
                                 </Grid>
                             </DataTemplate>
@@ -125,37 +141,51 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ListViewItem Style="{StaticResource ListViewItemTransactionStyle}">
-                            <Grid ColumnSpacing="12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
+                        <ListViewItem Style="{StaticResource ListViewItemExpanded}" Padding="0" HorizontalContentAlignment="Stretch">
+                            <ListView ItemsSource="{Binding}" SelectionMode="None" IsItemClickEnabled="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ListViewItem Style="{StaticResource ListViewItemTransactionStyle}" ContextFlyout="{StaticResource CommandFlyout}">
+                                            <Grid ColumnSpacing="12">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
 
-                                <controls:ImageIcon
-                                    Height="24"
-                                    Margin="0,4,0,0"
-                                    VerticalAlignment="Top"
-                                    Source="{Binding Source={StaticResource Icon Eating}}" />
+                                                <controls:ImageIcon
+                                                    Height="24"
+                                                    Margin="0,4,0,0"
+                                                    VerticalAlignment="Top"
+                                                    Source="{Binding Source={StaticResource Icon Eating}}" />
 
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock FontWeight="SemiBold" Text="Name of transactions" />
-                                    <TextBlock Foreground="{StaticResource Color6}">
-                                        <Italic>
-                                            <Run Text="500,000$" />
-                                        </Italic>
-                                    </TextBlock>
-                                </StackPanel>
+                                                <Grid Grid.Column="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
+                                                    <TextBlock Foreground="{StaticResource Color6}" Grid.Row="1">
+                                                        <Italic>
+                                                            <Run Text="{Binding Money}" />
+                                                        </Italic>
+                                                    </TextBlock>
+                                                </Grid>
 
-                                <Button
-                                    Grid.Column="2"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Foreground="{StaticResource Color4}">
-                                    <icons:FluentSymbolIcon Symbol="Delete24" />
-                                </Button>
-                            </Grid>
+                                                <Button
+                                                    Command="{StaticResource DeleteTransactionCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Grid.Column="2"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Foreground="{StaticResource Color4}">
+                                                    <icons:FluentSymbolIcon Symbol="Delete24" />
+                                                </Button>
+                                            </Grid>
+                                        </ListViewItem>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </ListViewItem>
                     </DataTemplate>
                 </ListView.ItemTemplate>

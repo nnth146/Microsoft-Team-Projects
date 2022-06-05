@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:MoneyLover.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="AddNewCategoryDialog"
+    DataContext="{Binding Source={StaticResource VML}, Path=AddCategoryDialog}"
     CornerRadius="4"
     mc:Ignorable="d">
 
@@ -18,6 +20,7 @@
     <Grid
         MinWidth="300"
         Background="White"
+        RowSpacing="12"
         CornerRadius="4">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -38,25 +41,19 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBox Header="Name Category" PlaceholderText="Enter Name" />
-                <TextBox
-                    Grid.Row="1"
-                    Header="Description"
-                    PlaceholderText="Enter Description" />
+                <TextBox Header="Name Category" PlaceholderText="Enter Name" Text="{Binding NameCategory, Mode=TwoWay}" />
 
-
-                <Grid Grid.Row="2" RowSpacing="8">
+                <Grid Grid.Row="1" RowSpacing="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock Text="Select icon" />
                     <GridView
+                        SelectedItem="{Binding selectedIcon, Mode=TwoWay}"
+                        ItemsSource="{Binding icons}"
                         Grid.Row="1"
-                        Height="100"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="1"
                         CornerRadius="4">
@@ -65,15 +62,15 @@
                                 <ItemsWrapGrid MaximumRowsOrColumns="4" />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
-                        <GridView.Items>
-                            <GridViewItem
-                                MinWidth="20"
-                                MinHeight="20"
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <GridViewItem
                                 Margin="16"
                                 Style="{StaticResource GridViewItemExpanded}">
-                                <controls:ImageIcon Height="24" Source="{Binding Source={StaticResource Icon Budget}}" />
-                            </GridViewItem>
-                        </GridView.Items>
+                                    <controls:ImageIcon Width="24" Source="{Binding Name}" />
+                                </GridViewItem>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
                     </GridView>
                 </Grid>
             </Grid>
@@ -91,8 +88,9 @@
             <Button
                 x:Name="PrimaryButton"
                 HorizontalAlignment="Stretch"
-                Command="{Binding ElementName=ContentDialog, Path=PrimaryButtonCommand}"
                 Content="Add"
+                Click="HideDialog"
+                Command="{Binding AddNewCategoryCommand}"
                 Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
 
             <Button
@@ -101,6 +99,7 @@
                 HorizontalAlignment="Stretch"
                 Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
                 Content="Cancel"
+                Click="HideDialog"
                 Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
         </Grid>
     </Grid>

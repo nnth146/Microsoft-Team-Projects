@@ -20,7 +20,8 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListView Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+        <ListView ItemsSource="{Binding budgets}"
+            Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
             <ListView.Header>
                 <Image
                     Height="24"
@@ -28,26 +29,35 @@
                     Source="{Binding Source={StaticResource RobotBudget}}" />
             </ListView.Header>
 
-            <ListView.Items>
-                <ListViewItem Style="{StaticResource ListViewItemReportStyle}">
-                    <Grid ColumnSpacing="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <controls:ImageIcon
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListViewItem Style="{StaticResource ListViewItemReportStyle}">
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <controls:ImageIcon
                             Height="24"
                             Margin="0,4,0,0"
                             VerticalAlignment="Top"
                             Source="{Binding Source={StaticResource Icon Wallet}}" />
 
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="Name of wallet" />
-                            <TextBlock Text="1000$" />
-                        </StackPanel>
-                    </Grid>
-                </ListViewItem>
-            </ListView.Items>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding Name}" />
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2">
+                                    <TextBlock Text="{Binding Money}" />
+                                    <TextBlock Text="{Binding Curency}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </ListViewItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
 
         <Grid
@@ -64,7 +74,8 @@
             </Grid.RowDefinitions>
 
             <!--  Binding Command vào 2 nút.  -->
-            <local:ButtonNavigationView />
+            <local:ButtonNavigationView MonthlyButtonCommand="{Binding NaviMonthlyCommand}" MonthlyButtonCommandParameter="{x:Bind RPFrame}"
+                                        AnnualButtonCommand="{Binding NaviYearCommand}" AnnualButtonCommandParameter="{x:Bind RPFrame}" />
 
             <Frame
                 x:Name="RPFrame"

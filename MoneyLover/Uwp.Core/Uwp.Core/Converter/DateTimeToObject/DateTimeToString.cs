@@ -11,14 +11,14 @@ namespace Uwp.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            DateTime dateTime = (DateTime)value;
+            DateTimeOffset dateTime = (DateTimeOffset)value;
             return dateTime.ToString("MMMM, dd yyyy");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             string str = (string)value;
-            return DateTime.Parse(str);
+            return DateTimeOffset.Parse(str);
         }
     }
 }

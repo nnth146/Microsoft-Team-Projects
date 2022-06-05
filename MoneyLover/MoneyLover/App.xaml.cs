@@ -1,4 +1,6 @@
-﻿using MoneyLover.View;
+﻿using MoneyLover.Database;
+using MoneyLover.Model;
+using MoneyLover.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +36,33 @@ namespace MoneyLover
             this.Suspending += OnSuspending;
 
             ConfigureHelper.ConfigureAll();
+            DB.initDatabase();
+            if (DB.getCategoryByWhere("").Count == 0)
+            {
+                List<string> nameCategory = new List<string>()
+                {
+                    "Eating",
+                    "Daily Spending",
+                    "Clothes",
+                    "Exchange Fee",
+                    "Medical"
+                };
+                List<string> iconCategory = new List<string>()
+                {
+                    "/Assets/icons/Icon Eating.png",
+                    "/Assets/icons/Icon Daily Spending.png",
+                    "/Assets/icons/Icon Clothes.png",
+                    "/Assets/icons/Icon Exchange Fee.png",
+                    "/Assets/icons/Icon Medical.png"
+                };
+                for (int i = 0; i < nameCategory.Count; i++)
+                {
+                    Category category = new Category();
+                    category.Name = nameCategory[i];
+                    category.Icon = iconCategory[i];
+                    DB.addNewCategory(category);
+                }
+            }
         }
 
         /// <summary>

@@ -56,7 +56,7 @@ namespace MoneyLover.View
 
         // Using a DependencyProperty as the backing store for AnnualButtonCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AnnualButtonCommandProperty =
-            DependencyProperty.Register("AnnualButtonCommand", typeof(ICommand), typeof(ButtonNavigationView), new PropertyMetadata(0));
+            DependencyProperty.Register("AnnualButtonCommand", typeof(ICommand), typeof(ButtonNavigationView), new PropertyMetadata(null));
 
 
 

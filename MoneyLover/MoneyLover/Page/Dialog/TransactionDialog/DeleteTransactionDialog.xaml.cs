@@ -24,5 +24,10 @@ namespace MoneyLover.View.Dialog
         {
             this.InitializeComponent();
         }
+
+        private void HidDialog(object sender, RoutedEventArgs e)
+        {
+            DeleteTransaction.Hide();
+        }
     }
 }
