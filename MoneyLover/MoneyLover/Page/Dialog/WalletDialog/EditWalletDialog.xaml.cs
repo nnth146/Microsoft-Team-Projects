@@ -24,12 +24,9 @@ namespace MoneyLover.View.Dialog
             this.InitializeComponent();
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void HideDialog(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
+            EditBudgetDialog.Hide();
         }
     }
 }

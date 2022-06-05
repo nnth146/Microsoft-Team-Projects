@@ -8,6 +8,7 @@
     xmlns:local="using:MoneyLover.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     CornerRadius="4"
+    x:Name="AddNewTransactionDialog"
     DataContext="{Binding Source={StaticResource VML}, Path=AddTransactionDialog}"
     mc:Ignorable="d">
     <ContentDialog.Resources>
@@ -35,17 +36,19 @@
 
             <Grid Grid.Row="1" RowSpacing="12">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                
-                <TextBox Header="Name of transaction" PlaceholderText="Enter Name" />
+
+                <TextBox Header="Name of transaction" PlaceholderText="Enter Name" Text="{Binding NameTransaction, Mode=TwoWay}" />
                 
                 <controls:NumberBox
                     Grid.Row="1"
                     Header="Value"
+                    Value="{Binding MoneyTransaction, Mode=TwoWay}"
+                    Minimum="0"
                     PlaceholderText="Enter Money" />
                 <Grid Grid.Row="2" ColumnSpacing="24">
                     <Grid.ColumnDefinitions>
@@ -61,25 +64,32 @@
                         <ComboBox
                             HorizontalAlignment="Stretch"
                             Header="Category"
+                            ItemsSource="{Binding categories}"
+                            SelectedItem="{Binding CurrencyTransaction, Mode=TwoWay}"
                             Resources="{Binding Source={StaticResource ResComboBox}, Path=Resources}">
-                            <ComboBox.Items>
-                                <Grid ColumnSpacing="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ComboBoxItem Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <Grid ColumnSpacing="16" HorizontalAlignment="Left">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
 
-                                    <controls:ImageIcon Height="20" Source="{Binding Source={StaticResource Icon Eating}}" />
-
-                                    <TextBlock VerticalAlignment="Center" Text="Eating" />
-                                </Grid>
-                            </ComboBox.Items>
+                                            <controls:ImageIcon Width="20" Source="{Binding Icon}" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" />
+                                        </Grid>
+                                    </ComboBoxItem>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
 
                         <Button
                             Grid.Column="1"
-                            Padding="6"
+                            Padding="10"
                             VerticalAlignment="Bottom"
+                            Click="HideDialog"
+                            Command="{Binding AddCategoryCommand}"
                             Resources="{Binding Source={StaticResource ResButton1}, Path=Resources}">
                             <icons:FluentSymbolIcon Symbol="Add20Filled" />
                         </Button>
@@ -87,15 +97,20 @@
 
                     <Grid Grid.Column="1">
                         <CalendarDatePicker
+                            Height="64"
                             HorizontalAlignment="Stretch"
                             Header="Date"
+                            Date="{Binding Create_OnTransaction, Mode=TwoWay}"
+                            DateFormat="{}{day.integer}/{month.integer}/{year.full}"
                             Resources="{Binding Source={StaticResource ResCalendarDatePicker}, Path=Resources}" />
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="3">
-                    <RichEditBox
+                    <TextBox
+                        Text="{Binding NoteTransaction, Mode=TwoWay}"
                         x:Name="Description"
                         MinHeight="120"
+                        TextWrapping="Wrap"
                         Header="Note"
                         PlaceholderText="Description" />
                 </Grid>
@@ -114,8 +129,9 @@
             <Button
                 x:Name="PrimaryButton"
                 HorizontalAlignment="Stretch"
-                Command="{Binding ElementName=ContentDialog, Path=PrimaryButtonCommand}"
+                Command="{Binding AddTransactionCommnand}"
                 Content="Add"
+                Click="HideDialog"
                 Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
 
             <Button
@@ -124,6 +140,7 @@
                 HorizontalAlignment="Stretch"
                 Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
                 Content="Cancel"
+                Click="HideDialog"
                 Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
         </Grid>
     </Grid>

@@ -16,7 +16,7 @@ namespace MoneyLover.VML
         public CalendarPageViewModel CalendarPage => Ioc.Default.GetService<CalendarPageViewModel>();
         public DeleteTransactionDialogViewModel DeleteTransactionDialog => Ioc.Default.GetService<DeleteTransactionDialogViewModel>();
         public DeleteWalletDialogViewModel DeleteWalletDialog => Ioc.Default.GetService<DeleteWalletDialogViewModel>();
-        public EditTransactionViewModel EditTransaction => Ioc.Default.GetService<EditTransactionViewModel>();
+        public EditTransactionDialogViewModel EditTransaction => Ioc.Default.GetService<EditTransactionDialogViewModel>();
         public EditWalletDialogViewModel EditWalletDialog => Ioc.Default.GetService<EditWalletDialogViewModel>();
         public MainPageViewModel MainPage => Ioc.Default.GetService<MainPageViewModel>();
         public ReportPageViewModel ReportPage => Ioc.Default.GetService<ReportPageViewModel>();

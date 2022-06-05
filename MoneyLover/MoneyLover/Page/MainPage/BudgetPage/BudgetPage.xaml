@@ -14,12 +14,12 @@
 
     <Page.Resources>
 
-        <XamlUICommand x:Name="EditCommand" />
-        <XamlUICommand x:Name="DeleteCommand" />
+        <XamlUICommand x:Name="EditCommand" Command="{Binding EditBudgetCommand}" />
+        <XamlUICommand x:Name="DeleteCommand" Command="{Binding DeleteBudgetCommand}" />
 
         <MenuFlyout x:Name="CommandFlyout">
-            <MenuFlyoutItem Icon="Edit" Text="Edit" />
-            <MenuFlyoutItem Icon="Delete" Text="Delete" />
+            <MenuFlyoutItem Icon="Edit" Text="Edit" Command="{StaticResource EditCommand}" CommandParameter="{Binding}" />
+            <MenuFlyoutItem Icon="Delete" Text="Delete" Command="{StaticResource DeleteCommand}" CommandParameter="{Binding}" />
         </MenuFlyout>
 
     </Page.Resources>
@@ -38,7 +38,7 @@
             QueryIcon="Find" />
 
         <Grid Grid.Row="1" Background="{StaticResource BackgroundPage}">
-            <ListView SelectionMode="None">
+            <ListView SelectionMode="None" ItemsSource="{Binding budgets}">
                 <ListView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -52,97 +52,107 @@
                             Source="{Binding Source={StaticResource RobotBudget}}" />
                     </Grid>
                 </ListView.Header>
-                <ListView.Items>
-                    <ListViewItem Style="{StaticResource ListViewItemWalletStyle}">
-                        <controls:Expander
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Style="{StaticResource ListViewItemWalletStyle}">
+                            <controls:Expander
                             ContextFlyout="{StaticResource CommandFlyout}"
                             Resources="{Binding Source={StaticResource ResExpander}, Path=Resources}"
                             Style="{StaticResource ExpanderStyle}">
-                            <controls:Expander.Header>
+                                <controls:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <controls:ImageIcon Height="20" Source="{Binding Source={StaticResource Icon Wallet}}" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource Color2}"
+                                                Text="{Binding Name}" />
+                                        </StackPanel>
+
+                                        <StackPanel 
+                                            Grid.Column="1" Spacing="2"
+                                            HorizontalAlignment="Right" Orientation="Horizontal">
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource Color2}"
+                                                Text="{Binding Money}" />
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource Color2}"
+                                                Text="{Binding Curency}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </controls:Expander.Header>
+
                                 <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <controls:ImageIcon Height="20" Source="{Binding Source={StaticResource Icon Wallet}}" />
+
+                                    <StackPanel HorizontalAlignment="Stretch">
                                         <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontWeight="SemiBold"
-                                            Foreground="{StaticResource Color2}"
-                                            Text="Name Wallet" />
-                                    </StackPanel>
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        FontWeight="SemiBold"
-                                        Foreground="{StaticResource Color2}"
-                                        Text="1000$" />
-                                </Grid>
-                            </controls:Expander.Header>
-
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel HorizontalAlignment="Stretch">
-                                    <TextBlock
                                         HorizontalAlignment="Center"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource Color1}"
                                         Text="Created On" />
-                                    <TextBlock
+                                        <TextBlock
                                         HorizontalAlignment="Center"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource Color1}"
-                                        Text="June, 14 1998" />
-                                </StackPanel>
+                                        Text="{Binding Create_On, Converter={StaticResource DateTimeToString}}" />
+                                    </StackPanel>
 
-                                <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
-                                    <TextBlock
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
+                                        <TextBlock
                                         HorizontalAlignment="Center"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource Color1}"
                                         Text="Transaction" />
-                                    <TextBlock
+                                        <TextBlock
                                         HorizontalAlignment="Center"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource Color1}"
-                                        Text="10" />
-                                </StackPanel>
+                                        Text="{Binding Transactions.Count}" />
+                                    </StackPanel>
 
-                                <Border
+                                    <Border
                                     Grid.Row="1"
                                     Grid.ColumnSpan="2"
                                     Margin="0,8,0,0"
                                     BorderBrush="LightGray"
                                     BorderThickness="0,1,0,0">
-                                    <ListView HorizontalAlignment="Center" SelectionMode="None">
-                                        <ListView.Items>
-                                            <ListViewItem HorizontalContentAlignment="Stretch">
-                                                <StackPanel
-                                                    HorizontalAlignment="Left"
-                                                    Orientation="Horizontal"
-                                                    Spacing="8">
-                                                    <controls:ImageIcon Height="20" Source="ms-appx:Assets/Icons/Icon Eating.png" />
-                                                    <TextBlock Text="Eating" />
-                                                    <TextBlock Text="80%" />
-                                                </StackPanel>
-                                            </ListViewItem>
-                                        </ListView.Items>
-                                    </ListView>
-                                </Border>
-                            </Grid>
-                        </controls:Expander>
-                    </ListViewItem>
-                </ListView.Items>
+                                        <ListView HorizontalAlignment="Center" SelectionMode="None" Visibility="Collapsed" ItemsSource="{Binding Transactions}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ListViewItem HorizontalContentAlignment="Stretch">
+                                                        <StackPanel
+                                                        HorizontalAlignment="Left"
+                                                        Orientation="Horizontal"
+                                                        Spacing="8">
+                                                            <controls:ImageIcon Height="20" Source="ms-appx:Assets/Icons/Icon Eating.png" />
+                                                            <TextBlock Text="{Binding Name}" />
+                                                            <TextBlock Text="{Binding Money}" />
+                                                        </StackPanel>
+                                                    </ListViewItem>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Border>
+                                </Grid>
+                            </controls:Expander>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Grid>
 
@@ -152,6 +162,7 @@
             HorizontalAlignment="Stretch"
             Content="Add Wallet"
             CornerRadius="0"
+            Command="{Binding AddNewBudgetCommand}"
             Resources="{Binding Source={StaticResource ResButton1}, Path=Resources}" />
     </Grid>
 </Page>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:MoneyLover.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource VML}, Path=AnnualPage}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
@@ -32,6 +33,7 @@
             <Button
                 Padding="2"
                 Background="Transparent"
+                Command="{Binding PrevYearCommand}"
                 BorderThickness="0">
                 <FontIcon FontSize="14" Glyph="&#xE76B;" />
             </Button>
@@ -42,12 +44,13 @@
                 VerticalAlignment="Center"
                 FontSize="16"
                 FontWeight="SemiBold"
-                Text="2022 (01/2022 - 12/2022)" />
+                Text="{Binding textDate}" />
 
             <Button
                 Grid.Column="3"
                 Padding="2"
                 Background="Transparent"
+                Command="{Binding NextYearCommand}"
                 BorderThickness="0">
                 <FontIcon FontSize="14" Glyph="&#xE76C;" />
             </Button>
@@ -64,42 +67,47 @@
             Grid.Row="3"
             Background="{StaticResource ListViewBackground}"
             BorderBrush="{StaticResource BorderBrush}"
+            ItemsSource="{Binding objectTransaction}"
             BorderThickness="1"
             CornerRadius="4"
             IsItemClickEnabled="True"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             SelectionMode="None">
-            <ListView.Items>
-                <ListViewItem
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListViewItem
                     HorizontalContentAlignment="Stretch"
                     VerticalContentAlignment="Stretch"
                     Style="{StaticResource ListViewItemRevealStyle}">
-                    <Grid VerticalAlignment="Center" ColumnSpacing="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
+                        <Grid VerticalAlignment="Center" ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <controls:ImageIcon Height="20" Source="{Binding Source={StaticResource Icon Clothes}}" />
+                            <controls:ImageIcon Height="20" Source="{Binding icon}" />
 
-                        <TextBlock
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Text="Name of transaction" />
-                        <TextBlock
-                            Grid.Column="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Text="2000$" />
-                        <TextBlock
-                            Grid.Column="3"
-                            VerticalAlignment="Center"
-                            Text="30%" />
-                    </Grid>
-                </ListViewItem>
-            </ListView.Items>
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="{Binding transaction.Name}" />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Text="{Binding transaction.Money}" />
+                            <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="2">
+                                <TextBlock
+                                Text="{Binding percent}" />
+                                <TextBlock
+                                Text="%" />
+                            </StackPanel>
+                        </Grid>
+                    </ListViewItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
 
     </Grid>

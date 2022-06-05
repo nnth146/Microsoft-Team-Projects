@@ -6,7 +6,8 @@
     xmlns:local="using:MoneyLover.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sr="using:Uwp.Core.SR"
-    x:Name="ContentDialog"
+    x:Name="DeleteTransaction"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeleteTransactionDialog}"
     CornerRadius="4"
     mc:Ignorable="d">
     <ContentDialog.Resources>
@@ -43,8 +44,9 @@
             <Button
                 x:Name="PrimaryButton"
                 HorizontalAlignment="Stretch"
-                Command="{Binding ElementName=ContentDialog, Path=PrimaryButtonCommand}"
+                Command="{Binding DeleteTransactionCommand}"
                 Content="Delete"
+                Click="HidDialog"
                 Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
 
             <Button
@@ -53,6 +55,7 @@
                 HorizontalAlignment="Stretch"
                 Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
                 Content="Cancel"
+                Click="HidDialog"
                 Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
         </Grid>
     </Grid>

@@ -1,7 +1,10 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MoneyLover.Database;
+using MoneyLover.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -15,15 +18,41 @@ namespace MoneyLover.ViewModel
     {
         public ReportPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
-
+            budgets = DB.getBudgetByWhere("");
         }
 
-        private RelayCommand _testCommand;
-        public RelayCommand TestCommand => _testCommand ?? (_testCommand = new RelayCommand(Test));
+        public ObservableCollection<Budget> budgets { get; set; }
 
-        private void Test()
+        private RelayCommand<object> _naviMonthlyCommand;
+        public RelayCommand<object> NaviMonthlyCommand
         {
-            Debug.WriteLine("Called");
+            get
+            {
+                if(_naviMonthlyCommand == null)
+                {
+                    _naviMonthlyCommand = new RelayCommand<object>((frame) =>
+                    {
+                        navigationService.Navigate(frame, typeof(MonthlyPageViewModel));
+                    });
+                }
+                return _naviMonthlyCommand;
+            }
+        }
+
+        private RelayCommand<object> _naviYearCommand;
+        public RelayCommand<object> NaviYearCommand
+        {
+            get
+            {
+                if (_naviYearCommand == null)
+                {
+                    _naviYearCommand = new RelayCommand<object>((frame) =>
+                    {
+                        navigationService.Navigate(frame, typeof(AnnualPageViewModel));
+                    });
+                }
+                return _naviYearCommand;
+            }
         }
     }
 }
