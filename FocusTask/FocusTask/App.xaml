@@ -9,11 +9,29 @@
         <ResourceDictionary>
             <vml:ViewModelLocator x:Key="VML" />
 
+            <Style
+                x:Name="TaskItemStyle"
+                BasedOn="{StaticResource ListViewItemExpanded}"
+                TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0,0,0,8" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+
+            <Style
+                x:Name="NotificationItemStyle"
+                BasedOn="{StaticResource ListViewItemExpanded}"
+                TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0,0,0,8" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Uwp.Core/Converter/Converter.xaml" />
-                <ResourceDictionary Source="ms-appx:///Style/String.xaml" />
-                <ResourceDictionary Source="ms-appx:///Style/Color.xaml" />
                 <controls:XamlControlsResources />
+                <ResourceDictionary Source="ms-appx:///Uwp.Core/Converter/Converter.xaml" />
+                <ResourceDictionary Source="ms-appx:///FocusTask.Style/String.xaml" />
+                <ResourceDictionary Source="ms-appx:///FocusTask.Style/Color.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

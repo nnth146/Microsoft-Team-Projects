@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,31 +34,37 @@ namespace Uwp.Controls.SR
 			get => (Brush)_resources[_controlName + nameof(BackgroundPointerOver)];
 			set => _resources[_controlName + nameof(BackgroundPointerOver)] = value;
 		}
+
 		public Brush BackgroundPressed
 		{
 			get => (Brush)_resources[_controlName + nameof(BackgroundPressed)];
 			set => _resources[_controlName + nameof(BackgroundPressed)] = value;
 		}
+
 		public Brush BackgroundDisabled
 		{
 			get => (Brush)_resources[_controlName + nameof(BackgroundDisabled)];
 			set => _resources[_controlName + nameof(BackgroundDisabled)] = value;
 		}
+
 		public Brush ForegroundPointerOver
 		{
 			get => (Brush)_resources[_controlName + nameof(ForegroundPointerOver)];
 			set => _resources[_controlName + nameof(ForegroundPointerOver)] = value;
 		}
+
 		public Brush ForegroundPressed
 		{
 			get => (Brush)_resources[_controlName + nameof(ForegroundPressed)];
 			set => _resources[_controlName + nameof(ForegroundPressed)] = value;
 		}
+
 		public Brush ForegroundDisabled
 		{
 			get => (Brush)_resources[_controlName + nameof(ForegroundDisabled)];
 			set => _resources[_controlName + nameof(ForegroundDisabled)] = value;
 		}
+
 		public Brush BorderBrushPointerOver
 		{
 			get => (Brush)_resources[_controlName + nameof(BorderBrushPointerOver)];

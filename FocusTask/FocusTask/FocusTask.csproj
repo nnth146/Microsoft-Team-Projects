@@ -119,7 +119,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Messenger\Messenger.cs" />
     <Compile Include="Model\BasicItemModel.cs" />
     <Compile Include="Model\ColorModel.cs" />
     <Compile Include="Model\Database.cs" />
@@ -129,61 +128,52 @@
     <Compile Include="Model\SubTaskModel.cs" />
     <Compile Include="Model\TaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AddDialogViewModel.cs" />
-    <Compile Include="ViewModel\CompletedPageViewModel.cs" />
-    <Compile Include="ViewModel\DeleteDialogViewModel.cs" />
-    <Compile Include="ViewModel\EditDialogViewModel.cs" />
-    <Compile Include="ViewModel\MainPageViewMode.cs" />
-    <Compile Include="ViewModel\MydayPageViewModel.cs" />
-    <Compile Include="ViewModel\ProjectPageViewModel.cs" />
-    <Compile Include="ViewModel\SomedayPageViewModel.cs" />
-    <Compile Include="ViewModel\StaticPageViewModel.cs" />
-    <Compile Include="ViewModel\TomorrowPageViewModel.cs" />
-    <Compile Include="ViewModel\UpcomingPageViewModel.cs" />
-    <Compile Include="View\AboutPage.xaml.cs">
+    <Compile Include="Pages\Dialog\AddDialogViewModel.cs" />
+    <Compile Include="Pages\MainPage\CompletedPage\CompletedPageViewModel.cs" />
+    <Compile Include="Pages\Dialog\DeleteDialogViewModel.cs" />
+    <Compile Include="Pages\Dialog\EditDialogViewModel.cs" />
+    <Compile Include="Pages\MainPage\MainPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\MydayPage\MydayPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\ProjectPage\ProjectPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\SomedayPage\SomedayPageViewModel.cs" />
+    <Compile Include="Pages\StaticPage\StaticPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\TomorrowPage\TomorrowPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\UpcomingPage\UpcomingPageViewModel.cs" />
+    <Compile Include="Pages\MainPage\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CompletedPage.xaml.cs">
-      <DependentUpon>CompletedPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialog\AddDialog.xaml.cs">
+    <Compile Include="Pages\Dialog\AddDialog.xaml.cs">
       <DependentUpon>AddDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\DeleteDialog.xaml.cs">
+    <Compile Include="Pages\Dialog\DeleteDialog.xaml.cs">
       <DependentUpon>DeleteDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\EditDialog.xaml.cs">
+    <Compile Include="Pages\Dialog\EditDialog.xaml.cs">
       <DependentUpon>EditDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MainPage.xaml.cs">
+    <Compile Include="Pages\MainPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MydayPage.xaml.cs">
+    <Compile Include="Pages\MainPage\MydayPage\MydayPage.xaml.cs">
       <DependentUpon>MydayPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PrimeumPage.xaml.cs">
-      <DependentUpon>PrimeumPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ProjectPage.xaml.cs">
-      <DependentUpon>ProjectPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SettingPage.xaml.cs">
-      <DependentUpon>SettingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SomedayPage.xaml.cs">
-      <DependentUpon>SomedayPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\StaticPage.xaml.cs">
+    <Compile Include="Pages\StaticPage\StaticPage.xaml.cs">
       <DependentUpon>StaticPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TimePage.xaml.cs">
-      <DependentUpon>TimePage.xaml</DependentUpon>
+    <Compile Include="Pages\MainPage\CompletedPage\CompletedPage.xaml.cs">
+      <DependentUpon>CompletedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TomorrowPage.xaml.cs">
+    <Compile Include="Pages\MainPage\SomedayPage\SomedayPage.xaml.cs">
+      <DependentUpon>SomedayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPage\TomorrowPage\TomorrowPage.xaml.cs">
       <DependentUpon>TomorrowPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UpcomingPage.xaml.cs">
+    <Compile Include="Pages\MainPage\UpcomingPage\UpcomingPage.xaml.cs">
       <DependentUpon>UpcomingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPage\ProjectPage\ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -262,87 +252,72 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FocusTask.Model\FocusTask.Model.csproj">
-      <Project>{3be89728-3ff4-49c7-9844-7bbdf44c6b90}</Project>
-      <Name>FocusTask.Model</Name>
+    <ProjectReference Include="..\FocusTask.Messenger\FocusTask.Messenger.csproj">
+      <Project>{a8bdf12c-a251-4e28-a33c-78f3424448ed}</Project>
+      <Name>FocusTask.Messenger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FocusTask.Style\FocusTask.Style.csproj">
+      <Project>{3b89d861-5ea7-430b-a6af-1ebb52056c5c}</Project>
+      <Name>FocusTask.Style</Name>
     </ProjectReference>
     <ProjectReference Include="..\Uwp.Core\Uwp.Core\Uwp.Core.csproj">
-      <Project>{69691dc6-85d8-452e-a6cb-73e2e74a7b84}</Project>
+      <Project>{69691DC6-85D8-452E-A6CB-73E2E74A7B84}</Project>
       <Name>Uwp.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Style\Color.xaml">
+    <Page Include="Pages\MainPage\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\String.xaml">
+    <Page Include="Pages\Dialog\AddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AboutPage.xaml">
+    <Page Include="Pages\Dialog\DeleteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CompletedPage.xaml">
+    <Page Include="Pages\Dialog\EditDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\AddDialog.xaml">
+    <Page Include="Pages\MainPage\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\DeleteDialog.xaml">
+    <Page Include="Pages\MainPage\MydayPage\MydayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\EditDialog.xaml">
+    <Page Include="Pages\StaticPage\StaticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainPage.xaml">
+    <Page Include="Pages\MainPage\CompletedPage\CompletedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MydayPage.xaml">
+    <Page Include="Pages\MainPage\SomedayPage\SomedayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PrimeumPage.xaml">
+    <Page Include="Pages\MainPage\TomorrowPage\TomorrowPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProjectPage.xaml">
+    <Page Include="Pages\MainPage\UpcomingPage\UpcomingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SettingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SomedayPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\StaticPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TimePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TomorrowPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UpcomingPage.xaml">
+    <Page Include="Pages\MainPage\ProjectPage\ProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

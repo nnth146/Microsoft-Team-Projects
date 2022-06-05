@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace UWP.Core.Service
+namespace Uwp.Core.Service
 {
     public class DataObject
     {
@@ -32,7 +32,7 @@ namespace UWP.Core.Service
             liteCollection.Delete(DataObject.Id);
         }
 
-        public ObservableCollection<DataObject> GetDataObjects()
+        public IEnumerable<DataObject> GetDataObjects()
         {
             if(liteCollection == null)
             {

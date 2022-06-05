@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UWP.Core.Service
+namespace Uwp.Core.Service
 {
     public interface IDataService
     {
-        ObservableCollection<DataObject> GetDataObjects();
+        IEnumerable<DataObject> GetDataObjects();
         void InsertDataObject(DataObject DataObject);
         void UpdateDataObject(DataObject DataObject);
         void DeleteDataObject(DataObject DataObject);

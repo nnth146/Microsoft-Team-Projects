@@ -1,0 +1,140 @@
+﻿<Page
+    x:Class="FocusTask.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:FocusTask.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Height="900"
+    d:Width="1200"
+    Background="{StaticResource MainColor}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <Flyout x:Name="NotificationFlyout" Placement="BottomEdgeAlignedRight">
+            <Grid Width="300" RowSpacing="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    FontSize="16"
+                    Text="Notifications"
+                    TextAlignment="Center" />
+                <Border
+                    Grid.Row="1"
+                    Height="1"
+                    Background="{StaticResource GrayColor}" />
+                <ListView Grid.Row="2">
+                    <ListView.Items>
+                        <ListViewItem Style="{StaticResource NotificationItemStyle}">
+                            <Grid ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="Name"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    FontStyle="Italic"
+                                    Foreground="{StaticResource LightGrayColor}"
+                                    Text="Remember" />
+                            </Grid>
+                        </ListViewItem>
+                    </ListView.Items>
+                </ListView>
+            </Grid>
+        </Flyout>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource PrimaryColor}">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                </ResourceDictionary>
+            </Grid.Resources>
+
+            <TextBlock
+                Margin="16,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="{StaticResource WhiteColor}"
+                Text="{StaticResource Welcome}" />
+
+            <StackPanel
+                Margin="0,0,8,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button Background="Transparent" BorderThickness="0">
+                    <Image
+                        Width="20"
+                        Height="20"
+                        Source="{StaticResource PremiumIcon}" />
+                </Button>
+
+                <Grid>
+                    <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Flyout="{StaticResource NotificationFlyout}">
+                        <FontIcon Foreground="{StaticResource WhiteColor}" Glyph="&#xEDAC;" />
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Background="#F3F3F3" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <controls:NavigationView
+                    x:Name="NavTop"
+                    IsBackButtonVisible="Collapsed"
+                    IsPaneToggleButtonVisible="False"
+                    IsSettingsVisible="False">
+                    <controls:NavigationView.MenuItems>
+                        <controls:NavigationViewItem
+                            Padding="12"
+                            Content="My day"
+                            Tag="Myday">
+                            <controls:NavigationViewItem.Icon>
+                                <controls:ImageIcon Source="{StaticResource MyDayIcon}" />
+                            </controls:NavigationViewItem.Icon>
+                        </controls:NavigationViewItem>
+                    </controls:NavigationView.MenuItems>
+                </controls:NavigationView>
+            </Grid>
+
+            <Frame
+                x:Name="MPFrame"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                CornerRadius="8 0 8 8" />
+        </Grid>
+    </Grid>
+</Page>

@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 
-namespace UWP.Core.Service
+namespace Uwp.Core.Service
 {
     public interface IDialogService
     {
         Task showAsync(Type dialogViewModelType);
+        Task showAsync(Type dialogViewModelType, ICommand primaryCommand);
+        Task showAsync(Type dialogViewModelType, ICommand primaryCommand, ICommand secondaryCommand);
+
+        Task showMessageDialogAsync(string message);
+
+        Task showMessageContentDialogAsync(string message);
+
+        Task showQuestionDialogAsync(string message, ICommand primaryCommand);
+        Task showQuestionDialogAsync(string message, ICommand primaryCommand, ICommand secondaryCommand);
+
+        void HideCurrentDialog();
     }
 }

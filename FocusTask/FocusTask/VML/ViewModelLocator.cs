@@ -14,9 +14,9 @@ namespace FocusTask.VML
         public CompletedPageViewModel CompletedPage => Ioc.Default.GetService<CompletedPageViewModel>();
         public DeleteDialogViewModel DeleteDialog => Ioc.Default.GetService<DeleteDialogViewModel>();
         public EditDialogViewModel EditDialog => Ioc.Default.GetService<EditDialogViewModel>();
-        public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
-        public MainPageViewMode MainPageViewMode => Ioc.Default.GetService<MainPageViewMode>();
+        public MainPageViewModel MainPage => Ioc.Default.GetService<MainPageViewModel>();
         public MydayPageViewModel MydayPage => Ioc.Default.GetService<MydayPageViewModel>();
+        public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
         public SomedayPageViewModel SomedayPage => Ioc.Default.GetService<SomedayPageViewModel>();
         public StaticPageViewModel StaticPage => Ioc.Default.GetService<StaticPageViewModel>();
         public TomorrowPageViewModel TomorrowPage => Ioc.Default.GetService<TomorrowPageViewModel>();

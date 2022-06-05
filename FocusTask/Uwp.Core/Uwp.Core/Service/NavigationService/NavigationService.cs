@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace UWP.Core.Service
+namespace Uwp.Core.Service
 {
     public class NavigationService : INavigationService
     {
