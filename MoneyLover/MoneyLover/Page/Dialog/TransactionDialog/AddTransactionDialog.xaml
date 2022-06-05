@@ -7,8 +7,8 @@
     xmlns:icons="using:Fluent.Icons"
     xmlns:local="using:MoneyLover.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    CornerRadius="4"
     x:Name="AddNewTransactionDialog"
+    CornerRadius="4"
     DataContext="{Binding Source={StaticResource VML}, Path=AddTransactionDialog}"
     mc:Ignorable="d">
     <ContentDialog.Resources>
@@ -42,14 +42,17 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBox Header="Name of transaction" PlaceholderText="Enter Name" Text="{Binding NameTransaction, Mode=TwoWay}" />
-                
+                <TextBox
+                    Header="Name of transaction"
+                    PlaceholderText="Enter Name"
+                    Text="{Binding NameTransaction, Mode=TwoWay}" />
+
                 <controls:NumberBox
                     Grid.Row="1"
                     Header="Value"
-                    Value="{Binding MoneyTransaction, Mode=TwoWay}"
                     Minimum="0"
-                    PlaceholderText="Enter Money" />
+                    PlaceholderText="Enter Money"
+                    Value="{Binding MoneyTransaction, Mode=TwoWay}" />
                 <Grid Grid.Row="2" ColumnSpacing="24">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -65,21 +68,25 @@
                             HorizontalAlignment="Stretch"
                             Header="Category"
                             ItemsSource="{Binding categories}"
-                            SelectedItem="{Binding CurrencyTransaction, Mode=TwoWay}"
-                            Resources="{Binding Source={StaticResource ResComboBox}, Path=Resources}">
+                            Resources="{Binding Source={StaticResource ResComboBox}, Path=Resources}"
+                            SelectedItem="{Binding CurrencyTransaction, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <ComboBoxItem Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <Grid ColumnSpacing="16" HorizontalAlignment="Left">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
+                                    <Grid HorizontalAlignment="Left" ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
 
-                                            <controls:ImageIcon Width="20" Source="{Binding Icon}" VerticalAlignment="Center" />
-                                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" />
-                                        </Grid>
-                                    </ComboBoxItem>
+                                        <controls:ImageIcon
+                                            Width="20"
+                                            VerticalAlignment="Center"
+                                            Source="{Binding Icon}" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Name}" />
+                                    </Grid>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -99,20 +106,20 @@
                         <CalendarDatePicker
                             Height="64"
                             HorizontalAlignment="Stretch"
-                            Header="Date"
                             Date="{Binding Create_OnTransaction, Mode=TwoWay}"
                             DateFormat="{}{day.integer}/{month.integer}/{year.full}"
+                            Header="Date"
                             Resources="{Binding Source={StaticResource ResCalendarDatePicker}, Path=Resources}" />
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="3">
                     <TextBox
-                        Text="{Binding NoteTransaction, Mode=TwoWay}"
                         x:Name="Description"
                         MinHeight="120"
-                        TextWrapping="Wrap"
                         Header="Note"
-                        PlaceholderText="Description" />
+                        PlaceholderText="Description"
+                        Text="{Binding NoteTransaction, Mode=TwoWay}"
+                        TextWrapping="Wrap" />
                 </Grid>
             </Grid>
         </Grid>
@@ -129,18 +136,18 @@
             <Button
                 x:Name="PrimaryButton"
                 HorizontalAlignment="Stretch"
+                Click="HideDialog"
                 Command="{Binding AddTransactionCommnand}"
                 Content="Add"
-                Click="HideDialog"
                 Resources="{Binding Resources, Source={StaticResource ResButton1}}" />
 
             <Button
                 x:Name="SecondaryButton"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
+                Click="HideDialog"
                 Command="{Binding ElementName=ContentDialog, Path=SecondaryButtonCommand}"
                 Content="Cancel"
-                Click="HideDialog"
                 Resources="{Binding Resources, Source={StaticResource ResSecondaryButton}}" />
         </Grid>
     </Grid>

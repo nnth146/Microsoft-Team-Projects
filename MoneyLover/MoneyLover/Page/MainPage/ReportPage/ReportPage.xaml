@@ -20,8 +20,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding budgets}"
-            Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+        <ListView ItemsSource="{Binding budgets}" Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
             <ListView.Header>
                 <Image
                     Height="24"
@@ -38,10 +37,10 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <controls:ImageIcon
-                            Height="24"
-                            Margin="0,4,0,0"
-                            VerticalAlignment="Top"
-                            Source="{Binding Source={StaticResource Icon Wallet}}" />
+                                Height="24"
+                                Margin="0,4,0,0"
+                                VerticalAlignment="Top"
+                                Source="{Binding Source={StaticResource Icon Wallet}}" />
 
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
@@ -49,7 +48,10 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="{Binding Name}" />
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2">
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    Spacing="2">
                                     <TextBlock Text="{Binding Money}" />
                                     <TextBlock Text="{Binding Curency}" />
                                 </StackPanel>
@@ -74,8 +76,11 @@
             </Grid.RowDefinitions>
 
             <!--  Binding Command vào 2 nút.  -->
-            <local:ButtonNavigationView MonthlyButtonCommand="{Binding NaviMonthlyCommand}" MonthlyButtonCommandParameter="{x:Bind RPFrame}"
-                                        AnnualButtonCommand="{Binding NaviYearCommand}" AnnualButtonCommandParameter="{x:Bind RPFrame}" />
+            <local:ButtonNavigationView
+                AnnualButtonCommand="{Binding NaviYearCommand}"
+                AnnualButtonCommandParameter="{x:Bind RPFrame}"
+                MonthlyButtonCommand="{Binding NaviMonthlyCommand}"
+                MonthlyButtonCommandParameter="{x:Bind RPFrame}" />
 
             <Frame
                 x:Name="RPFrame"

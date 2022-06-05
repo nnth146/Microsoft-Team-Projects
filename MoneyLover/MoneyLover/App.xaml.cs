@@ -35,7 +35,6 @@ namespace MoneyLover
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            ConfigureHelper.ConfigureAll();
             DB.initDatabase();
             if (DB.getCategoryByWhere("").Count == 0)
             {
@@ -63,6 +62,8 @@ namespace MoneyLover
                     DB.addNewCategory(category);
                 }
             }
+
+            ConfigureHelper.ConfigureAll();
         }
 
         /// <summary>
