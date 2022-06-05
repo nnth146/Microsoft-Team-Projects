@@ -90,7 +90,9 @@
                                 Grid.Column="2"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="{Binding transaction.Money}" />
+                                TextTrimming="CharacterEllipsis"
+                                MaxWidth="200"
+                                Text="{Binding transaction.Money, Converter={StaticResource DoubleToString}}" />
                             <StackPanel
                                 Grid.Column="3"
                                 Orientation="Horizontal"

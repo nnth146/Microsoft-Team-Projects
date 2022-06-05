@@ -45,7 +45,7 @@ namespace MoneyLover.ViewModel
                 Budget budget = e.NewItems[0] as Budget;
                 DB.updateBudgetById(budget, budget.Id);
             }
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 Budget budget = e.OldItems[0] as Budget;
                 DB.deleteBudgetById(budget.Id);

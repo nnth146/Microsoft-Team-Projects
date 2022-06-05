@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MoneyLover.Database;
 using MoneyLover.Model;
 using System;
 using System.Collections.Generic;

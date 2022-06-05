@@ -89,8 +89,10 @@
                             <TextBlock
                                 Grid.Column="2"
                                 VerticalAlignment="Center"
+                                TextTrimming="CharacterEllipsis"
+                                MaxWidth="200"
                                 HorizontalAlignment="Center"
-                                Text="{Binding transaction.Money}" />
+                                Text="{Binding transaction.Money, Converter={StaticResource DoubleToString}}" />
                             <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="2">
                                 <TextBlock
                                 Text="{Binding percent}" />

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MoneyLover.Model;
+using MoneyLover.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,17 @@ namespace MoneyLover.View
         public MonthlyPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            MonthlyPageViewModel monthlyPageViewModel = DataContext as MonthlyPageViewModel;
+            if (monthlyPageViewModel != null)
+            {
+                Budget budget = e.Parameter as Budget;
+                monthlyPageViewModel.budget = budget;
+                monthlyPageViewModel.updateData();
+            }
         }
     }
 }

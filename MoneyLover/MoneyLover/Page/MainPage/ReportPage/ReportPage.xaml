@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="900"
+    Loaded="Page_Loaded"
     Background="Transparent"
     DataContext="{Binding Source={StaticResource VML}, Path=ReportPage}"
     mc:Ignorable="d">
@@ -20,7 +21,13 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding budgets}" Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+        <ListView x:Name="ListViewReport" ItemsSource="{Binding budgets}" SelectedItem="{Binding selectedBudget, Mode=TwoWay}" 
+                  Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="SelectionChanged">
+                    <core:InvokeCommandAction Command="{Binding BudgetChangedCommand}" CommandParameter="{x:Bind RPFrame}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <ListView.Header>
                 <Image
                     Height="24"
@@ -51,8 +58,8 @@
                                 <StackPanel
                                     Grid.Row="1"
                                     Orientation="Horizontal"
-                                    Spacing="2">
-                                    <TextBlock Text="{Binding Money}" />
+                                    Spacing="1">
+                                    <TextBlock Text="{Binding Money, Converter={StaticResource DoubleToString}}" TextTrimming="CharacterEllipsis" MaxLines="1" MaxWidth="220" />
                                     <TextBlock Text="{Binding Curency}" />
                                 </StackPanel>
                             </Grid>
@@ -84,8 +91,7 @@
 
             <Frame
                 x:Name="RPFrame"
-                Grid.Row="1"
-                Loaded="RPFrame_Loaded" />
+                Grid.Row="1" />
 
         </Grid>
     </Grid>
