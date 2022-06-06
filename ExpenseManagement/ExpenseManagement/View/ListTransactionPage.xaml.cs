@@ -36,7 +36,13 @@ namespace ExpenseManagement.View
             if (listTransactionPageViewModel != null)
             {
                 listTransactionPageViewModel.transactions = e.Parameter as ObservableCollection<Transaction>;
+                listTransactionPageViewModel.selectedSort = listTransactionPageViewModel.listSort[1];
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListViewSort.SelectedItem = ListViewSort.Items[1];
         }
     }
 }

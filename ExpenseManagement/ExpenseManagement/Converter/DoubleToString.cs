@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,12 @@ namespace UWP.Mvvm.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Double valueDouble = (Double)value;
-            return valueDouble.ToString();
+            NumberFormatInfo nfi = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone();
+            nfi.CurrencySymbol = "$";
+
+            string result = String.Format(nfi, "{0:C}", value);
+
+            return result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

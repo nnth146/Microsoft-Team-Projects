@@ -204,7 +204,9 @@
                                         FontSize="14"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource redColor}"
-                                        Text="{Binding moneyExpense}" />
+                                        TextTrimming="CharacterEllipsis"
+                                        MaxWidth="100"
+                                        Text="{Binding moneyExpense, Converter={StaticResource DoubleToString}}" />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -243,7 +245,9 @@
                                         FontSize="14"
                                         FontWeight="SemiBold"
                                         Foreground="{StaticResource greenColor}"
-                                        Text="{Binding moneyIncome}" />
+                                        TextTrimming="CharacterEllipsis"
+                                        MaxWidth="100"
+                                        Text="{Binding moneyIncome, Converter={StaticResource DoubleToString}}" />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -284,7 +288,8 @@
                                     FontSize="14"
                                     FontWeight="SemiBold"
                                     Foreground="{StaticResource orangeColor}"
-                                    Text="{Binding moneyReturn}" />
+                                    MaxWidth="100"
+                                    Text="{Binding moneyReturn, Converter={StaticResource DoubleToString}}" />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -579,7 +584,7 @@
                     Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ListViewItem>
+                            <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -641,7 +646,7 @@
                     Visibility="Collapsed">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ListViewItem>
+                            <ListViewItem HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -663,7 +668,8 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Foreground="{Binding colorStatus, Converter={StaticResource StringToColorBrush}}"
-                                        Text="{Binding Spending.Money}" />
+                                        MaxWidth="160"
+                                        Text="{Binding Spending.Money, Converter={StaticResource DoubleToString}}" TextTrimming="CharacterEllipsis" />
                                     <TextBlock
                                         Grid.Column="2"
                                         Margin="70,0,36,0"
@@ -710,7 +716,7 @@
                     </ListView.Header>-->
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ListViewItem>
+                            <ListViewItem HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -731,8 +737,9 @@
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         FontSize="14"
+                                        MaxWidth="160"
                                         Foreground="{Binding colorStatus, Converter={StaticResource StringToColorBrush}}"
-                                        Text="{Binding Spending.Money}" />
+                                        Text="{Binding Spending.Money, Converter={StaticResource DoubleToString}}" TextTrimming="CharacterEllipsis" />
                                     <TextBlock
                                         Grid.Column="2"
                                         Margin="70,0,36,0"
