@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,24 +14,68 @@ namespace Uwp.Core.Service
         private static DataContext _db = new DataContext();
         public static DataContext Db { get { return _db; } }
 
-        public void DeleteDataObject(DataObject DataObject)
+        public void AddMission(Mission mission)
         {
-            throw new NotImplementedException();
+            Db.Missions.Add(mission);
+            SaveChanges();
         }
 
-        public IEnumerable<DataObject> GetDataObjects()
+        public void AddProject(Project project)
         {
-            throw new NotImplementedException();
+            Db.Projects.Add(project);
+            SaveChanges();
         }
 
-        public void InsertDataObject(DataObject DataObject)
+        public void AddSubMission(SubMission submission)
         {
-            throw new NotImplementedException();
+            Db.Submissions.Add(submission);
+            SaveChanges();
         }
 
-        public void UpdateDataObject(DataObject DataObject)
+        public ObservableCollection<Mission> GetMissions()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Mission>(Db.Missions
+                .Include(x=>x.Project)
+                .ToList());
+        }
+
+        public ObservableCollection<Project> GetProjects()
+        {
+            return new ObservableCollection<Project>(Db.Projects
+                .Include(x=>x.Missions)
+                .ToList());
+        }
+
+        public ObservableCollection<SubMission> GetSubMissions()
+        {
+            return new ObservableCollection<SubMission>(Db.Submissions.ToList());
+        }
+
+        public void RemoveMission(Mission mission)
+        {
+            Db.Missions.Remove(mission);
+            SaveChanges();
+        }
+
+        public void RemoveProject(Project project)
+        {
+            Db.Projects.Remove(project);
+            SaveChanges();
+        }
+
+        public void RemoveSubMission(SubMission mission)
+        {
+            Db.Submissions.Remove(mission);
+        }
+
+        public void SaveChanges()
+        {
+            Db.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await Db.SaveChangesAsync();
         }
     }
 }

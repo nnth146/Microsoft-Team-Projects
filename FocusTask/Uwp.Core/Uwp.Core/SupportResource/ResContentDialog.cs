@@ -29,90 +29,90 @@ namespace Uwp.Core.SR
 			}
 		}
 		private const string _controlName = "ContentDialog";
-		public double ContentDialogBorderWidth
+		public double BorderWidth
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogBorderWidth)];
-			set => _resources[_controlName + nameof(ContentDialogBorderWidth)] = value;
+			get => (double)_resources[_controlName + nameof(BorderWidth)];
+			set => _resources[_controlName + nameof(BorderWidth)] = value;
 		}
-		public Thickness ContentDialogButton1HostMargin
+		public Thickness Button1HostMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogButton1HostMargin)];
-			set => _resources[_controlName + nameof(ContentDialogButton1HostMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(Button1HostMargin)];
+			set => _resources[_controlName + nameof(Button1HostMargin)] = value;
 		}
-		public Thickness ContentDialogButton2HostMargin
+		public Thickness Button2HostMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogButton2HostMargin)];
-			set => _resources[_controlName + nameof(ContentDialogButton2HostMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(Button2HostMargin)];
+			set => _resources[_controlName + nameof(Button2HostMargin)] = value;
 		}
-		public Thickness ContentDialogContentMargin
+		public Thickness ContentMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogContentMargin)];
-			set => _resources[_controlName + nameof(ContentDialogContentMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ContentMargin)];
+			set => _resources[_controlName + nameof(ContentMargin)] = value;
 		}
-		public Thickness ContentDialogContentScrollViewerMargin
+		public Thickness ContentScrollViewerMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogContentScrollViewerMargin)];
-			set => _resources[_controlName + nameof(ContentDialogContentScrollViewerMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(ContentScrollViewerMargin)];
+			set => _resources[_controlName + nameof(ContentScrollViewerMargin)] = value;
 		}
-		public Thickness ContentDialogCommandSpaceMargin
+		public Thickness CommandSpaceMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogCommandSpaceMargin)];
-			set => _resources[_controlName + nameof(ContentDialogCommandSpaceMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(CommandSpaceMargin)];
+			set => _resources[_controlName + nameof(CommandSpaceMargin)] = value;
 		}
-		public Thickness ContentDialogTitleMargin
+		public Thickness TitleMargin
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogTitleMargin)];
-			set => _resources[_controlName + nameof(ContentDialogTitleMargin)] = value;
+			get => (Thickness)_resources[_controlName + nameof(TitleMargin)];
+			set => _resources[_controlName + nameof(TitleMargin)] = value;
 		}
-		public Thickness ContentDialogPadding
+		public Thickness Padding
 		{
-			get => (Thickness)_resources[_controlName + nameof(ContentDialogPadding)];
-			set => _resources[_controlName + nameof(ContentDialogPadding)] = value;
+			get => (Thickness)_resources[_controlName + nameof(Padding)];
+			set => _resources[_controlName + nameof(Padding)] = value;
 		}
-		public double ContentDialogMinWidth
+		public double MinWidth
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogMinWidth)];
-			set => _resources[_controlName + nameof(ContentDialogMinWidth)] = value;
+			get => (double)_resources[_controlName + nameof(MinWidth)];
+			set => _resources[_controlName + nameof(MinWidth)] = value;
 		}
-		public double ContentDialogMaxWidth
+		public double MaxWidth
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogMaxWidth)];
-			set => _resources[_controlName + nameof(ContentDialogMaxWidth)] = value;
+			get => (double)_resources[_controlName + nameof(MaxWidth)];
+			set => _resources[_controlName + nameof(MaxWidth)] = value;
 		}
-		public double ContentDialogMinHeight
+		public double MinHeight
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogMinHeight)];
-			set => _resources[_controlName + nameof(ContentDialogMinHeight)] = value;
+			get => (double)_resources[_controlName + nameof(MinHeight)];
+			set => _resources[_controlName + nameof(MinHeight)] = value;
 		}
-		public double ContentDialogMaxHeight
+		public double MaxHeight
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogMaxHeight)];
-			set => _resources[_controlName + nameof(ContentDialogMaxHeight)] = value;
+			get => (double)_resources[_controlName + nameof(MaxHeight)];
+			set => _resources[_controlName + nameof(MaxHeight)] = value;
 		}
-		public double ContentDialogButtonMinWidth
+		public double ButtonMinWidth
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogButtonMinWidth)];
-			set => _resources[_controlName + nameof(ContentDialogButtonMinWidth)] = value;
+			get => (double)_resources[_controlName + nameof(ButtonMinWidth)];
+			set => _resources[_controlName + nameof(ButtonMinWidth)] = value;
 		}
-		public double ContentDialogButtonMaxWidth
+		public double ButtonMaxWidth
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogButtonMaxWidth)];
-			set => _resources[_controlName + nameof(ContentDialogButtonMaxWidth)] = value;
+			get => (double)_resources[_controlName + nameof(ButtonMaxWidth)];
+			set => _resources[_controlName + nameof(ButtonMaxWidth)] = value;
 		}
-		public double ContentDialogButtonMinHeight
+		public double ButtonMinHeight
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogButtonMinHeight)];
-			set => _resources[_controlName + nameof(ContentDialogButtonMinHeight)] = value;
+			get => (double)_resources[_controlName + nameof(ButtonMinHeight)];
+			set => _resources[_controlName + nameof(ButtonMinHeight)] = value;
 		}
-		public double ContentDialogButtonHeight
+		public double ButtonHeight
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogButtonHeight)];
-			set => _resources[_controlName + nameof(ContentDialogButtonHeight)] = value;
+			get => (double)_resources[_controlName + nameof(ButtonHeight)];
+			set => _resources[_controlName + nameof(ButtonHeight)] = value;
 		}
-		public double ContentDialogTitleMaxHeight
+		public double TitleMaxHeight
 		{
-			get => (double)_resources[_controlName + nameof(ContentDialogTitleMaxHeight)];
-			set => _resources[_controlName + nameof(ContentDialogTitleMaxHeight)] = value;
+			get => (double)_resources[_controlName + nameof(TitleMaxHeight)];
+			set => _resources[_controlName + nameof(TitleMaxHeight)] = value;
 		}
 	}
 

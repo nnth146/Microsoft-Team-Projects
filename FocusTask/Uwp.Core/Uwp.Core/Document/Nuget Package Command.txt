@@ -1,23 +1,31 @@
+
+<-- MainProject -->
 Install-Package Microsoft.UI.Xaml
 Install-Package Microsoft.Extensions.DependencyInjection
 Install-Package Microsoft.Xaml.Behaviors.Uwp.Managed
 Install-Package Microsoft.Toolkit.Mvvm
+Install-Package Fluent.Icons
 Install-Package Telerik.UI.for.UniversalWindowsPlatform
 
-//Sqlite
+<-- Project.Style -->
+Install-Package Fluent.Icons
+Install-Package Microsoft.UI.Xaml
+
+<--Project.Messenger -->
+Install-Package Microsoft.Toolkit.Mvvm
+
+<-- Uwp.SQLite.Model -->
+Install-Package Microsoft.Toolkit.Mvvm
 Install-Package Microsoft.EntityFrameworkCore.Sqlite -Version 3.1.25
+
+<-- Console --> 
 Install-Package Microsoft.EntityFrameworkCore.Tools -Version 3.1.25
 Install-Package Microsoft.EntityFrameworkCore.Design -Version 3.1.25
 
-dotnet ef migrations remove Migrationv1 -s DummyConsole -p Uwp.Model
+<-- Migration -->
+dotnet ef migrations remove Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
+dotnet ef migrations add Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
+dotnet ef database update Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
 
-L?nh này ???c s? d?ng sau khi setup xong t?t c? model
-dotnet ef migrations add Migrationv1 -s DummyConsole -p Uwp.Model
-
-
-dotnet ef database update Migrationv1 -s DummyConsole -p Uwp.Model
-
-//LiteDB
+<-- LiteDB -->
 Install-Package LiteDB
-
-Install-Package Fluent.Icons

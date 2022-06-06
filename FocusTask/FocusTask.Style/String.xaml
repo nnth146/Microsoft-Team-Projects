@@ -40,4 +40,7 @@
 
     <x:String x:Key="UncompleledGlyph">&#xE739;</x:String>
     <x:String x:Key="CompleledGlyph">&#xE73A;</x:String>
+    <x:String x:Key="CheckboxFillGlyph">&#xe73b;</x:String>
+    <x:String x:Key="AcceptGlyph">&#xe8fb;</x:String>
+    <x:String x:Key="GiftGlyph">&#xF133;</x:String>
 </ResourceDictionary>

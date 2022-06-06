@@ -119,14 +119,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\BasicItemModel.cs" />
-    <Compile Include="Model\ColorModel.cs" />
-    <Compile Include="Model\Database.cs" />
-    <Compile Include="Model\PriorityModel.cs" />
-    <Compile Include="Model\ProjectModel.cs" />
-    <Compile Include="Model\ProjectTaskModel.cs" />
-    <Compile Include="Model\SubTaskModel.cs" />
-    <Compile Include="Model\TaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pages\Dialog\AddDialogViewModel.cs" />
     <Compile Include="Pages\MainPage\CompletedPage\CompletedPageViewModel.cs" />
@@ -263,6 +255,10 @@
     <ProjectReference Include="..\Uwp.Core\Uwp.Core\Uwp.Core.csproj">
       <Project>{69691DC6-85D8-452E-A6CB-73E2E74A7B84}</Project>
       <Name>Uwp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Uwp.Model\Uwp.SQLite.Model.csproj">
+      <Project>{56643f6b-285a-477c-b7b0-7ed1e9701366}</Project>
+      <Name>Uwp.SQLite.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

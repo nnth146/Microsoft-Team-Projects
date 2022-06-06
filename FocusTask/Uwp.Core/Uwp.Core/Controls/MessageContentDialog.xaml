@@ -6,6 +6,8 @@
     xmlns:local="using:Uwp.Core.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Notification"
+    Background="White"
+    CornerRadius="4"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     PrimaryButtonText="Okay"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"

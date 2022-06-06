@@ -1,5 +1,4 @@
-﻿using FocusTask.Models;
-using FocusTask.View;
+﻿using FocusTask.View;
 using System;
 using System.Collections.Generic;
 using System.IO;

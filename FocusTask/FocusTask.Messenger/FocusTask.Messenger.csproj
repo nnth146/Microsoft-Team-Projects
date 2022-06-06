@@ -132,6 +132,12 @@
       <Version>7.1.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uwp.Model\Uwp.SQLite.Model.csproj">
+      <Project>{56643F6B-285A-477C-B7B0-7ED1E9701366}</Project>
+      <Name>Uwp.SQLite.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

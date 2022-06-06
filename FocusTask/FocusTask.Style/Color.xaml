@@ -39,4 +39,10 @@
     <SolidColorBrush x:Key="Color18">#B69A8F</SolidColorBrush>
     <SolidColorBrush x:Key="Color19">#62E0C5</SolidColorBrush>
     <SolidColorBrush x:Key="Color20">#4E4E4E</SolidColorBrush>
+
+    <SolidColorBrush
+        x:Key="MainBorderBrush"
+        Opacity="0.3"
+        Color="Black" />
+
 </ResourceDictionary>

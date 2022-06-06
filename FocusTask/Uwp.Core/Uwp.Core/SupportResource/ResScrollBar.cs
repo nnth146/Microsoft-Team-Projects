@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace WinUI3.Controls.SR
+namespace Uwp.Core.SR
 {
 	public class ResScrollBar : DependencyObject
 	{

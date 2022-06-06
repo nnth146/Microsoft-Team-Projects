@@ -1,4 +1,4 @@
-﻿using FocusTask.Models;
+﻿using FocusTask.Messenger;
 using FocusTask.View.Dialog;
 using FocusTask.ViewModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -31,6 +31,29 @@ namespace FocusTask.View
         public MainPage()
         {
             this.InitializeComponent();
+
+            WeakReferenceMessenger.Default.Register<MPFrameRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(MPFrame);
+            });
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            WeakReferenceMessenger.Default.UnregisterAll(DataContext);
+        }
+
+        private void NavView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            NavSelectionChangedCommand.Command.Execute(args.SelectedItem);
+        }
+
+        private void Projects_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            ProjectsSelectionChangedCommand.Command.Execute(args.SelectedItem);
         }
     }
 }

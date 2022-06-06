@@ -44,7 +44,7 @@ namespace Uwp.Core.Helper
             helper.ConfigureServices();
 
             //Nếu sử dụng Uwp.SQLite.Model thì bỏ ghi chú
-            //helper.ConfigureDatabase();
+            helper.ConfigureDatabase();
 
             //Tự động tạo biến cho khi chạy chương trình ViewModelLocator
             helper.GenerateViewModelLocator(helper._typeViewModelList);

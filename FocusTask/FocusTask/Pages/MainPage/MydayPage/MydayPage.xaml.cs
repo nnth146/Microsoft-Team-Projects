@@ -1,5 +1,4 @@
-﻿using FocusTask.Models;
-using FocusTask.ViewModel;
+﻿using FocusTask.ViewModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;

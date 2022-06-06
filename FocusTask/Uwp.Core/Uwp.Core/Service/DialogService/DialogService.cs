@@ -65,6 +65,32 @@ namespace Uwp.Core.Service
             await dialog.ShowAsync();
         }
 
+        public async Task showAsync(Type dialogViewModelType, ICommand primaryCommand, object primaryCommandParameter)
+        {
+            var dialog = Activator.CreateInstance(Dialogs[dialogViewModelType]) as ContentDialog;
+
+            dialog.PrimaryButtonCommand = primaryCommand;
+            dialog.PrimaryButtonCommandParameter = primaryCommandParameter;
+
+            _currentDialog = dialog;
+
+            await dialog.ShowAsync();
+        }
+
+        public async Task showAsync(Type dialogViewModelType, ICommand primaryCommand, ICommand secondaryCommand, object primaryCommandParameter, object secondaryCommandParameter)
+        {
+            var dialog = Activator.CreateInstance(Dialogs[dialogViewModelType]) as ContentDialog;
+
+            dialog.PrimaryButtonCommand = primaryCommand;
+            dialog.PrimaryButtonCommandParameter = primaryCommandParameter;
+            dialog.SecondaryButtonCommand = secondaryCommand;
+            dialog.SecondaryButtonCommandParameter = secondaryCommandParameter;
+
+            _currentDialog = dialog;
+
+            await dialog.ShowAsync();
+        }
+
         public void HideCurrentDialog()
         {
             _currentDialog.Hide();
@@ -101,6 +127,31 @@ namespace Uwp.Core.Service
             _questionDialog.Content = message;
             _questionDialog.PrimaryButtonCommand = primaryCommand;
             _questionDialog.SecondaryButtonCommand = secondaryCommand;
+
+            _currentDialog = _questionDialog;
+
+            await _questionDialog.ShowAsync();
+        }
+
+
+        public async Task showQuestionDialogAsync(string message, ICommand primaryCommand, object primaryCommandParameter)
+        {
+            _questionDialog.Content = message;
+            _questionDialog.PrimaryButtonCommand = primaryCommand;
+            _questionDialog.PrimaryButtonCommandParameter = primaryCommandParameter;
+
+            _currentDialog = _questionDialog;
+
+            await _questionDialog.ShowAsync();
+        }
+
+        public async Task showQuestionDialogAsync(string message, ICommand primaryCommand, ICommand secondaryCommand, object primaryCommandParameter, object secondaryCommandParameter)
+        {
+            _questionDialog.Content = message;
+            _questionDialog.PrimaryButtonCommand = primaryCommand;
+            _questionDialog.PrimaryButtonCommandParameter = primaryCommandParameter;
+            _questionDialog.SecondaryButtonCommand = secondaryCommand;
+            _questionDialog.SecondaryButtonCommandParameter = secondaryCommandParameter;
 
             _currentDialog = _questionDialog;
 

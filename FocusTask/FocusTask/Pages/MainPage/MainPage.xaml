@@ -5,18 +5,34 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:FocusTask.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:Height="900"
     d:Width="1200"
     Background="{StaticResource MainColor}"
+    DataContext="{Binding Source={StaticResource VML}, Path=MainPage}"
     mc:Ignorable="d">
 
     <Page.Resources>
 
+        <XamlUICommand x:Name="NavSelectionChangedCommand" Command="{Binding NavSelectionChangedCommand}" />
+        <XamlUICommand x:Name="ProjectsSelectionChangedCommand" Command="{Binding ProjectsSelectionChangedCommand}" />
+        <XamlUICommand x:Name="EditProjectCommand" Command="{Binding EditProjectCommand}" />
+        <XamlUICommand x:Name="RemoveProjectCommand" Command="{Binding RemoveProjectCommand}" />
+
         <Flyout x:Name="NotificationFlyout" Placement="BottomEdgeAlignedRight">
-            <Grid Width="300" RowSpacing="12">
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+            <Grid
+                MinWidth="200"
+                MaxWidth="300"
+                RowSpacing="12">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -30,12 +46,16 @@
                     Grid.Row="1"
                     Height="1"
                     Background="{StaticResource GrayColor}" />
-                <ListView Grid.Row="2">
+                <ListView
+                    Grid.Row="2"
+                    IsItemClickEnabled="True"
+                    SelectionMode="None">
                     <ListView.Items>
                         <ListViewItem Style="{StaticResource NotificationItemStyle}">
-                            <Grid ColumnSpacing="16">
+                            <Grid ColumnSpacing="8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock
@@ -50,6 +70,15 @@
                                     FontStyle="Italic"
                                     Foreground="{StaticResource LightGrayColor}"
                                     Text="Remember" />
+
+                                <Button
+                                    Grid.Column="2"
+                                    Padding="0"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="{StaticResource PurpleColor}">
+                                    <FontIcon FontSize="16" Glyph="{StaticResource AcceptGlyph}" />
+                                </Button>
                             </Grid>
                         </ListViewItem>
                     </ListView.Items>
@@ -57,6 +86,18 @@
             </Grid>
         </Flyout>
 
+        <MenuFlyout x:Name="ProjectCommandFlyout">
+            <MenuFlyoutItem
+                Command="{StaticResource EditProjectCommand}"
+                CommandParameter="{Binding}"
+                Icon="Edit"
+                Text="Edit" />
+            <MenuFlyoutItem
+                Command="{StaticResource RemoveProjectCommand}"
+                CommandParameter="{Binding}"
+                Icon="Delete"
+                Text="Delete" />
+        </MenuFlyout>
     </Page.Resources>
 
     <Grid>
@@ -83,11 +124,11 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <Button Background="Transparent" BorderThickness="0">
-                    <Image
-                        Width="20"
-                        Height="20"
-                        Source="{StaticResource PremiumIcon}" />
+                <Button
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="{StaticResource WhiteColor}">
+                    <FontIcon Glyph="{StaticResource GiftGlyph}" />
                 </Button>
 
                 <Grid>
@@ -101,33 +142,88 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" Visibility="Visible">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Background="#F3F3F3" RowSpacing="8">
+
+            <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                
+
                 <controls:NavigationView
-                    x:Name="NavTop"
+                    x:Name="NavView"
+                    Background="{StaticResource MainColor}"
+                    BorderBrush="{StaticResource MainBorderBrush}"
+                    BorderThickness="0,0,0,1"
                     IsBackButtonVisible="Collapsed"
                     IsPaneToggleButtonVisible="False"
-                    IsSettingsVisible="False">
-                    <controls:NavigationView.MenuItems>
-                        <controls:NavigationViewItem
-                            Padding="12"
-                            Content="My day"
-                            Tag="Myday">
-                            <controls:NavigationViewItem.Icon>
-                                <controls:ImageIcon Source="{StaticResource MyDayIcon}" />
-                            </controls:NavigationViewItem.Icon>
-                        </controls:NavigationViewItem>
-                    </controls:NavigationView.MenuItems>
+                    IsSettingsVisible="False"
+                    MenuItemsSource="{Binding NavItems}"
+                    SelectedItem="{Binding SelectedNavItem, Mode=TwoWay}"
+                    SelectionChanged="NavView_SelectionChanged">
+                    <controls:NavigationView.MenuItemTemplate>
+                        <DataTemplate>
+                            <controls:NavigationViewItem Content="{Binding Content}" FontWeight="SemiBold">
+                                <controls:NavigationViewItem.Icon>
+                                    <controls:ImageIcon Source="{Binding Icon}" />
+                                </controls:NavigationViewItem.Icon>
+
+                                <controls:NavigationViewItem.InfoBadge>
+                                    <controls:InfoBadge Value="0" />
+                                </controls:NavigationViewItem.InfoBadge>
+                            </controls:NavigationViewItem>
+                        </DataTemplate>
+                    </controls:NavigationView.MenuItemTemplate>
                 </controls:NavigationView>
+
+                <controls:NavigationView
+                    x:Name="Projects"
+                    Grid.Row="1"
+                    Background="{StaticResource MainColor}"
+                    BorderBrush="{StaticResource MainBorderBrush}"
+                    BorderThickness="0,0,0,1"
+                    IsBackButtonVisible="Collapsed"
+                    IsPaneToggleButtonVisible="False"
+                    IsSettingsVisible="False"
+                    MenuItemsSource="{Binding Projects}"
+                    SelectionChanged="Projects_SelectionChanged">
+                    <controls:NavigationView.MenuItemTemplate>
+                        <DataTemplate>
+                            <controls:NavigationViewItem
+                                Content="{Binding Name}"
+                                ContextFlyout="{StaticResource ProjectCommandFlyout}"
+                                FontWeight="SemiBold">
+                                <controls:NavigationViewItem.Icon>
+                                    <FontIcon Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                                </controls:NavigationViewItem.Icon>
+
+                                <controls:NavigationViewItem.InfoBadge>
+                                    <controls:InfoBadge DataContext="{Binding Missions}" Value="{Binding Count}" />
+                                </controls:NavigationViewItem.InfoBadge>
+                            </controls:NavigationViewItem>
+                        </DataTemplate>
+                    </controls:NavigationView.MenuItemTemplate>
+                </controls:NavigationView>
+
+                <Button
+                    Grid.Row="2"
+                    Padding="10"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    Command="{Binding AddProjectCommand}"
+                    CornerRadius="4,4,0,0"
+                    Foreground="{StaticResource AddButtonForeground}"
+                    Resources="{Binding Source={StaticResource ResAddProjectButton}, Path=Resources}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <icons:FluentSymbolIcon Symbol="Add20Filled" />
+                        <TextBlock Text="Add Project" />
+                    </StackPanel>
+                </Button>
             </Grid>
 
             <Frame

@@ -9,40 +9,45 @@
     xmlns:local="using:FocusTask.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    d:DesignHeight="900"
+    d:DesignWidth="1200"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource VML}, Path=MydayPage}"
     mc:Ignorable="d">
 
     <Page.Resources>
 
-        <Flyout x:Name="ChooseProjectFlyout" Placement="BottomEdgeAlignedRight">
-            <ListView x:Name="ListViewProject">
-                <ListView.Items>
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Grid
-                                Width="16"
-                                Height="16"
-                                Background="{Binding color, Converter={StaticResource StringToColorBrush}}"
-                                CornerRadius="4" />
-                            <TextBlock Text="{Binding name}" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView.Items>
-            </ListView>
-        </Flyout>
+        <XamlUICommand x:Name="TaskItemClickCommand" Command="{Binding TaskItemClickCommand}" />
+        <XamlUICommand x:Name="RemoveMissonCommand" Command="{Binding RemoveMissonCommand}" />
+        <XamlUICommand x:Name="AddMissionCommand" Command="{Binding AddMissionCommand}" />
+        <XamlUICommand x:Name="ProjectChosenCommand" Command="{Binding ProjectChosenCommand}" />
 
-        <Flyout x:Name="ChangeProjectFlyout" Placement="BottomEdgeAlignedRight">
-            <ListView>
+        <Flyout
+            x:Name="ChooseProjectFlyout"
+            FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}"
+            Placement="BottomEdgeAlignedRight">
+            <ListView
+                MaxWidth="200"
+                CornerRadius="4"
+                IsItemClickEnabled="True"
+                ItemsSource="{Binding Projects}"
+                SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ListViewItem>
-                            <StackPanel Orientation="Horizontal" Spacing="12">
-                                <Grid
-                                    Width="16"
-                                    Height="16"
-                                    CornerRadius="4" />
-                                <TextBlock Text="Name" />
+                        <ListViewItem Style="{StaticResource ProjectItemStyle}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource ProjectChosenCommand}}" CommandParameter="{Binding}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <Grid CornerRadius="4">
+                                    <FontIcon Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                                </Grid>
+                                <TextBlock Text="{Binding Name}" />
                             </StackPanel>
                         </ListViewItem>
                     </DataTemplate>
@@ -50,20 +55,54 @@
             </ListView>
         </Flyout>
 
-        <Flyout x:Name="ChoosePriorityFlyout" Placement="BottomEdgeAlignedRight">
-            <ListView>
+        <Flyout
+            x:Name="ChangeProjectFlyout"
+            FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}"
+            Placement="BottomEdgeAlignedRight">
+            <ListView
+                MaxWidth="200"
+                CornerRadius="4"
+                IsItemClickEnabled="True"
+                SelectionMode="None">
                 <ListView.Items>
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <FontIcon Foreground="{StaticResource Color01}" Glyph="&#xe734;" />
-                            <TextBlock VerticalAlignment="Center" Text="Name" />
+                    <ListViewItem Style="{StaticResource ProjectItemStyle}">
+                        <StackPanel
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Grid CornerRadius="4">
+                                <FontIcon Foreground="{StaticResource Color01}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                            </Grid>
+                            <TextBlock Text="Name of project" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView.Items>
             </ListView>
         </Flyout>
 
-        <Flyout x:Name="TaskProjectFlyout" Placement="BottomEdgeAlignedRight">
+        <Flyout
+            x:Name="ChoosePriorityFlyout"
+            FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}"
+            Placement="BottomEdgeAlignedRight">
+            <ListView
+                CornerRadius="4"
+                IsItemClickEnabled="True"
+                SelectionMode="None">
+                <ListView.Items>
+                    <ListViewItem Style="{StaticResource ProjectItemStyle}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Foreground="{StaticResource LowColor}" Glyph="&#xe734;" />
+                            <TextBlock VerticalAlignment="Center" Text="No Priority" />
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView.Items>
+            </ListView>
+        </Flyout>
+
+        <Flyout
+            x:Name="TaskProjectFlyout"
+            FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}"
+            Placement="BottomEdgeAlignedRight">
             <ListView>
                 <ListView.Items>
                     <ListViewItem>
@@ -79,18 +118,23 @@
             </ListView>
         </Flyout>
 
-        <Flyout x:Name="DueDateFlyout">
-            <Grid RowSpacing="20">
+        <Flyout x:Name="DueDateFlyout" FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}">
+            <Grid RowSpacing="8">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+
                 <CalendarView
                     CalendarIdentifier="GregorianCalendar"
                     IsGroupLabelVisible="True"
                     IsOutOfScopeEnabled="True"
                     Language="en" />
-                <Grid Grid.Row="1" ColumnSpacing="8">
+
+                <Grid
+                    Grid.Row="1"
+                    Padding="4"
+                    ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -117,7 +161,7 @@
             </Grid>
         </Flyout>
 
-        <Flyout x:Name="ReminderFlyout">
+        <Flyout x:Name="ReminderFlyout" FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}">
             <Grid RowSpacing="20">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -131,23 +175,12 @@
                     Language="en"
                     SelectionMode="Single" />
                 <Grid Grid.Row="1" ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <muxc:NumberBox
-                        Maximum="23"
-                        Minimum="0"
-                        SmallChange="1"
-                        Value="12" />
-                    <muxc:NumberBox
-                        Grid.Column="1"
-                        Maximum="59"
-                        Minimum="0"
-                        SmallChange="1"
-                        Value="00" />
+                    <TimePicker Padding="4,0,4,0" HorizontalAlignment="Stretch" />
                 </Grid>
-                <Grid Grid.Row="2" ColumnSpacing="8">
+                <Grid
+                    Grid.Row="2"
+                    Padding="4,0,4,4"
+                    ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -159,8 +192,8 @@
                         Foreground="{StaticResource WhiteColor}">
                         <Button.Resources>
                             <ResourceDictionary>
-                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource primaryColor}" />
-                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource whiteColor}" />
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource PrimaryColor}" />
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource WhiteColor}" />
                             </ResourceDictionary>
                         </Button.Resources>
                     </Button>
@@ -173,6 +206,11 @@
         </Flyout>
 
         <Flyout x:Name="RepeatFlyout" Placement="BottomEdgeAlignedRight">
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="Background" Value="White" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
             <Grid Width="297" RowSpacing="20">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -183,6 +221,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+
                     <Grid ColumnSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -196,8 +235,14 @@
                             SmallChange="1"
                             Value="0" />
                     </Grid>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" />
+
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch">
+                        <ComboBox.Items>
+                            <TextBlock Text="Days" />
+                        </ComboBox.Items>
+                    </ComboBox>
                 </Grid>
+
                 <Grid Grid.Row="1" ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -210,8 +255,8 @@
                         Foreground="{StaticResource WhiteColor}">
                         <Button.Resources>
                             <ResourceDictionary>
-                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource primaryColor}" />
-                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource whiteColor}" />
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource PrimaryColor}" />
+                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource WhiteColor}" />
                             </ResourceDictionary>
                         </Button.Resources>
                     </Button>
@@ -252,7 +297,9 @@
                     FontSize="20"
                     Text="My day" />
             </StackPanel>
+
             <Button
+                x:Name="SortButton"
                 Grid.Column="1"
                 Margin="0,0,16,0"
                 Padding="0"
@@ -276,15 +323,17 @@
                 </Button.Flyout>
                 <FontIcon Glyph="&#xe8cb;" />
             </Button>
+
         </Grid>
 
         <SplitView
             x:Name="SplitViewTask"
             Grid.Row="1"
             DisplayMode="Inline"
-            IsPaneOpen="False"
+            IsPaneOpen="{Binding IsOpen, Mode=TwoWay}"
             OpenPaneLength="364"
             PanePlacement="Right">
+
             <SplitView.Pane>
                 <Grid
                     Padding="12"
@@ -292,7 +341,7 @@
                     BorderBrush="{StaticResource GrayColor}"
                     BorderThickness="1"
                     CornerRadius="8"
-                    RowSpacing="24">
+                    RowSpacing="16">
 
                     <Grid.Resources>
                         <ResourceDictionary>
@@ -302,13 +351,16 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Grid ColumnSpacing="4">
+                    <!--  Task name  -->
+                    <Grid
+                        Padding="0,0,0,4"
+                        BorderBrush="{StaticResource GrayColor}"
+                        BorderThickness="0,0,0,1"
+                        ColumnSpacing="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -324,20 +376,15 @@
                             <Image
                                 Width="24"
                                 Height="24"
-                                Source="{Binding Source={StaticResource CheckPremiumIcon}}" />
+                                Source="{StaticResource CheckIcon}" />
                         </Button>
 
                         <TextBox
                             Grid.Column="1"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
-                            Text="Task Name"
-                            TextWrapping="Wrap" />
-                        <Button
-                            Grid.Column="2"
-                            VerticalAlignment="Top"
-                            Content="Save" />
+                            Text="Task Name" />
 
                         <Button
                             Grid.Column="3"
@@ -349,36 +396,40 @@
                             Flyout="{StaticResource ChoosePriorityFlyout}">
                             <FontIcon
                                 FontSize="20"
-                                Foreground="AliceBlue"
+                                Foreground="{StaticResource NoColor}"
                                 Glyph="&#xe734;" />
                         </Button>
                     </Grid>
 
-                    <muxc:ProgressBar
-                        Grid.Row="1"
-                        Width="360"
-                        Value="0" />
+                    <!--  Due Date, Project Name, Reminder, Repeat, Submission, Note  -->
+                    <Grid Grid.Row="1" RowSpacing="12">
+                        <Grid.Resources>
+                            <Style x:Key="ButtonCustomStyle" TargetType="Button">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Right" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Foreground" Value="Gray" />
+                            </Style>
+                        </Grid.Resources>
 
-                    <Grid Grid.Row="2" RowSpacing="16">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <RowDefinition />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Button
-                            Grid.Row="1"
-                            Padding="0,8"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Flyout="{StaticResource DueDateFlyout}">
-                            <Grid>
+
+                        <Grid RowSpacing="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid x:Name="DuedatePanel" Padding="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -388,25 +439,26 @@
                                         FontSize="20"
                                         Foreground="{StaticResource GrayColor}"
                                         Glyph="&#xed28;" />
-                                    <TextBlock Foreground="{StaticResource GrayColor}" Text="Due Date" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource GrayColor}"
+                                        Text="Due Date" />
                                 </StackPanel>
-                                <TextBlock
+                                <Button
                                     Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Foreground="{StaticResource GrayColor}"
-                                    Text="Due date" />
+                                    Padding="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Right"
+                                    BorderThickness="0"
+                                    Content="Select a date"
+                                    Flyout="{StaticResource DueDateFlyout}"
+                                    Foreground="{StaticResource GrayColor}" />
                             </Grid>
-                        </Button>
 
-                        <Button
-                            Grid.Row="2"
-                            Padding="0,8"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Flyout="{StaticResource TaskProjectFlyout}">
-                            <Grid>
+                            <Grid
+                                x:Name="ProjectPanel"
+                                Grid.Row="1"
+                                Padding="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -418,24 +470,19 @@
                                         Glyph="&#xea42;" />
                                     <TextBlock Foreground="{StaticResource GrayColor}" Text="Project Name" />
                                 </StackPanel>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Foreground="{StaticResource GrayColor}"
-                                    Text="{Binding NameProject}"
-                                    TextTrimming="CharacterEllipsis" />
-                            </Grid>
-                        </Button>
 
-                        <Button
-                            Grid.Row="3"
-                            Padding="0,8"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Flyout="{StaticResource ReminderFlyout}">
-                            <Grid Grid.Row="3">
+                                <Button
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Right"
+                                    BorderThickness="0"
+                                    Content="Project Name"
+                                    Flyout="{StaticResource ChangeProjectFlyout}"
+                                    Foreground="{StaticResource GrayColor}" />
+                            </Grid>
+
+                            <Grid x:Name="ReminderPanel" Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -447,23 +494,18 @@
                                         Glyph="&#xea8f;" />
                                     <TextBlock Foreground="{StaticResource GrayColor}" Text="Reminder" />
                                 </StackPanel>
-                                <TextBlock
+                                <Button
                                     Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Foreground="{StaticResource GrayColor}"
-                                    Text="Reminder" />
+                                    Padding="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Right"
+                                    BorderThickness="0"
+                                    Content="Select a date"
+                                    Flyout="{StaticResource ReminderFlyout}"
+                                    Foreground="{StaticResource GrayColor}" />
                             </Grid>
-                        </Button>
 
-                        <Button
-                            Grid.Row="4"
-                            Padding="0,8"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Flyout="{StaticResource RepeatFlyout}">
-                            <Grid Grid.Row="4">
+                            <Grid x:Name="RepeatPanel" Grid.Row="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -475,50 +517,70 @@
                                         Glyph="&#xe8ee;" />
                                     <TextBlock Foreground="{StaticResource GrayColor}" Text="Repeat" />
                                 </StackPanel>
-                                <TextBlock
+
+                                <Button
                                     Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Foreground="{StaticResource GrayColor}"
-                                    Text="Repeat" />
+                                    Padding="0"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Right"
+                                    BorderThickness="0"
+                                    Flyout="{StaticResource RepeatFlyout}"
+                                    Foreground="{StaticResource GrayColor}">
+                                    <TextBlock>
+                                        <Span>
+                                            <Run Text="Every" />
+                                            <Run Text="1 Days" />
+                                        </Span>
+                                    </TextBlock>
+                                </Button>
                             </Grid>
-                        </Button>
+                        </Grid>
 
-                        <TextBox
-                            Grid.Row="5"
-                            Padding="12,8"
-                            BorderBrush="{StaticResource GrayColor}"
-                            BorderThickness="1"
-                            CornerRadius="4"
-                            PlaceholderForeground="{StaticResource GrayColor}"
-                            PlaceholderText="Add to Submission" />
+                        <Grid Grid.Row="2" RowSpacing="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                        <ListView Grid.Row="6" SelectionMode="None">
-                            <ListView.Items>
-                                <ListViewItem Padding="0">
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Button
-                                            Padding="2"
-                                            Background="Transparent"
-                                            BorderThickness="0">
-                                            <FontIcon
-                                                VerticalAlignment="Center"
-                                                FontSize="16"
+                            <TextBox
+                                Padding="12,8"
+                                BorderBrush="{StaticResource GrayColor}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                PlaceholderForeground="{StaticResource GrayColor}"
+                                PlaceholderText="Add to Submission" />
+
+                            <ListView
+                                Grid.Row="1"
+                                MaxHeight="300"
+                                SelectionMode="None">
+                                <ListView.Items>
+                                    <ListViewItem Padding="4,0,0,0">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Button
+                                                Padding="2"
+                                                Background="Transparent"
+                                                BorderThickness="0">
+                                                <FontIcon
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    Foreground="{StaticResource GrayColor}"
+                                                    Glyph="{StaticResource UncompleledGlyph}" />
+                                            </Button>
+                                            <TextBlock
+                                                FontSize="14"
                                                 Foreground="{StaticResource GrayColor}"
-                                                Glyph="{StaticResource UncompleledGlyph}" />
-                                        </Button>
-                                        <TextBlock
-                                            FontSize="14"
-                                            Foreground="{StaticResource GrayColor}"
-                                            Text="Name"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </ListViewItem>
-                            </ListView.Items>
-                        </ListView>
+                                                Text="Name"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </ListViewItem>
+                                </ListView.Items>
+                            </ListView>
+                        </Grid>
 
                         <RichEditBox
                             x:Name="NoteTask"
-                            Grid.Row="7"
+                            Grid.Row="3"
                             Padding="12"
                             BorderBrush="{StaticResource GrayColor}"
                             BorderThickness="1"
@@ -526,12 +588,9 @@
                             IsSpellCheckEnabled="False"
                             PlaceholderText="Add to Note" />
                     </Grid>
-                    <muxc:ProgressBar
-                        Grid.Row="3"
-                        Width="360"
-                        Value="0" />
 
-                    <Grid Grid.Row="4">
+                    <!--  Bottom  -->
+                    <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -540,7 +599,8 @@
                         <Button
                             Padding="0"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Command="{Binding ClosePaneCommand}">
                             <FontIcon FontSize="16" Glyph="&#xE72b;" />
                         </Button>
                         <StackPanel
@@ -565,186 +625,125 @@
             </SplitView.Pane>
 
             <!--  Content  -->
-            <Grid Margin="16,0" RowSpacing="24">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid
-                    Padding="4"
-                    BorderBrush="{StaticResource GrayColor}"
-                    BorderThickness="1"
-                    CornerRadius="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Spacing="20">
-                        <TextBlock
-                            FontSize="35"
-                            Foreground="{StaticResource PurpleColor}"
-                            Text="0"
-                            TextAlignment="Center" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource LightGrayColor}"
-                            Text="{StaticResource Estimated}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Spacing="20">
-                        <TextBlock
-                            FontSize="35"
-                            Foreground="{StaticResource PurpleColor}"
-                            Text="0"
-                            TextAlignment="Center" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource LightGrayColor}"
-                            Text="{StaticResource Mission}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="2" Spacing="20">
-                        <TextBlock
-                            FontSize="35"
-                            Foreground="{StaticResource PurpleColor}"
-                            Text="0"
-                            TextAlignment="Center" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource LightGrayColor}"
-                            Text="{StaticResource Estimated}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="3" Spacing="20">
-                        <TextBlock
-                            FontSize="35"
-                            Foreground="{StaticResource PurpleColor}"
-                            Text="0"
-                            TextAlignment="Center" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="{StaticResource LightGrayColor}"
-                            Text="{StaticResource Completed}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent" />
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    <FontIcon
-                        Margin="12,0"
-                        HorizontalAlignment="Left"
-                        Foreground="{StaticResource PurpleColor}"
-                        Glyph="&#xE710;" />
-
-                    <TextBox
-                        Height="48"
-                        Padding="48,12,40,16"
-                        Background="Transparent"
-                        BorderBrush="{StaticResource GrayColor}"
-                        BorderThickness="1"
-                        PlaceholderText="Ask to task"
-                        TextWrapping="Wrap" />
-
-                    <StackPanel
-                        Margin="12,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="8">
-                        <Button
-                            Width="20"
-                            Height="20"
-                            Padding="0"
-                            CornerRadius="4"
-                            Flyout="{StaticResource ChooseProjectFlyout}" />
-                    </StackPanel>
-                </Grid>
-                <!--  ListView Task Uncompleted  -->
-                <ListView
-                    x:Name="UncompleteTasks"
-                    Grid.Row="2"
-                    MaxHeight="320"
-                    IsItemClickEnabled="True"
-                    SelectionMode="None">
-                    <ListView.Items>
-                        <ListViewItem Style="{StaticResource TaskItemStyle}">
-                            <Grid
-                                Padding="12,8"
-                                Background="{StaticResource WhiteColor}"
-                                BorderBrush="{StaticResource GrayColor}"
-                                BorderThickness="1"
-                                ColumnSpacing="16"
-                                CornerRadius="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    Padding="0"
-                                    VerticalAlignment="Center"
-                                    Background="Transparent"
-                                    BorderThickness="0">
-                                    <Image
-                                        Width="24"
-                                        Height="24"
-                                        Source="{StaticResource CheckIcon}" />
-                                </Button>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Text="Name"
-                                    TextTrimming="CharacterEllipsis" />
-                            </Grid>
-                        </ListViewItem>
-                    </ListView.Items>
-                </ListView>
-
-                <Grid Grid.Row="3" RowSpacing="12">
+            <ScrollViewer>
+                <Grid Margin="16,0" RowSpacing="12">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ToggleButton
-                        Width="280"
+
+                    <!--  Information  -->
+                    <Grid
+                        x:Name="Information"
                         Padding="4"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Center"
                         BorderBrush="{StaticResource GrayColor}"
                         BorderThickness="1"
-                        Content="Show Completed Missions" />
+                        CornerRadius="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Spacing="12">
+                            <TextBlock
+                                FontSize="35"
+                                Foreground="{StaticResource PurpleColor}"
+                                Text="0"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{StaticResource LightGrayColor}"
+                                Text="{StaticResource Mission}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
 
-                    <!--  Task Completed  -->
-                    <ListView
-                        x:Name="CompletedTasks"
-                        Grid.Row="1"
-                        Visibility="Visible">
-                        <ListView.Items>
-                            <ListViewItem
-                                Margin="0,0,0,8"
+                        <StackPanel Grid.Column="3" Spacing="12">
+                            <TextBlock
+                                FontSize="35"
+                                Foreground="{StaticResource PurpleColor}"
+                                Text="0"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{StaticResource LightGrayColor}"
+                                Text="{StaticResource Completed}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  Add Task Field  -->
+                    <Grid Grid.Row="1">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent" />
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <FontIcon
+                            Margin="12,0"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource PurpleColor}"
+                            Glyph="&#xE710;" />
+                        <!--  TODO  -->
+                        <TextBox
+                            Height="42"
+                            Padding="42,10,8,0"
+                            Background="Transparent"
+                            BorderBrush="{StaticResource GrayColor}"
+                            BorderThickness="1"
+                            PlaceholderText="Enter name mission then press Enter to add Task"
+                            Resources="{Binding Source={StaticResource ResTextBox}, Path=Resources}"
+                            TextWrapping="Wrap">
+                            <TextBox.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Enter">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior>
+                                            <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource AddMissionCommand}}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </KeyboardAccelerator>
+                            </TextBox.KeyboardAccelerators>
+                        </TextBox>
+
+                        <StackPanel
+                            Margin="12,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <Button
+                                Width="20"
+                                Height="20"
                                 Padding="0"
-                                Style="{StaticResource TaskItemStyle}">
-                                <Grid
-                                    Padding="12,8"
-                                    Background="{StaticResource WhiteColor}"
-                                    BorderBrush="{StaticResource GrayColor}"
-                                    BorderThickness="1"
-                                    ColumnSpacing="16"
-                                    CornerRadius="8">
+                                BorderThickness="0"
+                                CornerRadius="4"
+                                DataContext="{Binding SelectedProject}"
+                                Flyout="{StaticResource ChooseProjectFlyout}">
+                                <FontIcon Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  Uncompleted Tasks  -->
+                    <ListView
+                        x:Name="UncompleteTasks"
+                        Grid.Row="2"
+                        IsItemClickEnabled="True"
+                        SelectionMode="None">
+                        <ListView.Items>
+                            <ListViewItem Style="{StaticResource TaskItemStyle}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource TaskItemClickCommand}, Path=Command}" CommandParameter="{Binding}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                                <Grid ColumnSpacing="16">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Button
                                         Padding="0"
@@ -754,21 +753,92 @@
                                         <Image
                                             Width="24"
                                             Height="24"
-                                            Source="{StaticResource CompletedIcon}" />
+                                            Source="{StaticResource CheckIcon}" />
                                     </Button>
 
                                     <TextBlock
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
                                         Text="Name"
-                                        TextDecorations="Strikethrough"
                                         TextTrimming="CharacterEllipsis" />
+
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource GrayColor}"
+                                        Text="Apr, 22 2002" />
                                 </Grid>
                             </ListViewItem>
                         </ListView.Items>
                     </ListView>
+
+                    <!--  Completed Tasks  -->
+                    <Grid Grid.Row="3" RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <ToggleButton
+                            x:Name="ShowCompleteButton"
+                            Width="280"
+                            Padding="4"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            BorderBrush="{StaticResource GrayColor}"
+                            BorderThickness="1"
+                            Content="Show Completed Missions" />
+
+                        <!--  Task Completed  -->
+                        <ListView
+                            x:Name="CompletedTasks"
+                            Grid.Row="1"
+                            IsItemClickEnabled="True"
+                            SelectionMode="None"
+                            Visibility="{Binding ElementName=ShowCompleteButton, Path=IsChecked, Converter={StaticResource BooleanToVisibility}}">
+                            <ListView.Items>
+                                <ListViewItem Style="{StaticResource TaskItemStyle}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{Binding Source={StaticResource TaskItemClickCommand}, Path=Command}" CommandParameter="{Binding}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Grid ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button
+                                            Padding="0"
+                                            VerticalAlignment="Center"
+                                            Background="Transparent"
+                                            BorderThickness="0">
+                                            <Image
+                                                Width="24"
+                                                Height="24"
+                                                Source="{StaticResource CompletedIcon}" />
+                                        </Button>
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="Name"
+                                            TextDecorations="Strikethrough"
+                                            TextTrimming="CharacterEllipsis" />
+
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource GrayColor}"
+                                            Text="Apr, 22 2002" />
+                                    </Grid>
+                                </ListViewItem>
+                            </ListView.Items>
+                        </ListView>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </ScrollViewer>
         </SplitView>
     </Grid>
 </Page>

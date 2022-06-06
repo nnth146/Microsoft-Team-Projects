@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\ContentDialogTemplate.xaml.cs">
+      <DependentUpon>ContentDialogTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MessageContentDialog.xaml.cs">
       <DependentUpon>MessageContentDialog.xaml</DependentUpon>
     </Compile>
@@ -146,7 +149,6 @@
     <Compile Include="Service\DatabaseService\IDataService.cs" />
     <Compile Include="Service\DialogService\IDialogService.cs" />
     <Compile Include="Service\NavigationService\INavigationService.cs" />
-    <Compile Include="Service\DatabaseService\LiteDBService.cs" />
     <Compile Include="Service\MessengerService\MessengerService.cs" />
     <Compile Include="Service\NavigationService\NavigationService.cs" />
     <Compile Include="Service\DatabaseService\SQLiteService.cs" />
@@ -198,10 +200,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Document\AppConfig.txt" />
     <Content Include="Document\Nuget Package Command.txt" />
     <Content Include="SupportResource\README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ContentDialogTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MessageContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

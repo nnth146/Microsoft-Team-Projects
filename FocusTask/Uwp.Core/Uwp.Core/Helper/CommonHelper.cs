@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace Uwp.Core.Helper
 {
@@ -35,6 +38,24 @@ namespace Uwp.Core.Helper
             DataPackage data = new DataPackage();
             data.SetText(content);
             Clipboard.SetContent(data);
+        }
+
+        static public object GetAppResources(string key)
+        {
+            return Application.Current.Resources[key];
+        }
+
+        private async Task<byte[]> ConvertImageToByte(StorageFile file)
+        {
+            using (var inputStream = await file.OpenSequentialReadAsync())
+            {
+                var readStream = inputStream.AsStreamForRead();
+
+                var byteArray = new byte[readStream.Length];
+                await readStream.ReadAsync(byteArray, 0, byteArray.Length);
+                return byteArray;
+            }
+
         }
     }
 }

@@ -145,6 +145,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uwp.Core\Uwp.Core\Uwp.Core.csproj">
+      <Project>{69691dc6-85d8-452e-a6cb-73e2e74a7b84}</Project>
+      <Name>Uwp.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
