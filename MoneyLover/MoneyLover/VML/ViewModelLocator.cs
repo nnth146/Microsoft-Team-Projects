@@ -26,5 +26,6 @@ namespace MoneyLover.VML
         public MonthlyPageViewModel MonthlyPage => Ioc.Default.GetService<MonthlyPageViewModel>();
         public AddCategoryDialogViewModel AddCategoryDialog => Ioc.Default.GetService<AddCategoryDialogViewModel>();
         public EditCategoryDialogViewModel EditCategoryDialog => Ioc.Default.GetService<EditCategoryDialogViewModel>();
+        public GiftDialogViewModel GiftDialog => Ioc.Default.GetService<GiftDialogViewModel>(); 
     }
 }

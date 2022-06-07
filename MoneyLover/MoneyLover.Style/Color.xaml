@@ -36,6 +36,12 @@
         <GradientStop Offset="1" Color="{StaticResource Color18}" />
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="Linear370" Opacity="0.7" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Offset="0" Color="{StaticResource Color16}" />
+        <GradientStop Offset="0.5" Color="{StaticResource Color17}" />
+        <GradientStop Offset="1" Color="{StaticResource Color18}" />
+    </LinearGradientBrush>
+
     <SolidColorBrush
         x:Key="NavigationViewItemBackgroundColor"
         Opacity="0.067"
@@ -66,7 +72,10 @@
         Opacity="0.032"
         Color="Black" />
 
-    <SolidColorBrush x:Key="ResToggleButtonBackground" Color="{StaticResource Color5}"/>
+    <SolidColorBrush x:Key="ResToggleButtonBackground" Color="{StaticResource Color5}" />
 
-    <SolidColorBrush x:Key="ContentDialogBackgroundButtonRegion" Color="Black" Opacity="0.056"/>
+    <SolidColorBrush
+        x:Key="ContentDialogBackgroundButtonRegion"
+        Opacity="0.056"
+        Color="Black" />
 </ResourceDictionary>

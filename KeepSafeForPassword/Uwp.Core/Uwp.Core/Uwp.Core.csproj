@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\ContentDialogTemplate.xaml.cs" />
+    <Compile Include="Controls\MessageContentDialog.xaml.cs" />
+    <Compile Include="Controls\QuestionDialog.xaml.cs" />
     <Compile Include="Converter\BooleanToObject\BooleanToVisibility.cs" />
     <Compile Include="Converter\BooleanToObject\BooleanToVisibilityReverse.cs" />
     <Compile Include="Converter\ByteToObject\ByteToBitmapImageConverter.cs" />
@@ -193,6 +196,18 @@
     <Content Include="SupportResource\README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ContentDialogTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MessageContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\QuestionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Converter\Converter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

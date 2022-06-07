@@ -68,7 +68,7 @@ namespace KeepSafeForPassword.ViewModel
             string successMessage = "Register success!";
 
             await dataService.AddAccountAsync(account);
-            await dialogService.showMessageAsync(successMessage);
+            await dialogService.showMessageContentDialogAsync(successMessage);
             
             navigationService.GoBack();
         }));

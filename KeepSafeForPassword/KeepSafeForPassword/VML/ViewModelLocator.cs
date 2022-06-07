@@ -35,5 +35,6 @@ namespace KeepSafeForPassword.VML
         public EditContactPageViewModel EditContactPage => Ioc.Default.GetService<EditContactPageViewModel>();
         public EditPasswordPageViewModel EditPasswordPage => Ioc.Default.GetService<EditPasswordPageViewModel>();
         public AddContactPageViewModel AddContactPage => Ioc.Default.GetService<AddContactPageViewModel>();
+        public GiftDialogViewModel GiftDialog => Ioc.Default.GetService<GiftDialogViewModel>();
     }
 }

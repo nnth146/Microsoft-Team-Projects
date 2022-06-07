@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:MoneyLover.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Core.SR"
     d:DesignHeight="900"
     d:DesignWidth="1200"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -14,6 +15,15 @@
 
     <Page.Resources>
         <XamlUICommand x:Name="NavSelectionChangedCommand" Command="{Binding NavSelectionChangedCommand}" />
+
+        <sr:ResButton
+            x:Key="ResButton"
+            Background="{StaticResource Linear3}"
+            BackgroundPointerOver="{StaticResource Linear370}"
+            BackgroundPressed="{StaticResource Linear3}"
+            Foreground="White"
+            ForegroundPointerOver="White"
+            ForegroundPressed="White" />
     </Page.Resources>
 
     <Grid Background="{StaticResource Linear3}">
@@ -27,6 +37,12 @@
             <controls:NavigationView.PaneCustomContent>
                 <Grid Margin="2,0,2,8" CornerRadius="4">
                     <Image Source="{Binding Source={StaticResource Banner}}" />
+
+                    <Button
+                        VerticalAlignment="Bottom"
+                        Content="Donate for me"
+                        Command="{Binding GiveMeAGiftCommand}"
+                        Resources="{Binding Resources, Source={StaticResource ResButton}}" />
                 </Grid>
             </controls:NavigationView.PaneCustomContent>
 

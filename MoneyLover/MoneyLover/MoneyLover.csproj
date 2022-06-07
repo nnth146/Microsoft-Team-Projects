@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Page\Dialog\CategoryDialog\AddCategoryDialogViewModel.cs" />
     <Compile Include="Page\Dialog\CategoryDialog\EditCategoryDialogViewModel.cs" />
+    <Compile Include="ViewModel\GiftDialogViewModel.cs" />
     <Compile Include="View\ButtonNavigationView.xaml.cs">
       <DependentUpon>ButtonNavigationView.xaml</DependentUpon>
     </Compile>
@@ -193,6 +194,9 @@
     </Compile>
     <Compile Include="Page\Dialog\CategoryDialog\EditCategoryDialog.xaml.cs">
       <DependentUpon>EditCategoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\GiftDialog.xaml.cs">
+      <DependentUpon>GiftDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -352,11 +356,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Dialog\GiftDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\Dialog\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
