@@ -1,0 +1,72 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="Color1">#7E0A58</Color>
+    <Color x:Key="Color2">#FFFFFF</Color>
+    <Color x:Key="Color3">#00AFC1</Color>
+    <Color x:Key="Color4">#FFD124</Color>
+    <Color x:Key="Color5">#F7E2E2</Color>
+    <Color x:Key="Color6">#979696</Color>
+    <Color x:Key="Color7">#6B69D6</Color>
+    <Color x:Key="Color8">#5A5A5A</Color>
+    <Color x:Key="Color9">#B8B8B8</Color>
+    <Color x:Key="Color10">#058D02</Color>
+    <Color x:Key="Color11">#006778</Color>
+    <Color x:Key="Color12">#0093AB</Color>
+    <Color x:Key="Color13">#EBEBEB</Color>
+    <Color x:Key="Color14">#FF8C00</Color>
+    <Color x:Key="Color15">#FFB648</Color>
+    <Color x:Key="Color16">#A770EF</Color>
+    <Color x:Key="Color17">#CF8BF2</Color>
+    <Color x:Key="Color18">#FDB99B</Color>
+    <Color x:Key="Color19">#000000</Color>
+
+    <LinearGradientBrush x:Key="Linear1" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#EF629F" />
+        <GradientStop Offset="1" Color="#EECDA3" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Linear2" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#3F2B2B" />
+        <GradientStop Offset="1" Color="#F2CE9F" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Linear3" Opacity="0.9" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Offset="0" Color="{StaticResource Color16}" />
+        <GradientStop Offset="0.5" Color="{StaticResource Color17}" />
+        <GradientStop Offset="1" Color="{StaticResource Color18}" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush
+        x:Key="NavigationViewItemBackgroundColor"
+        Opacity="0.067"
+        Color="{StaticResource Color2}" />
+
+    <SolidColorBrush x:Key="NavigationViewItemForegroundColor" Color="{StaticResource Color2}" />
+
+    <SolidColorBrush
+        x:Key="BackgroundPage"
+        Opacity="0.8"
+        Color="{StaticResource Color2}" />
+
+    <SolidColorBrush x:Key="ResButton1Background" Color="{StaticResource Color4}" />
+
+    <SolidColorBrush
+        x:Key="ResButton1Background80"
+        Opacity="0.8"
+        Color="{StaticResource Color4}" />
+
+    <SolidColorBrush x:Key="ResButton1Foreground" Color="{StaticResource Color1}" />
+    <SolidColorBrush x:Key="ResExpanderHeaderBackground" Color="{StaticResource Color3}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource Color9}" />
+
+    <SolidColorBrush x:Key="ResListViewBackground" Color="{StaticResource Color3}" />
+    <SolidColorBrush x:Key="ResListViewForeground" Color="{StaticResource Color3}" />
+    <SolidColorBrush
+        x:Key="ListViewBackground"
+        Opacity="0.032"
+        Color="Black" />
+
+    <SolidColorBrush x:Key="ResToggleButtonBackground" Color="{StaticResource Color5}"/>
+
+    <SolidColorBrush x:Key="ContentDialogBackgroundButtonRegion" Color="Black" Opacity="0.056"/>
+</ResourceDictionary>
