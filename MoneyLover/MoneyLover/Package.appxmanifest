@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="83cdc620-3f4c-47e3-a64d-0f6cdfb9e015"
-    Publisher="CN=Tuan Hung"
+    Name="34572LuongAnhXG.MoneyLover"
+    Publisher="CN=43162CBB-040D-4060-9B3B-CB12976447C1"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="83cdc620-3f4c-47e3-a64d-0f6cdfb9e015" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MoneyLover</DisplayName>
-    <PublisherDisplayName>Tuan Hung</PublisherDisplayName>
+    <PublisherDisplayName>LuongAnhXG</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,9 +36,11 @@
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="MoneyLover"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        BackgroundColor="#FFFFFF">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#FFFFFF"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

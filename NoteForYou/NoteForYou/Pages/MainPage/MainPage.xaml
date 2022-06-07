@@ -30,7 +30,12 @@
         </controls:NavigationView.MenuItemTemplate>
 
         <controls:NavigationView.PaneFooter>
-            <Button Margin="4,0,4,0" HorizontalAlignment="Stretch">
+            <Button
+                Margin="4,0,4,0"
+                HorizontalAlignment="Stretch"
+                Background="LightCoral"
+                Command="{Binding GiveMeAGiftCommand}"
+                Foreground="White">
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <TextBlock Text="Give me a gift" />
                 </StackPanel>

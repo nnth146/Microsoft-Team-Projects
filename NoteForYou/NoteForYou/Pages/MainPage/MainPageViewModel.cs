@@ -19,5 +19,11 @@ namespace NoteForYou.ViewModel
         {
             
         }
+
+        private RelayCommand _giveMeAGiftCommand;
+        public RelayCommand GiveMeAGiftCommand => _giveMeAGiftCommand ?? (_giveMeAGiftCommand = new RelayCommand(() =>
+        {
+            dialogService.showAsync(typeof(GiftDialogViewModel));
+        }));
     }
 }

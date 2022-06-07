@@ -8,6 +8,7 @@
     xmlns:local="using:MoneyLover.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sr="using:Uwp.Core.SR"
+    CornerRadius="4"
     DataContext="{Binding GiftDialog, Source={StaticResource VML}}"
     mc:Ignorable="d">
 
