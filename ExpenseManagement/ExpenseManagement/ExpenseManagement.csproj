@@ -11,7 +11,7 @@
     <AssemblyName>ExpenseManagement</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -124,12 +124,6 @@
     <Compile Include="Converter\DoubleToString.cs" />
     <Compile Include="Converter\Int64ToString.cs" />
     <Compile Include="Converter\StringToColorBrush.cs" />
-    <Compile Include="Helper\CommonFunctionHelper.cs" />
-    <Compile Include="Helper\LinkingHelper.cs" />
-    <Compile Include="Helper\NavigationTransactionInfoHelper.cs" />
-    <Compile Include="Helper\ServiceHelper.cs" />
-    <Compile Include="Helper\ServiceObject.cs" />
-    <Compile Include="Helper\ServiceObservableObject.cs" />
     <Compile Include="Messenger\Messenger.cs" />
     <Compile Include="Model\Basic.cs" />
     <Compile Include="Model\Category.cs" />
@@ -139,17 +133,11 @@
     <Compile Include="Model\Spending.cs" />
     <Compile Include="Model\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\DialogService.cs" />
-    <Compile Include="Service\IService\IDataService.cs" />
-    <Compile Include="Service\IService\IDialogService.cs" />
-    <Compile Include="Service\IService\INavigationService.cs" />
-    <Compile Include="Service\LiteDBService.cs" />
-    <Compile Include="Service\MessengerService.cs" />
-    <Compile Include="Service\NavigationService.cs" />
     <Compile Include="ViewModel\AddTransactionDialogViewModel.cs" />
     <Compile Include="ViewModel\DeleteTransactionDialogViewModel.cs" />
     <Compile Include="ViewModel\EditTransactionDialogViewModel.cs" />
     <Compile Include="ViewModel\EmptyTransactionPageViewModel.cs" />
+    <Compile Include="ViewModel\GiftDialogViewModel.cs" />
     <Compile Include="ViewModel\ListTransactionPageViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ReportPageViewModel.cs" />
@@ -162,6 +150,9 @@
     </Compile>
     <Compile Include="View\Dialog\EditTransactionDialog.xaml.cs">
       <DependentUpon>EditTransactionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\GiftDialog.xaml.cs">
+      <DependentUpon>GiftDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EmptyTransactionPage.xaml.cs">
       <DependentUpon>EmptyTransactionPage.xaml</DependentUpon>
@@ -242,6 +233,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Dialog\GiftDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EmptyTransactionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,7 +281,12 @@
       <Version>2.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Uwp.Core\Uwp.Core\Uwp.Core.csproj">
+      <Project>{69691dc6-85d8-452e-a6cb-73e2e74a7b84}</Project>
+      <Name>Uwp.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

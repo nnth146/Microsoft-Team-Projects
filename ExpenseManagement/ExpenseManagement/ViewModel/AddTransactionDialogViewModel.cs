@@ -7,13 +7,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UWP.Mvvm.Core.Helper;
-using UWP.Mvvm.Core.Service;
+using Uwp.Core.Helper;
+using Uwp.Core.Service;
 using static ExpenseManagement.Messenger.Messenger;
 
 namespace ExpenseManagement.ViewModel
 {
-    public class AddTransactionDialogViewModel : ServiceObservableObject
+    public class AddTransactionDialogViewModel : ViewModelBase
     {
         public AddTransactionDialogViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {

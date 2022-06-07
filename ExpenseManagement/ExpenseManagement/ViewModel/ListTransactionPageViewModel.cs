@@ -8,12 +8,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UWP.Mvvm.Core.Helper;
-using UWP.Mvvm.Core.Service;
+using Uwp.Core.Service;
+using Uwp.Core.Helper;
 
 namespace ExpenseManagement.ViewModel
 {
-    public class ListTransactionPageViewModel : ServiceObservableObject
+    public class ListTransactionPageViewModel : ViewModelBase
     {
         public ListTransactionPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {

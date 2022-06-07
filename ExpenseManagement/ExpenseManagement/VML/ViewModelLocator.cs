@@ -18,5 +18,6 @@ namespace ExpenseManagement.VML
         public ListTransactionPageViewModel ListTransactionPage => Ioc.Default.GetService<ListTransactionPageViewModel>();
         public TransactionPageViewModel TransactionPage => Ioc.Default.GetService<TransactionPageViewModel>();
         public ReportPageViewModel ReportPage => Ioc.Default.GetService<ReportPageViewModel>();
+        public GiftDialogViewModel GriftDialog => Ioc.Default.GetService<GiftDialogViewModel>();
     }
 }

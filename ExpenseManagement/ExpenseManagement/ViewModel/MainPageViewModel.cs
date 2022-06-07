@@ -8,13 +8,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UWP.Mvvm.Core.Helper;
-using UWP.Mvvm.Core.Service;
+using Uwp.Core.Helper;
+using Uwp.Core.Service;
 using static ExpenseManagement.Messenger.Messenger;
 
 namespace ExpenseManagement.ViewModel
 {
-    public class MainPageViewModel : ServiceObservableObject
+    public class MainPageViewModel : ViewModelBase
     {
         public MainPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
@@ -24,7 +24,6 @@ namespace ExpenseManagement.ViewModel
             basics = new ObservableCollection<Basic>()
             {
                 new Basic("/Assets/icons/transaction.png", "Transactions", true),
-                new Basic("/Assets/icons/calender.png", "Calendar", false),
                 new Basic("/Assets/icons/report.png", "Reports", true)
             };
         }
@@ -208,6 +207,16 @@ namespace ExpenseManagement.ViewModel
                 return _basicChangedCommand;
             }
         }
+
+        #region Xử lý tặng quà
+
+        private RelayCommand _giveMeAGiftCommand;
+        public RelayCommand GiveMeAGiftCommand => _giveMeAGiftCommand ?? (_giveMeAGiftCommand = new RelayCommand(() =>
+        {
+            dialogService.showAsync(typeof(GiftDialogViewModel));
+        }));
+
+        #endregion
     }
 }
     

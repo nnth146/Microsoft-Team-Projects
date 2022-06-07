@@ -7,10 +7,28 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:ExpenseManagement.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Core.SR"
     Background="{StaticResource color1}"
     DataContext="{Binding Source={StaticResource VML}, Path=MainPage}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="ResButtonBackground" Color="{StaticResource color4}" />
+        <SolidColorBrush
+            x:Key="ResButtonBackgroundPointerOver"
+            Opacity="0.8"
+            Color="{StaticResource color4}" />
+        <SolidColorBrush x:Key="ResButtonForeground" Color="{StaticResource color3}" />
+        <sr:ResButton
+            x:Key="ResButton"
+            Background="{StaticResource ResButtonBackground}"
+            BackgroundPointerOver="{StaticResource ResButtonBackgroundPointerOver}"
+            BackgroundPressed="{StaticResource ResButtonBackground}"
+            Foreground="{StaticResource ResButtonForeground}"
+            ForegroundPointerOver="{StaticResource ResButtonForeground}"
+            ForegroundPressed="{StaticResource ResButtonForeground}" />
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,8 +44,14 @@
                 <RowDefinition Height="Auto" />
 
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Padding="12">
-                <AutoSuggestBox IsEnabled="False" AutomationProperties.Name="Search" QueryIcon="Find" />
+
+            <Grid>
+                <Button
+                    Margin="4"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding GiveMeAGiftCommand}"
+                    Content="Give me a gift"
+                    Resources="{Binding Resources, Source={StaticResource ResButton}}" />
             </Grid>
             <ListView
                 x:Name="ListViewBasic"
