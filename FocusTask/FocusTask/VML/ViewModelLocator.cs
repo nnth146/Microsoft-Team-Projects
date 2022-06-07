@@ -17,9 +17,9 @@ namespace FocusTask.VML
         public MainPageViewModel MainPage => Ioc.Default.GetService<MainPageViewModel>();
         public MydayPageViewModel MydayPage => Ioc.Default.GetService<MydayPageViewModel>();
         public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
-        public SomedayPageViewModel SomedayPage => Ioc.Default.GetService<SomedayPageViewModel>();
         public StaticPageViewModel StaticPage => Ioc.Default.GetService<StaticPageViewModel>();
         public TomorrowPageViewModel TomorrowPage => Ioc.Default.GetService<TomorrowPageViewModel>();
         public UpcomingPageViewModel UpcomingPage => Ioc.Default.GetService<UpcomingPageViewModel>();
+        public GiftDialogViewModel GiftDialog => Ioc.Default.GetService<GiftDialogViewModel>();
     }
 }

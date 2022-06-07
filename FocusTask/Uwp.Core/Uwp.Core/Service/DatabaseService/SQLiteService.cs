@@ -36,6 +36,7 @@ namespace Uwp.Core.Service
         {
             return new ObservableCollection<Mission>(Db.Missions
                 .Include(x=>x.Project)
+                .Include(x=>x.SubMissions)
                 .ToList());
         }
 

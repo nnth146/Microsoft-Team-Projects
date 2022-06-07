@@ -21,6 +21,7 @@
         <XamlUICommand x:Name="ProjectsSelectionChangedCommand" Command="{Binding ProjectsSelectionChangedCommand}" />
         <XamlUICommand x:Name="EditProjectCommand" Command="{Binding EditProjectCommand}" />
         <XamlUICommand x:Name="RemoveProjectCommand" Command="{Binding RemoveProjectCommand}" />
+        <XamlUICommand x:Name="ComfirmNotificationCommand" Command="{Binding ComfirmNotificationCommand}" />
 
         <Flyout x:Name="NotificationFlyout" Placement="BottomEdgeAlignedRight">
             <Flyout.FlyoutPresenterStyle>
@@ -31,6 +32,7 @@
             </Flyout.FlyoutPresenterStyle>
             <Grid
                 MinWidth="200"
+                MinHeight="200"
                 MaxWidth="300"
                 RowSpacing="12">
                 <Grid.RowDefinitions>
@@ -49,51 +51,53 @@
                 <ListView
                     Grid.Row="2"
                     IsItemClickEnabled="True"
+                    ItemsSource="{Binding NotificationMissions}"
                     SelectionMode="None">
-                    <ListView.Items>
-                        <ListViewItem Style="{StaticResource NotificationItemStyle}">
-                            <Grid ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="Name"
-                                    TextWrapping="Wrap" />
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem Style="{StaticResource NotificationItemStyle}">
+                                <Grid ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    FontSize="12"
-                                    FontStyle="Italic"
-                                    Foreground="{StaticResource LightGrayColor}"
-                                    Text="Remember" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        FontStyle="Italic"
+                                        Foreground="{StaticResource LightGrayColor}"
+                                        Text="Remember" />
 
-                                <Button
-                                    Grid.Column="2"
-                                    Padding="0"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Foreground="{StaticResource PurpleColor}">
-                                    <FontIcon FontSize="16" Glyph="{StaticResource AcceptGlyph}" />
-                                </Button>
-                            </Grid>
-                        </ListViewItem>
-                    </ListView.Items>
+                                    <Button
+                                        Grid.Column="2"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding Command, Source={StaticResource ComfirmNotificationCommand}}"
+                                        CommandParameter="{Binding}"
+                                        Foreground="{StaticResource PurpleColor}">
+                                        <FontIcon FontSize="16" Glyph="{StaticResource AcceptGlyph}" />
+                                    </Button>
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </Grid>
         </Flyout>
 
         <MenuFlyout x:Name="ProjectCommandFlyout">
             <MenuFlyoutItem
-                Command="{StaticResource EditProjectCommand}"
+                Command="{Binding Command, Source={StaticResource EditProjectCommand}}"
                 CommandParameter="{Binding}"
                 Icon="Edit"
                 Text="Edit" />
             <MenuFlyoutItem
-                Command="{StaticResource RemoveProjectCommand}"
+                Command="{Binding Command, Source={StaticResource RemoveProjectCommand}}"
                 CommandParameter="{Binding}"
                 Icon="Delete"
                 Text="Delete" />
@@ -127,6 +131,7 @@
                 <Button
                     Background="Transparent"
                     BorderThickness="0"
+                    Command="{Binding DonateCommand}"
                     Foreground="{StaticResource WhiteColor}">
                     <FontIcon Glyph="{StaticResource GiftGlyph}" />
                 </Button>
@@ -172,10 +177,6 @@
                                 <controls:NavigationViewItem.Icon>
                                     <controls:ImageIcon Source="{Binding Icon}" />
                                 </controls:NavigationViewItem.Icon>
-
-                                <controls:NavigationViewItem.InfoBadge>
-                                    <controls:InfoBadge DataContext="{Binding Missions}" Value="{Binding Count}" />
-                                </controls:NavigationViewItem.InfoBadge>
                             </controls:NavigationViewItem>
                         </DataTemplate>
                     </controls:NavigationView.MenuItemTemplate>

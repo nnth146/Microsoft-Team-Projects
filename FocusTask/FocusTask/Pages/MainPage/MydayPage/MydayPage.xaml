@@ -15,6 +15,7 @@
     DataContext="{Binding Source={StaticResource VML}, Path=MydayPage}"
     mc:Ignorable="d">
 
+    <!--#region All-->
     <Page.Resources>
 
         <XamlUICommand x:Name="TaskItemClickCommand" Command="{Binding TaskItemClickCommand}" />
@@ -27,6 +28,11 @@
         <XamlUICommand x:Name="DueDateChangedCommand" Command="{Binding DueDateChangedCommand}" />
         <XamlUICommand x:Name="ChangeProjectCommand" Command="{Binding ChangeProjectCommand}" />
         <XamlUICommand x:Name="ReminderChangedCommand" Command="{Binding ReminderChangedCommand}" />
+        <XamlUICommand x:Name="AddSubMission" Command="{Binding AddSubMission}" />
+        <XamlUICommand x:Name="RemoveSubMission" Command="{Binding RemoveSubMission}" />
+        <XamlUICommand x:Name="CompletedSubMission" Command="{Binding CompletedSubMission}" />
+        <XamlUICommand x:Name="LostFocusCommand" Command="{Binding LostFocusCommand}" />
+        <XamlUICommand x:Name="SaveNoteCommand" Command="{Binding SaveNoteCommand}" />
 
         <MenuFlyout x:Name="MissionCommandFlyout">
             <MenuFlyoutItem
@@ -217,7 +223,7 @@
                     Language="en"
                     SelectedDatesChanged="ReminderCalendar_SelectedDatesChanged"
                     SelectionMode="Single" />
-                
+
                 <Grid
                     Grid.Row="2"
                     Padding="4,0,4,4"
@@ -278,13 +284,19 @@
                             Maximum="60"
                             Minimum="1"
                             SmallChange="1"
-                            Value="0" />
+                            Value="{Binding RepeatValue, Mode=TwoWay}" />
                     </Grid>
 
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch">
-                        <ComboBox.Items>
-                            <TextBlock Text="Days" />
-                        </ComboBox.Items>
+                    <ComboBox
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding RepeatItems}"
+                        SelectedItem="{Binding SelectedRepeatItem, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </Grid>
 
@@ -296,6 +308,8 @@
                     <Button
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource PrimaryColor}"
+                        Click="HideRepeatFlyout_Event"
+                        Command="{Binding SaveRepeatCommand}"
                         Content="Save"
                         Foreground="{StaticResource WhiteColor}">
                         <Button.Resources>
@@ -308,6 +322,8 @@
                     <Button
                         Grid.Column="1"
                         HorizontalAlignment="Stretch"
+                        Click="HideRepeatFlyout_Event"
+                        Command="{Binding RemoveRepeatCommand}"
                         Content="Remove" />
                 </Grid>
             </Grid>
@@ -342,33 +358,6 @@
                     FontSize="20"
                     Text="My day" />
             </StackPanel>
-
-            <Button
-                x:Name="SortButton"
-                Grid.Column="1"
-                Margin="0,0,16,0"
-                Padding="0"
-                HorizontalAlignment="Right"
-                Background="Transparent"
-                BorderThickness="0"
-                Visibility="Collapsed">
-                <Button.Flyout>
-                    <Flyout Placement="BottomEdgeAlignedRight">
-                        <ListView>
-                            <ListView.Items>
-                                <ListViewItem>
-                                    <TextBlock Text="Sort by Project" />
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <TextBlock Text="Sort by mission priority" />
-                                </ListViewItem>
-                            </ListView.Items>
-                        </ListView>
-                    </Flyout>
-                </Button.Flyout>
-                <FontIcon Glyph="&#xe8cb;" />
-            </Button>
-
         </Grid>
 
         <SplitView
@@ -613,10 +602,11 @@
                                     BorderThickness="0"
                                     Flyout="{StaticResource RepeatFlyout}"
                                     Foreground="{StaticResource GrayColor}">
-                                    <TextBlock>
+                                    <TextBlock DataContext="{Binding SelectedMission}">
                                         <Span>
                                             <Run Text="Every" />
-                                            <Run Text="1 Days" />
+                                            <Run Text="{Binding Repeat}" />
+                                            <Run Text="Days" />
                                         </Span>
                                     </TextBlock>
                                 </Button>
@@ -628,40 +618,93 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-
                             <TextBox
                                 Padding="12,8"
                                 BorderBrush="{StaticResource GrayColor}"
                                 BorderThickness="1"
                                 CornerRadius="4"
                                 PlaceholderForeground="{StaticResource GrayColor}"
-                                PlaceholderText="Add to Submission" />
+                                PlaceholderText="Add to Submission"
+                                Text="{Binding SubMissionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Enter">
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="Invoked">
+                                                <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource AddSubMission}}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </KeyboardAccelerator>
+                                </TextBox.KeyboardAccelerators>
+                            </TextBox>
 
                             <ListView
                                 Grid.Row="1"
                                 MaxHeight="300"
+                                DataContext="{Binding SelectedMission}"
+                                ItemsSource="{Binding SubMissions}"
                                 SelectionMode="None">
-                                <ListView.Items>
-                                    <ListViewItem Padding="4,0,0,0">
-                                        <StackPanel Orientation="Horizontal" Spacing="8">
-                                            <Button
-                                                Padding="2"
-                                                Background="Transparent"
-                                                BorderThickness="0">
-                                                <FontIcon
-                                                    VerticalAlignment="Center"
-                                                    FontSize="16"
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ListViewItem Padding="4,0,0,0">
+                                            <ListViewItem.ContextFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem
+                                                        Command="{Binding Command, Source={StaticResource RemoveSubMission}}"
+                                                        CommandParameter="{Binding}"
+                                                        Icon="Delete"
+                                                        Text="Delete" />
+                                                </MenuFlyout>
+                                            </ListViewItem.ContextFlyout>
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <Button
+                                                    Padding="2"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Command="{Binding Command, Source={StaticResource CompletedSubMission}}"
+                                                    CommandParameter="{Binding}">
+                                                    <FontIcon
+                                                        x:Name="IconCompleted"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Foreground="{StaticResource GrayColor}"
+                                                        Tag="{Binding IsCompleted}">
+                                                        <interactivity:Interaction.Behaviors>
+                                                            <core:DataTriggerBehavior
+                                                                Binding="{Binding ElementName=IconCompleted, Path=Tag}"
+                                                                ComparisonCondition="Equal"
+                                                                Value="{StaticResource True}">
+                                                                <core:ChangePropertyAction
+                                                                    PropertyName="Glyph"
+                                                                    TargetObject="{Binding ElementName=IconCompleted}"
+                                                                    Value="{StaticResource CompleledGlyph}" />
+                                                            </core:DataTriggerBehavior>
+                                                            <core:DataTriggerBehavior
+                                                                Binding="{Binding ElementName=IconCompleted, Path=Tag}"
+                                                                ComparisonCondition="Equal"
+                                                                Value="{StaticResource False}">
+                                                                <core:ChangePropertyAction
+                                                                    PropertyName="Glyph"
+                                                                    TargetObject="{Binding ElementName=IconCompleted}"
+                                                                    Value="{StaticResource UncompleledGlyph}" />
+                                                            </core:DataTriggerBehavior>
+                                                        </interactivity:Interaction.Behaviors>
+                                                    </FontIcon>
+                                                </Button>
+                                                <TextBox
+                                                    BorderThickness="0"
+                                                    FontSize="14"
                                                     Foreground="{StaticResource GrayColor}"
-                                                    Glyph="{StaticResource UncompleledGlyph}" />
-                                            </Button>
-                                            <TextBlock
-                                                FontSize="14"
-                                                Foreground="{StaticResource GrayColor}"
-                                                Text="Name"
-                                                TextWrapping="Wrap" />
-                                        </StackPanel>
-                                    </ListViewItem>
-                                </ListView.Items>
+                                                    Text="{Binding Name, Mode=TwoWay}">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:EventTriggerBehavior EventName="LostFocus">
+                                                            <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource LostFocusCommand}}" />
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </TextBox>
+                                            </StackPanel>
+                                        </ListViewItem>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
                             </ListView>
                         </Grid>
 
@@ -673,6 +716,7 @@
                             BorderThickness="1"
                             CornerRadius="4"
                             IsSpellCheckEnabled="False"
+                            LostFocus="NoteTask_LostFocus"
                             PlaceholderText="Add to Note" />
                     </Grid>
 
@@ -697,14 +741,19 @@
                             Orientation="Horizontal"
                             Spacing="4">
                             <TextBlock Foreground="{StaticResource GrayColor}" Text="Create on: " />
-                            <TextBlock Foreground="{StaticResource GrayColor}" Text="12/06/1998" />
+                            <TextBlock
+                                DataContext="{Binding SelectedMission}"
+                                Foreground="{StaticResource GrayColor}"
+                                Text="{Binding Created, Converter={StaticResource DateTimeToString}}" />
                         </StackPanel>
                         <Button
                             Grid.Column="2"
                             Padding="0"
                             HorizontalAlignment="Right"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Command="{Binding RemoveMissonCommand}"
+                            CommandParameter="{Binding}">
                             <FontIcon FontSize="16" Glyph="&#xe74d;" />
                         </Button>
                     </Grid>
@@ -734,9 +783,10 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Spacing="12">
                             <TextBlock
+                                DataContext="{Binding Missions}"
                                 FontSize="35"
                                 Foreground="{StaticResource PurpleColor}"
-                                Text="0"
+                                Text="{Binding Count}"
                                 TextAlignment="Center" />
                             <TextBlock
                                 FontSize="12"
@@ -748,9 +798,10 @@
 
                         <StackPanel Grid.Column="3" Spacing="12">
                             <TextBlock
+                                DataContext="{Binding CompletedMissions}"
                                 FontSize="35"
                                 Foreground="{StaticResource PurpleColor}"
-                                Text="0"
+                                Text="{Binding Count}"
                                 TextAlignment="Center" />
                             <TextBlock
                                 FontSize="12"
@@ -834,7 +885,6 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <Button
                                             Padding="0"
@@ -849,17 +899,23 @@
                                                 Source="{StaticResource CheckIcon}" />
                                         </Button>
 
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding Name}"
-                                            TextTrimming="CharacterEllipsis" />
+                                        <Grid Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextTrimming="CharacterEllipsis" />
 
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            VerticalAlignment="Center"
-                                            Foreground="{StaticResource GrayColor}"
-                                            Text="{Binding DateTime, Converter={StaticResource DateTimeToString}}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource GrayColor}"
+                                                Text="{Binding DateTime, Converter={StaticResource DateTimeToString}}" />
+                                        </Grid>
                                     </Grid>
                                 </ListViewItem>
                             </DataTemplate>
@@ -940,4 +996,5 @@
             </ScrollViewer>
         </SplitView>
     </Grid>
+    <!--#endregion-->
 </Page>

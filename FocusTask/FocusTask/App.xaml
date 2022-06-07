@@ -44,14 +44,14 @@
                 <Setter Property="Background" Value="{StaticResource WhiteColor}" />
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="Padding" Value="8,4,8,4"/>
-                <Setter Property="MinHeight" Value="36"/>
+                <Setter Property="Padding" Value="8,4,8,4" />
+                <Setter Property="MinHeight" Value="36" />
             </Style>
 
             <Style x:Key="NoPaddingFlyoutStyle" TargetType="FlyoutPresenter">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Background" Value="White" />
-                <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="CornerRadius" Value="4" />
             </Style>
 
             <vml:ViewModelLocator x:Key="VML" />

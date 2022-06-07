@@ -31,6 +31,11 @@ namespace FocusTask.View
         {
             this.InitializeComponent();
 
+            RegisterMessenger();
+        }
+
+        private void RegisterMessenger()
+        {
             WeakReferenceMessenger.Default.Register<SetDisplayDueDateMessage>(this, (r, m) =>
             {
                 DateTimeOffset date = new DateTimeOffset(m.DueDate);
@@ -43,6 +48,11 @@ namespace FocusTask.View
                 DateTimeOffset date = new DateTimeOffset(m.Reminder);
                 ReminderCalendar.SelectedDates.Clear();
                 ReminderCalendar.SelectedDates.Add(date);
+            });
+
+            WeakReferenceMessenger.Default.Register<NoteValueChanged>(this, (r, m) =>
+            {
+                NoteTask.Document.SetText(Windows.UI.Text.TextSetOptions.None, m.Value ?? "");
             });
         }
 
@@ -91,6 +101,11 @@ namespace FocusTask.View
         {
             ReminderFlyout.Hide();
         }
+
+        private void HideRepeatFlyout_Event(object sender, RoutedEventArgs e)
+        {
+            RepeatFlyout.Hide();
+        }
         #endregion
 
         private void ReminderCalendar_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
@@ -105,5 +120,11 @@ namespace FocusTask.View
             }
         }
 
+        private void NoteTask_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string value;
+            NoteTask.Document.GetText(Windows.UI.Text.TextGetOptions.UseObjectText, out value);
+            SaveNoteCommand.Command.Execute(value);
+        }
     }
 }

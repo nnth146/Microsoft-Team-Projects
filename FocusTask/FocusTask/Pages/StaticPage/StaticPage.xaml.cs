@@ -71,11 +71,6 @@ namespace FocusTask.View
                 contentFrame.Navigate(typeof(UpcomingPage));
                 NameProject.Text = "Upcoming";
             }
-            if (e.Parameter.ToString() == "Someday")
-            {
-                contentFrame.Navigate(typeof(SomedayPage));
-                NameProject.Text = "Someday";
-            }
             if (e.Parameter.ToString() == "Completed")
             {
                 contentFrame.Navigate(typeof(CompletedPage));

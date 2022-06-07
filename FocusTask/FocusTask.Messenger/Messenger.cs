@@ -35,4 +35,11 @@ namespace FocusTask.Messenger
             Reminder = reminder;
         }
     }
+
+    public class NoteValueChanged : ValueChangedMessage<string>
+    {
+        public NoteValueChanged(string value) : base(value)
+        {
+        }
+    }
 }

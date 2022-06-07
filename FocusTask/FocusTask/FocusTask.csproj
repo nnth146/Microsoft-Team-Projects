@@ -127,7 +127,6 @@
     <Compile Include="Pages\MainPage\MainPageViewModel.cs" />
     <Compile Include="Pages\MainPage\MydayPage\MydayPageViewModel.cs" />
     <Compile Include="Pages\MainPage\ProjectPage\ProjectPageViewModel.cs" />
-    <Compile Include="Pages\MainPage\SomedayPage\SomedayPageViewModel.cs" />
     <Compile Include="Pages\StaticPage\StaticPageViewModel.cs" />
     <Compile Include="Pages\MainPage\TomorrowPage\TomorrowPageViewModel.cs" />
     <Compile Include="Pages\MainPage\UpcomingPage\UpcomingPageViewModel.cs" />
@@ -155,9 +154,6 @@
     <Compile Include="Pages\MainPage\CompletedPage\CompletedPage.xaml.cs">
       <DependentUpon>CompletedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPage\SomedayPage\SomedayPage.xaml.cs">
-      <DependentUpon>SomedayPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\MainPage\TomorrowPage\TomorrowPage.xaml.cs">
       <DependentUpon>TomorrowPage.xaml</DependentUpon>
     </Compile>
@@ -166,6 +162,10 @@
     </Compile>
     <Compile Include="Pages\MainPage\ProjectPage\ProjectPage.xaml.cs">
       <DependentUpon>ProjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\GiftDialogViewModel.cs" />
+    <Compile Include="View\Dialog\GiftDialog.xaml.cs">
+      <DependentUpon>GiftDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -294,10 +294,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainPage\SomedayPage\SomedayPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\MainPage\TomorrowPage\TomorrowPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,11 +306,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Dialog\GiftDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\Dialog\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

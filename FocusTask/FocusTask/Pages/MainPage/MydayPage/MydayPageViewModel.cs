@@ -21,6 +21,7 @@ namespace FocusTask.ViewModel
             GetRawMissions();
             SetupMissions();
             SetupProjects();
+            SetupRepeatItems();
         }
 
         #region Xử lý SplitView
@@ -32,7 +33,8 @@ namespace FocusTask.ViewModel
         public RelayCommand<Mission> TaskItemClickCommand => _taskItemClickCommand ?? (_taskItemClickCommand = new RelayCommand<Mission>((obj) =>
         {
             SelectedMission = obj;
-            IsOpen = true;            
+            IsOpen = true;
+            messengerService.Send(new NoteValueChanged(SelectedMission.Description));
         }));
 
         private RelayCommand _closePaneCommand;
@@ -69,7 +71,7 @@ namespace FocusTask.ViewModel
 
         #region Xử lý Mission
 
-        private ObservableCollection<Mission> RawMissions { get; set; }
+        public ObservableCollection<Mission> RawMissions { get; set; }
 
         private void GetRawMissions()
         {
@@ -121,7 +123,7 @@ namespace FocusTask.ViewModel
             set { SetProperty(ref _completedMissions, value); }
         }
 
-        private void SetupMissions()
+        public void SetupMissions()
         {
             var missions = RawMissions
                 .Where(x => x.IsCompleted == false)
@@ -172,6 +174,7 @@ namespace FocusTask.ViewModel
         public RelayCommand<Mission> RemoveMissonCommand => _removeMissionCommand ?? (_removeMissionCommand = new RelayCommand<Mission>((obj) =>
         {
             RawMissions.Remove(obj);
+            IsOpen = false;
         }));
 
         private RelayCommand<Mission> _completedMissionCommand;
@@ -183,8 +186,24 @@ namespace FocusTask.ViewModel
                 SetupMissions();
             }else
             {
-                obj.IsCompleted = true;
-                SetupMissions();
+                if(obj.Repeat == 0)
+                {
+                    obj.IsCompleted = true;
+                    SetupMissions();
+                }
+                else
+                {
+                    if (obj.DateTime.HasValue)
+                    {
+                        obj.DateTime = obj.DateTime.Value.AddDays(obj.Repeat);
+                        SetupMissions();
+                    }
+                    else
+                    {
+                        obj.IsCompleted = true;
+                        SetupMissions();
+                    }
+                }
             }
             dataService.SaveChanges();
         }));
@@ -297,13 +316,113 @@ namespace FocusTask.ViewModel
         #endregion
 
         #region Repeat
+        public List<RepeatItem> RepeatItems { get; set; }
+        public RepeatItem SelectedRepeatItem { get; set; }
+        public double RepeatValue { get; set; }
+
+        private void SetupRepeatItems()
+        {
+            RepeatItems = new List<RepeatItem>
+            {
+                new RepeatItem
+                {
+                    Title = "Days",
+                    Value = 1
+                },
+                new RepeatItem
+                {
+                    Title = "Weeks",
+                    Value = 7
+                },
+                new RepeatItem
+                {
+                    Title = "Months",
+                    Value = 30
+                },
+                new RepeatItem
+                {
+                    Title = "Years",
+                    Value = 365
+                },
+            };
+
+            SelectedRepeatItem = RepeatItems[0];
+
+            RepeatValue = 1;
+        }
+
         private RelayCommand _saveRepeatCommand;
         public RelayCommand SaveRepeatCommand => _saveRepeatCommand ?? (_saveRepeatCommand = new RelayCommand(() =>
         {
+            if(RepeatValue > 0)
+            {
+                SelectedMission.Repeat = ((int)RepeatValue) * SelectedRepeatItem.Value;
+            }
+            else
+            {
+                SelectedMission.Repeat = 0;
+            }
+        }));
 
+        private RelayCommand _removeRepeatCommand;
+        public RelayCommand RemoveRepeatCommand => _removeRepeatCommand ?? (_removeRepeatCommand = new RelayCommand(() =>
+        {
+            SelectedMission.Repeat = 0;
         }));
         #endregion
 
+        #region SubMission
+
+        private string _subMissionName;
+        public string SubMissionName
+        {
+            get { return _subMissionName; }
+            set { SetProperty(ref _subMissionName, value); }
+        }
+
+        private RelayCommand _addSubMission;
+        public RelayCommand AddSubMission => _addSubMission ?? (_addSubMission = new RelayCommand(() =>
+        {
+            var submission = new SubMission
+            {
+                Name = string.IsNullOrEmpty(SubMissionName) ? "Sub Task" : SubMissionName,
+                IsCompleted = false,
+                MissionId = SelectedMission.Id,
+                Mission = SelectedMission
+            };
+            SelectedMission.SubMissions.Add(submission);
+            dataService.AddSubMission(submission);
+
+            SubMissionName = "";
+        }));
+
+        private RelayCommand<SubMission> _removeSubMission;
+        public RelayCommand<SubMission> RemoveSubMission => _removeSubMission ?? (_removeSubMission = new RelayCommand<SubMission>((obj) =>
+        {
+            dataService.RemoveSubMission(obj);
+        }));
+
+        private RelayCommand<SubMission> _completedSubMission;
+        public RelayCommand<SubMission> CompletedSubMission => _completedSubMission ?? (_completedSubMission = new RelayCommand<SubMission>((obj) =>
+        {
+            obj.IsCompleted = !obj.IsCompleted;
+        }));
+
+        private RelayCommand _lostFocusCommand;
+        public RelayCommand LostFocusCommand => _lostFocusCommand ?? (_lostFocusCommand = new RelayCommand(() =>
+        {
+            dataService.SaveChanges();
+        }));
         #endregion
+
+        private RelayCommand<string> _saveNoteCommand;
+        public RelayCommand<string> SaveNoteCommand => _saveNoteCommand ?? (_saveNoteCommand = new RelayCommand<string>((obj) =>
+        {
+            SelectedMission.Description = obj;
+            dataService.SaveChanges();
+        }));
+
+        #endregion
+
     }
 }

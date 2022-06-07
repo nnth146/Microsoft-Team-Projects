@@ -18,11 +18,15 @@ namespace FocusTask.ViewModel
     {
         public MainPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
+            Missions = dataService.GetMissions();
+
             SetupNavItems();
 
             SetupProjects();
 
             RegisterMessenger();
+
+            SetupNotificationMissions();
         }
 
         private void Projects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -86,12 +90,6 @@ namespace FocusTask.ViewModel
                 Content = "Upcoming",
                 Icon = CommonHelper.GetAppResources("UpcomingIcon") as string,
                 Page = typeof(UpcomingPageViewModel)
-            },
-            new NavItem
-            {
-                Content = "Someday",
-                Icon = CommonHelper.GetAppResources("SomedayIcon") as string,
-                Page = typeof(SomedayPageViewModel)
             },
             new NavItem
             {
@@ -180,6 +178,42 @@ namespace FocusTask.ViewModel
             EditedProject = obj;
 
             dialogService.showAsync(typeof(EditDialogViewModel));
+        }));
+        #endregion
+
+        #region Notification
+        private ObservableCollection<Mission> _notificationMissions;
+        public ObservableCollection<Mission> NotificationMissions
+        {
+            get { return _notificationMissions; }
+            set { SetProperty(ref _notificationMissions, value); }
+        }
+        
+        public ObservableCollection<Mission> Missions { get; set; }
+
+        private void SetupNotificationMissions()
+        {
+            var list = Missions
+                .Where(x => (x.Reminder <= DateTime.Now))
+                .Where(x=>x.IsCompleted == false)
+                .OrderBy(x => x.DateTime)
+                .ToList();
+
+            list.Reverse();
+            NotificationMissions = new ObservableCollection<Mission>(list);
+        }
+
+        private RelayCommand<Mission> _comfirmNotificationCommand;
+        public RelayCommand<Mission> ComfirmNotificationCommand => _comfirmNotificationCommand ?? (_comfirmNotificationCommand = new RelayCommand<Mission>((obj) =>
+        {
+            obj.Reminder = null;
+            SetupNotificationMissions();
+        }));
+
+        private RelayCommand _donateCommand;
+        public RelayCommand DonateCommand => _donateCommand ?? (_donateCommand = new RelayCommand(() =>
+        {
+            dialogService.showAsync(typeof(GiftDialogViewModel));
         }));
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Uwp.SQLite.Model
@@ -35,6 +36,8 @@ namespace Uwp.SQLite.Model
         private int _repeat;
         public int Repeat { get { return _repeat; } set { SetProperty(ref _repeat, value); } }
 
+        private bool _isInformed;
+        public bool IsInformed { get { return _isInformed; } set { SetProperty(ref _isInformed, value); } }
 
         public int ProjectId { get; set; }
 
@@ -45,8 +48,12 @@ namespace Uwp.SQLite.Model
             set { SetProperty(ref _project, value); }
         }
 
+        public int SubMissionId { get; set; }
+        public ObservableCollection<SubMission> SubMissions { get; set; } = new ObservableCollection<SubMission>();
+
         public Mission()
         {
+            Created = System.DateTime.Now;
             IsCompleted = false;
             Priority = Priority.No;
         }
