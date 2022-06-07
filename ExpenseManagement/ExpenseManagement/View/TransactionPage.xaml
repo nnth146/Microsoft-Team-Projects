@@ -254,7 +254,7 @@
                             Text="View Spending" />
                     </Grid>
 
-                    <!--  Enter value  -->
+                    <!--  Value  -->
                     <ScrollViewer
                         Grid.Row="1"
                         Margin="0,0,-12,0"
@@ -303,7 +303,7 @@
                                     BorderBrush="{StaticResource borderColor}"
                                     BorderThickness="1"
                                     CornerRadius="8">
-                                    <TextBlock Text="{Binding selectedSpending.Spending.Money}" />
+                                    <TextBlock TextTrimming="CharacterEllipsis" MaxWidth="430" Text="{Binding selectedSpending.Spending.Money, Converter={StaticResource DoubleToString}}" />
                                 </Grid>
                             </StackPanel>
                             <StackPanel Grid.Row="3" Spacing="8">
@@ -649,46 +649,54 @@
                             <Button
                                 Margin="12,0,0,0"
                                 Padding="0"
+                                VerticalAlignment="Center"
                                 Background="Transparent"
                                 BorderThickness="0">
                                 <Button.Flyout>
                                     <Flyout Placement="BottomEdgeAlignedLeft">
-                                        <ListView>
+                                        <ListView x:Name="ListViewSort" ItemClick="ListViewSort_ItemClick" ItemsSource="{Binding listSort}" SelectedItem="{Binding selectedSort, Mode=TwoWay}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:InvokeCommandAction Command="{Binding SortChangedCommand}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
                                             <ListView.Items>
                                                 <ListViewItem>
-                                                    <TextBlock Text="Sort by Name" />
-                                                </ListViewItem>
-                                                <ListViewItem>
-                                                    <TextBlock Text="Sort by Date" />
+                                                    <TextBlock Text="{Binding}" />
                                                 </ListViewItem>
                                             </ListView.Items>
                                         </ListView>
                                     </Flyout>
                                 </Button.Flyout>
-                                <FontIcon Glyph="&#xe8cb;" />
+                                <FontIcon Glyph="&#xe8cb;" FontSize="16" />
                             </Button>
                             <Button
                                 Grid.Column="1"
                                 Margin="0,0,24,0"
                                 Padding="0"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
                                 Background="Transparent"
                                 BorderThickness="0">
                                 <Button.Flyout>
                                     <Flyout Placement="BottomEdgeAlignedRight">
-                                        <ListView>
-                                            <ListView.Items>
-                                                <ListViewItem>
-                                                    <TextBlock Text="Income" />
-                                                </ListViewItem>
-                                                <ListViewItem>
-                                                    <TextBlock Text="Expense" />
-                                                </ListViewItem>
-                                            </ListView.Items>
+                                        <ListView ItemClick="ListViewFilter_ItemClick" x:Name="ListViewFilter" ItemsSource="{Binding listFilter}" SelectedItem="{Binding selectedFilter, Mode=TwoWay}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:InvokeCommandAction Command="{Binding FilterChangedCommand}" />
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ListViewItem>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </ListViewItem>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
                                         </ListView>
                                     </Flyout>
                                 </Button.Flyout>
-                                <FontIcon Glyph="&#xe7b3;" />
+                                <FontIcon Glyph="&#xe7b3;" FontSize="20" />
                             </Button>
                         </Grid>
                     </ListView.Header>
@@ -749,8 +757,10 @@
                                         <TextBlock
                                             Grid.Row="0"
                                             VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            TextTrimming="CharacterEllipsis"
                                             Foreground="{Binding colorStatus, Converter={StaticResource StringToColorBrush}}"
-                                            Text="{Binding Spending.Money}" />
+                                            Text="{Binding Spending.Money, Converter={StaticResource DoubleToString}}" />
                                         <TextBlock
                                             Grid.Row="1"
                                             VerticalAlignment="Center"
@@ -774,7 +784,6 @@
                                                 </ResourceDictionary>
                                             </Button.Resources>
                                         </Button>
-
                                     </Grid>
                                     <Grid Grid.Column="4">
                                         <Border BorderBrush="{StaticResource borderColor}" BorderThickness="0,0,1,0" />

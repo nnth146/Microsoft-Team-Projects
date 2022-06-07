@@ -31,6 +31,9 @@ namespace ExpenseManagement.View
         private void addTransaction_btn_Click(object sender, RoutedEventArgs e)
         {
             splitView.IsPaneOpen = true;
+            EditSpending.Visibility = Visibility.Collapsed;
+            ViewSpending.Visibility = Visibility.Collapsed;
+            AddSpending.Visibility = Visibility.Visible;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,8 +43,8 @@ namespace ExpenseManagement.View
             {
                 Transaction transaction = e.Parameter as Transaction;
                 transactionPageViewModel.transaction = transaction;
-                transactionPageViewModel.spendings = Database.getSpendingByWhere("where id_transaction = " + transaction.Id);
                 transactionPageViewModel.getCategory();
+                transactionPageViewModel.selectedSort = transactionPageViewModel.listSort[1];
             }
         }
 
@@ -64,6 +67,16 @@ namespace ExpenseManagement.View
             AddSpending.Visibility = Visibility.Collapsed;
             ViewSpending.Visibility = Visibility.Collapsed;
             EditSpending.Visibility = Visibility.Visible;
+        }
+
+        private void ListViewFilter_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ListViewSort.SelectedItem = null;
+        }
+
+        private void ListViewSort_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ListViewFilter.SelectedItem = null;
         }
     }
 }

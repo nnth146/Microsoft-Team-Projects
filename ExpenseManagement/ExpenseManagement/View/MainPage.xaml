@@ -27,7 +27,7 @@
 
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Padding="12">
-                <AutoSuggestBox AutomationProperties.Name="Search" QueryIcon="Find" />
+                <AutoSuggestBox IsEnabled="False" AutomationProperties.Name="Search" QueryIcon="Find" />
             </Grid>
             <ListView
                 x:Name="ListViewBasic"

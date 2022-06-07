@@ -18,9 +18,8 @@ namespace ExpenseManagement.ViewModel
     {
         public MainPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
-            transactions = Database.getTransactionByWhere("");
-            transactions.CollectionChanged += Transactions_CollectionChanged;
-            
+            getData();
+
             EnabledTransaction = false;
             basics = new ObservableCollection<Basic>()
             {
@@ -30,27 +29,36 @@ namespace ExpenseManagement.ViewModel
             };
         }
 
+        private void getData()
+        {
+            transactions = Database.getTransactionByWhere("");
+            transactions.CollectionChanged += Transactions_CollectionChanged;
+            OnPropertyChanged(nameof(transactions));
+        }
+
         private void Transactions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                Database.addNewTransaction(e.NewItems[0] as Transaction);
+                Transaction transaction = e.NewItems[0] as Transaction;
+                Database.addNewTransaction(transaction);
+                Debug.WriteLine("Da vao add");
             }
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
             {
                 Transaction transaction = (Transaction)e.NewItems[0];
                 Database.updateTransactionById(transaction, transaction.Id);
+                Debug.WriteLine("Da vao edit");
             }
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 Transaction transaction = (Transaction)e.OldItems[0];
                 Database.deleteTransactionById(transaction.Id);
+                selectedBasic = basics[0];
+                OnPropertyChanged(nameof(selectedBasic));
+                Debug.WriteLine("Da vao delete");
             }
-            OnPropertyChanged(nameof(transactions));
-            selectedBasic = null;
-            OnPropertyChanged(nameof(selectedBasic));
-            selectedBasic = basics[0];
-            OnPropertyChanged(nameof(selectedBasic));   
+            getData();
         }
             
         // Variable

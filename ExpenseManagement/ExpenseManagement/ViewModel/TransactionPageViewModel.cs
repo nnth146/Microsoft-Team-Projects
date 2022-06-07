@@ -19,11 +19,22 @@ namespace ExpenseManagement.ViewModel
         {
             spendings = new ObservableCollection<Spending>();
             setUpBeforeAdd();
+            listSort = new ObservableCollection<string>()
+            {
+                "Sort by Name",
+                "Sort by Date"
+            };
+            listFilter = new ObservableCollection<string>()
+            {
+                "Icome",
+                "Expense"
+            };
         }
 
         public void getCategory()
         {
-            if(spendings.Count > 0)
+            spendings = Database.getSpendingByWhere("where id_transaction = " + transaction.Id);
+            if (spendings.Count > 0)
             {
                 hasItem = "Visible";
                 notItem = "Collapsed";
@@ -48,6 +59,31 @@ namespace ExpenseManagement.ViewModel
             OnPropertyChanged(nameof(notItem));
         }
 
+        public void getSort()
+        {
+            if (selectedSort == "Sort by Name")
+            {
+                objectSpendings = new ObservableCollection<ObjectSpending>(objectSpendings.OrderBy(objectSpending => objectSpending.Spending.Name));
+            }
+            else
+            {
+                objectSpendings = new ObservableCollection<ObjectSpending>(objectSpendings.OrderBy(objectSpending => objectSpending.Spending.Create_On));
+            }
+            OnPropertyChanged(nameof(objectSpendings));
+        }
+        public void getFilter()
+        {
+            if (selectedFilter == "Expense")
+            {
+                objectSpendings = new ObservableCollection<ObjectSpending>(objectSpendings.Where(objectSpending => objectSpending.Spending.Status.Equals(true)));
+            }
+            else
+            {
+                objectSpendings = new ObservableCollection<ObjectSpending>(objectSpendings.Where(objectSpending => objectSpending.Spending.Status.Equals(false)));
+            }
+            OnPropertyChanged(nameof(objectSpendings));
+        }
+
         private void setUpBeforeAdd()
         {
             NameSpending = "";
@@ -65,6 +101,10 @@ namespace ExpenseManagement.ViewModel
         public ObservableCollection<Category> categories { get; set; }
         public ObservableCollection<ObjectSpending> objectSpendings { get; set; }
         public ObjectSpending selectedSpending { get; set; }
+        public ObservableCollection<string> listSort { get; set; }
+        public string selectedSort { get; set; }
+        public ObservableCollection<string> listFilter { get; set; }
+        public string selectedFilter { get; set; }
 
         // Add spending
         public string NameSpending { get; set; }
@@ -126,6 +166,7 @@ namespace ExpenseManagement.ViewModel
                         Database.addNewSpending(spending);
                         spendings.Add(spending);
                         getCategory();
+                        getSort();
                     });
                 }
                 return _addSpendingCommand;
@@ -206,6 +247,7 @@ namespace ExpenseManagement.ViewModel
                         }
                         OnPropertyChanged(nameof(spendings));
                         getCategory();
+                        getSort();
                     });
                 }
                 return _editSpendingCommand;
@@ -225,9 +267,49 @@ namespace ExpenseManagement.ViewModel
                         Database.deleteSpendingById(selectedSpending.Id);
                         objectSpendings.Remove(selectedObjectSpending);
                         getCategory();
+                        getSort();
                     });
                 }
                 return _deleteSpendingCommand;
+            }
+        }
+
+        private RelayCommand _sortChangedCommand;
+        public RelayCommand SortChangedCommand
+        {
+            get
+            {
+                if (_sortChangedCommand == null)
+                {
+                    _sortChangedCommand = new RelayCommand(() =>
+                    {
+                        if(selectedSort != null)
+                        {
+                            getCategory();
+                            getSort();
+                        }
+                    });
+                }
+                return _sortChangedCommand;
+            }
+        }
+        private RelayCommand _filterChangedCommand;
+        public RelayCommand FilterChangedCommand
+        {
+            get
+            {
+                if (_filterChangedCommand == null)
+                {
+                    _filterChangedCommand = new RelayCommand(() =>
+                    {
+                        if (selectedFilter != null)
+                        {
+                            getCategory();
+                            getFilter();
+                        }
+                    });
+                }
+                return _filterChangedCommand;
             }
         }
     }
