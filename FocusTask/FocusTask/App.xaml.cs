@@ -1,5 +1,4 @@
-﻿using FocusTask.Models;
-using FocusTask.View;
+﻿using FocusTask.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,10 +33,9 @@ namespace FocusTask
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            ApplicationView.PreferredLaunchViewSize = new Size(1200, 900);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
-            Database.initDatabase();
+            //Configure Service and Database
+            ConfigureHelper.ConfigureAll();
         }
 
         /// <summary>
@@ -49,8 +47,6 @@ namespace FocusTask
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            // Config Service
-            ServiceHelper.ConfigureServices();
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)

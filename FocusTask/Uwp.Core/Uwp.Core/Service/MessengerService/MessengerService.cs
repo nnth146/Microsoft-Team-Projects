@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UWP.Core.Service
+namespace Uwp.Core.Service
 {
     public class MessengerService : IMessenger
     {

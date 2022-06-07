@@ -14,12 +14,12 @@ namespace FocusTask.VML
         public CompletedPageViewModel CompletedPage => Ioc.Default.GetService<CompletedPageViewModel>();
         public DeleteDialogViewModel DeleteDialog => Ioc.Default.GetService<DeleteDialogViewModel>();
         public EditDialogViewModel EditDialog => Ioc.Default.GetService<EditDialogViewModel>();
-        public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
-        public MainPageViewMode MainPageViewMode => Ioc.Default.GetService<MainPageViewMode>();
+        public MainPageViewModel MainPage => Ioc.Default.GetService<MainPageViewModel>();
         public MydayPageViewModel MydayPage => Ioc.Default.GetService<MydayPageViewModel>();
-        public SomedayPageViewModel SomedayPage => Ioc.Default.GetService<SomedayPageViewModel>();
+        public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
         public StaticPageViewModel StaticPage => Ioc.Default.GetService<StaticPageViewModel>();
         public TomorrowPageViewModel TomorrowPage => Ioc.Default.GetService<TomorrowPageViewModel>();
         public UpcomingPageViewModel UpcomingPage => Ioc.Default.GetService<UpcomingPageViewModel>();
+        public GiftDialogViewModel GiftDialog => Ioc.Default.GetService<GiftDialogViewModel>();
     }
 }

@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  icon  -->
+    <x:String x:Key="MyDayIcon">ms-appx:///Assets/Icons/myday.png</x:String>
+    <x:String x:Key="CompletedIcon">ms-appx:///Assets/Icons/completed.png</x:String>
+    <x:String x:Key="CheckIcon">ms-appx:///Assets/Icons/check.png</x:String>
+    <x:String x:Key="PremiumIcon">ms-appx:///Assets/Icons/premium.png</x:String>
+    <x:String x:Key="SomedayIcon">ms-appx:///Assets/Icons/someday.png</x:String>
+    <x:String x:Key="TomorrowIcon">ms-appx:///Assets/Icons/tomorrow.png</x:String>
+    <x:String x:Key="SortIcon">ms-appx:///Assets/Icons/sort.png</x:String>
+    <x:String x:Key="UpcomingIcon">ms-appx:///Assets/Icons/upcoming.png</x:String>
+    <x:String x:Key="ClockIcon">ms-appx:///Assets/Icons/clock.png</x:String>
+    <x:String x:Key="TimeIcon">ms-appx:///Assets/Icons/time.png</x:String>
+    <x:String x:Key="AirPlayIcon">ms-appx:///Assets/Icons/airplay.png</x:String>
+    <x:String x:Key="PauseIcon">ms-appx:///Assets/Icons/pause.png</x:String>
+    <x:String x:Key="StopIcon">ms-appx:///Assets/Icons/stop.png</x:String>
+    <x:String x:Key="ShopPremiumIcon">ms-appx:///Assets/Icons/shop_primeum.png</x:String>
+    <x:String x:Key="ShopPremiumSelectedIcon">ms-appx:///Assets/Icons/shop_primeum_selected.png</x:String>
+    <x:String x:Key="AboutIcon">ms-appx:///Assets/Icons/about.png</x:String>
+    <x:String x:Key="AboutSelectedIcon">ms-appx:///Assets/Icons/about_selected.png</x:String>
+    <x:String x:Key="CheckPremiumIcon">ms-appx:///Assets/Icons/check_primeum.png</x:String>
+    <x:String x:Key="BellIcon">ms-appx:///Assets/Icons/bell.png</x:String>
+    <x:String x:Key="AndroidIcon">ms-appx:///Assets/Icons/android.png</x:String>
+    <x:String x:Key="AppleIcon">ms-appx:///Assets/Icons/apple.png</x:String>
+    <x:String x:Key="MicrosoftIcon">ms-appx:///Assets/Icons/microsoft.png</x:String>
+
+    <!--  Priority Icon  -->
+    <x:String x:Key="NoPriority">ms-appx:///Assets/Icons/no_priority.png</x:String>
+    <x:String x:Key="LowPriority">ms-appx:///Assets/Icons/low_priority.png</x:String>
+    <x:String x:Key="MediumPriority">ms-appx:///Assets/Icons/medium_priority.png</x:String>
+    <x:String x:Key="HighPriority">ms-appx:///Assets/Icons/high_priority.png</x:String>
+
+    <!--  String  -->
+    <x:String x:Key="Welcome">Welcome to Focus Task</x:String>
+    <x:String x:Key="Estimated">Estimated Time(h)</x:String>
+    <x:String x:Key="Mission">Mission to be Completed</x:String>
+    <x:String x:Key="Completed">Completed Mission</x:String>
+    <x:String x:Key="HideCompleted">Hide completed Missions</x:String>
+    <x:String x:Key="ShowCompleted">Completed Mission</x:String>
+    <x:String x:Key="DeleteProject">Are you sure you want to delete this project? This action cannot be undone.</x:String>
+
+    <x:String x:Key="UncompleledGlyph">&#xE739;</x:String>
+    <x:String x:Key="CompleledGlyph">&#xE73A;</x:String>
+    <x:String x:Key="CheckboxFillGlyph">&#xe73b;</x:String>
+    <x:String x:Key="AcceptGlyph">&#xe8fb;</x:String>
+    <x:String x:Key="GiftGlyph">&#xF133;</x:String>
+
+    <x:String x:Key="DateNull">Select a date</x:String>
+
+    <x:Boolean x:Key="True">True</x:Boolean>
+    <x:Boolean x:Key="False">False</x:Boolean>
+</ResourceDictionary>

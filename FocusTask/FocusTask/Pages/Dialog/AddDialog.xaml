@@ -1,0 +1,133 @@
+﻿<ContentDialog
+    x:Class="FocusTask.View.Dialog.AddDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:FocusTask.View.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Core.SR"
+    CornerRadius="4"
+    DataContext="{Binding Source={StaticResource VML}, Path=AddDialog}"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+
+        <SolidColorBrush
+            x:Key="ContentDialogBackgroundButtonRegion"
+            Opacity="0.055"
+            Color="Black" />
+
+        <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource PurpleColor}" />
+
+        <sr:ResTextBox
+            x:Name="ResTextBox"
+            BorderBrush="{StaticResource MainBorderBrush}"
+            BorderBrushFocused="{StaticResource TextBoxBorderBrush}"
+            BorderBrushPointerOver="{StaticResource TextBoxBorderBrush}" />
+
+        <sr:ResButton
+            x:Name="ResPrimaryButton"
+            Background="{StaticResource TextBoxBorderBrush}"
+            BackgroundPointerOver="{StaticResource TextBoxBorderBrush}"
+            Foreground="White"
+            ForegroundPointerOver="White" />
+
+        <x:Double x:Key="GridViewWidth">300</x:Double>
+    </ContentDialog.Resources>
+
+    <Grid
+        MinWidth="300"
+        Background="White"
+        CornerRadius="4">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Padding="12" Background="{StaticResource PurpleColor}">
+                <TextBlock
+                    x:Name="ContentDialogTitle"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Foreground="{StaticResource WhiteColor}"
+                    Text="New Project" />
+            </Grid>
+
+            <Grid
+                x:Name="ContentDialogContent"
+                Grid.Row="1"
+                Padding="12"
+                RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBox
+                    Height="36"
+                    PlaceholderText="Enter project name"
+                    Resources="{Binding Source={StaticResource ResTextBox}, Path=Resources}"
+                    Text="{Binding ProjectName, Mode=TwoWay}" />
+
+                <GridView
+                    x:Name="Colors"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Colors}"
+                    SelectedItem="{Binding SelectedColor, Mode=TwoWay}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid
+                                ItemHeight="30"
+                                ItemWidth="30"
+                                MaximumRowsOrColumns="2" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <GridViewItem
+                                MinWidth="20"
+                                MinHeight="20"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                CornerRadius="4"
+                                Style="{StaticResource GridViewItemExpanded}">
+                                <Grid Background="{Binding Converter={StaticResource StringToColorBrush}}" />
+                            </GridViewItem>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            Background="{StaticResource ContentDialogBackgroundButtonRegion}"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                x:Name="PrimaryButton"
+                HorizontalAlignment="Stretch"
+                Command="{Binding PrimaryButtonCommand}"
+                Content="Save"
+                Resources="{Binding Source={StaticResource ResPrimaryButton}, Path=Resources}" />
+
+            <Button
+                x:Name="SecondaryButton"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Command="{Binding SecondaryButtonCommand}"
+                Content="Cancel" />
+        </Grid>
+    </Grid>
+</ContentDialog>
