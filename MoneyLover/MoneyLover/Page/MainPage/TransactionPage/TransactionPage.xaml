@@ -116,9 +116,9 @@
                                             FontWeight="SemiBold"
                                             Style="{StaticResource BaseTextBlockStyle}"
                                             Text="{Binding Name}" />
-                                        <StackPanel Orientation="Horizontal" Spacing="2" Grid.Row="1">
-                                            <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
-                                                <Run Text="{Binding Money}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="1" Grid.Row="1">
+                                            <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}" MaxLines="1" TextTrimming="CharacterEllipsis" MaxWidth="660">
+                                                <Run Text="{Binding Money, Converter={StaticResource DoubleToString}}" />
                                             </TextBlock>
                                             <TextBlock Foreground="{StaticResource Color2}" Style="{StaticResource BaseTextBlockStyle}">
                                                 <Run Text="{Binding Curency}" />
@@ -165,9 +165,9 @@
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
                                                     <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
-                                                    <TextBlock Foreground="{StaticResource Color6}" Grid.Row="1">
+                                                    <TextBlock Foreground="{StaticResource Color6}" Grid.Row="1" TextTrimming="CharacterEllipsis">
                                                         <Italic>
-                                                            <Run Text="{Binding Money}" />
+                                                            <Run Text="{Binding Money, Converter={StaticResource DoubleToString}}" />
                                                         </Italic>
                                                     </TextBlock>
                                                 </Grid>

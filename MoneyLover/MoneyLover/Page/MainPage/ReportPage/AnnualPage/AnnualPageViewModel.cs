@@ -18,12 +18,11 @@ namespace MoneyLover.ViewModel
         public AnnualPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
             dateNow = DateTimeOffset.Now.LocalDateTime;
-            updateData();
         }
 
-        private void updateData()
+        public void updateData()
         {
-            transactions = DB.getTransactionByWhere("");
+            transactions = DB.getTransactionByWhere("where id_budget = " + budget.Id);
 
             string year = dateNow.Year.ToString();
             Double total = 0;
@@ -54,6 +53,8 @@ namespace MoneyLover.ViewModel
             }
             OnPropertyChanged(nameof(objectTransaction));
         }
+
+        public Budget budget { get; set; }
 
         public DateTimeOffset dateNow { get; set; }
         public string textDate { get; set; }

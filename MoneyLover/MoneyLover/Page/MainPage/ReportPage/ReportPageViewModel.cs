@@ -19,9 +19,12 @@ namespace MoneyLover.ViewModel
         public ReportPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
             budgets = DB.getBudgetByWhere("");
+            isButton = false;
         }
 
         public ObservableCollection<Budget> budgets { get; set; }
+        public Budget selectedBudget { get; set; }
+        public Boolean isButton { get; set; }
 
         private RelayCommand<object> _naviMonthlyCommand;
         public RelayCommand<object> NaviMonthlyCommand
@@ -32,7 +35,11 @@ namespace MoneyLover.ViewModel
                 {
                     _naviMonthlyCommand = new RelayCommand<object>((frame) =>
                     {
-                        navigationService.Navigate(frame, typeof(MonthlyPageViewModel));
+                        if(selectedBudget != null)
+                        {
+                            isButton = false;
+                            navigationReport(isButton, frame, selectedBudget);
+                        }
                     });
                 }
                 return _naviMonthlyCommand;
@@ -48,10 +55,44 @@ namespace MoneyLover.ViewModel
                 {
                     _naviYearCommand = new RelayCommand<object>((frame) =>
                     {
-                        navigationService.Navigate(frame, typeof(AnnualPageViewModel));
+                        if(selectedBudget != null)
+                        {
+                            isButton = true;
+                            navigationReport(isButton, frame, selectedBudget);
+                        }
                     });
                 }
                 return _naviYearCommand;
+            }
+        }
+
+        public void navigationReport(Boolean isCheck, object frame, Budget budget)
+        {
+            if (isCheck)
+            {
+                navigationService.Navigate(frame, typeof(AnnualPageViewModel), budget);
+            } else
+            {
+                navigationService.Navigate(frame, typeof(MonthlyPageViewModel), budget);
+            }
+        }
+
+        private RelayCommand<object> _budgetChangedCommand;
+        public RelayCommand<object> BudgetChangedCommand
+        {
+            get
+            {
+                if (_budgetChangedCommand == null)
+                {
+                    _budgetChangedCommand = new RelayCommand<object>((frame) =>
+                    {
+                        if (selectedBudget != null)
+                        {
+                            navigationReport(isButton, frame, selectedBudget);
+                        }
+                    });
+                }
+                return _budgetChangedCommand;
             }
         }
     }

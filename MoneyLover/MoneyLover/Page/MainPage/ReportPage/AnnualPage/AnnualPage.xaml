@@ -14,7 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -56,13 +56,6 @@
             </Button>
         </Grid>
 
-        <Grid Grid.Row="2">
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Chart thêm vào đây" />
-        </Grid>
-
         <ListView
             Grid.Row="3"
             Background="{StaticResource ListViewBackground}"
@@ -96,8 +89,10 @@
                             <TextBlock
                                 Grid.Column="2"
                                 VerticalAlignment="Center"
+                                TextTrimming="CharacterEllipsis"
+                                MaxWidth="200"
                                 HorizontalAlignment="Center"
-                                Text="{Binding transaction.Money}" />
+                                Text="{Binding transaction.Money, Converter={StaticResource DoubleToString}}" />
                             <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="2">
                                 <TextBlock
                                 Text="{Binding percent}" />

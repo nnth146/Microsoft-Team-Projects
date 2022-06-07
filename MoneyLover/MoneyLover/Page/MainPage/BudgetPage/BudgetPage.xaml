@@ -79,8 +79,10 @@
                                             HorizontalAlignment="Right" Orientation="Horizontal">
                                             <TextBlock
                                                 FontWeight="SemiBold"
+                                                MaxWidth="240"
                                                 Foreground="{StaticResource Color2}"
-                                                Text="{Binding Money}" />
+                                                TextTrimming="CharacterEllipsis"
+                                                Text="{Binding Money, Converter={StaticResource DoubleToString}}" />
                                             <TextBlock
                                                 FontWeight="SemiBold"
                                                 Foreground="{StaticResource Color2}"

@@ -19,12 +19,11 @@ namespace MoneyLover.ViewModel
         public MonthlyPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
             dateNow = DateTime.Now.ToLocalTime();
-            updateData();
         }
 
-        private void updateData()
+        public void updateData()
         {
-            transactions = DB.getTransactionByWhere("");
+            transactions = DB.getTransactionByWhere("where id_budget = " + budget.Id);
             
             string mon = dateNow.Month.ToString();
             string year = dateNow.Year.ToString();
@@ -57,6 +56,7 @@ namespace MoneyLover.ViewModel
             }
             OnPropertyChanged(nameof(objectTransaction));
         }
+        public Budget budget { get; set; }
 
         public DateTimeOffset dateNow { get; set; }
         public string textDate { get; set; }

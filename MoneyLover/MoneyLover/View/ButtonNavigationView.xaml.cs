@@ -27,6 +27,12 @@ namespace MoneyLover.View
 
             _monthlyButtonIsSelected = false;
             _annualButtonIsSelected = false;
+
+            MonthlyButton.Background = ButtonBackgroundPointerOver;
+            AnnualButton.Background = ButtonBackground;
+            _monthlyButtonIsSelected = true;
+            _annualButtonIsSelected = false;
+            OnMonthlyButtonIsSelected();
         }
 
         public object MonthlyButtonCommandParameter { get; set; }

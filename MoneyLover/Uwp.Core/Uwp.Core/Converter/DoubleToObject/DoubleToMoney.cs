@@ -13,7 +13,7 @@ namespace Uwp.Core.Converter
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             NumberFormatInfo nfi = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone();
-            nfi.CurrencySymbol = "$";
+            nfi.CurrencySymbol = "";
 
             string result = String.Format(nfi, "{0:C}", value);
 

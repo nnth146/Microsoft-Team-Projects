@@ -27,9 +27,12 @@ namespace MoneyLover.View
             this.InitializeComponent();
         }
 
-        private void RPFrame_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            RPFrame.Navigate(typeof(MonthlyPage));
+            if (ListViewReport.Items.Count > 0)
+            {
+                ListViewReport.SelectedItem = ListViewReport.Items[0];
+            }
         }
     }
 }

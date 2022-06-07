@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="900"
     d:DesignWidth="900"
+    Loaded="Page_Loaded"
     Background="Transparent"
     DataContext="{Binding Source={StaticResource VML}, Path=ReportPage}"
     mc:Ignorable="d">
@@ -20,8 +21,13 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding budgets}"
-            Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+        <ListView x:Name="ListViewReport" ItemsSource="{Binding budgets}" SelectedItem="{Binding selectedBudget, Mode=TwoWay}" 
+                  Resources="{Binding Source={StaticResource ResListView}, Path=Resources}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="SelectionChanged">
+                    <core:InvokeCommandAction Command="{Binding BudgetChangedCommand}" CommandParameter="{x:Bind RPFrame}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <ListView.Header>
                 <Image
                     Height="24"
@@ -38,10 +44,10 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <controls:ImageIcon
-                            Height="24"
-                            Margin="0,4,0,0"
-                            VerticalAlignment="Top"
-                            Source="{Binding Source={StaticResource Icon Wallet}}" />
+                                Height="24"
+                                Margin="0,4,0,0"
+                                VerticalAlignment="Top"
+                                Source="{Binding Source={StaticResource Icon Wallet}}" />
 
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
@@ -49,8 +55,11 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="{Binding Name}" />
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="2">
-                                    <TextBlock Text="{Binding Money}" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    Spacing="1">
+                                    <TextBlock Text="{Binding Money, Converter={StaticResource DoubleToString}}" TextTrimming="CharacterEllipsis" MaxLines="1" MaxWidth="220" />
                                     <TextBlock Text="{Binding Curency}" />
                                 </StackPanel>
                             </Grid>
@@ -74,13 +83,15 @@
             </Grid.RowDefinitions>
 
             <!--  Binding Command vào 2 nút.  -->
-            <local:ButtonNavigationView MonthlyButtonCommand="{Binding NaviMonthlyCommand}" MonthlyButtonCommandParameter="{x:Bind RPFrame}"
-                                        AnnualButtonCommand="{Binding NaviYearCommand}" AnnualButtonCommandParameter="{x:Bind RPFrame}" />
+            <local:ButtonNavigationView
+                AnnualButtonCommand="{Binding NaviYearCommand}"
+                AnnualButtonCommandParameter="{x:Bind RPFrame}"
+                MonthlyButtonCommand="{Binding NaviMonthlyCommand}"
+                MonthlyButtonCommandParameter="{x:Bind RPFrame}" />
 
             <Frame
                 x:Name="RPFrame"
-                Grid.Row="1"
-                Loaded="RPFrame_Loaded" />
+                Grid.Row="1" />
 
         </Grid>
     </Grid>

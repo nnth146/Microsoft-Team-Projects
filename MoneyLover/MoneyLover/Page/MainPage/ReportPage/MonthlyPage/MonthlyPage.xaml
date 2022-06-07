@@ -10,11 +10,11 @@
     DataContext="{Binding Source={StaticResource VML}, Path=MonthlyPage}"
     mc:Ignorable="d">
 
-    <Grid RowSpacing="12" Background="{StaticResource BackgroundPage}">
+    <Grid Background="{StaticResource BackgroundPage}" RowSpacing="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -33,8 +33,8 @@
             <Button
                 Padding="2"
                 Background="Transparent"
-                Command="{Binding PrevMonthlyCommand}"
-                BorderThickness="0">
+                BorderThickness="0"
+                Command="{Binding PrevMonthlyCommand}">
                 <FontIcon FontSize="14" Glyph="&#xE76B;" />
             </Button>
 
@@ -50,27 +50,20 @@
                 Grid.Column="3"
                 Padding="2"
                 Background="Transparent"
-                Command="{Binding NextMonthlyCommand}"
-                BorderThickness="0">
+                BorderThickness="0"
+                Command="{Binding NextMonthlyCommand}">
                 <FontIcon FontSize="14" Glyph="&#xE76C;" />
             </Button>
-        </Grid>
-
-        <Grid Grid.Row="2">
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Chart thêm vào đây" />
         </Grid>
 
         <ListView
             Grid.Row="3"
             Background="{StaticResource ListViewBackground}"
             BorderBrush="{StaticResource BorderBrush}"
-            ItemsSource="{Binding objectTransaction}"
             BorderThickness="1"
             CornerRadius="4"
             IsItemClickEnabled="True"
+            ItemsSource="{Binding objectTransaction}"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             SelectionMode="None">
             <ListView.ItemTemplate>
@@ -95,14 +88,17 @@
                                 Text="{Binding transaction.Name}" />
                             <TextBlock
                                 Grid.Column="2"
-                                VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Text="{Binding transaction.Money}" />
-                            <StackPanel Orientation="Horizontal" Grid.Column="3" Spacing="2">
-                                <TextBlock
-                                Text="{Binding percent}" />
-                                <TextBlock
-                                Text="%" />
+                                VerticalAlignment="Center"
+                                TextTrimming="CharacterEllipsis"
+                                MaxWidth="200"
+                                Text="{Binding transaction.Money, Converter={StaticResource DoubleToString}}" />
+                            <StackPanel
+                                Grid.Column="3"
+                                Orientation="Horizontal"
+                                Spacing="2">
+                                <TextBlock Text="{Binding percent}" />
+                                <TextBlock Text="%" />
                             </StackPanel>
                         </Grid>
                     </ListViewItem>
