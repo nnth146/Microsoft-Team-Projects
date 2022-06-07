@@ -20,6 +20,6 @@ namespace Uwp.SQLite.Model
         public DateTime? Created { get { return _created; } set { SetProperty(ref _created, value); } }
 
 
-        public IEnumerable<Mission> Missions { get; set; } = new ObservableCollection<Mission>();
+        public ObservableCollection<Mission> Missions { get; set; } = new ObservableCollection<Mission>();
     }
 }

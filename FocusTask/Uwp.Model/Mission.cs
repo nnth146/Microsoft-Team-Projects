@@ -37,6 +37,18 @@ namespace Uwp.SQLite.Model
 
 
         public int ProjectId { get; set; }
-        public Project Project { get; set; }
+
+        private Project _project;   
+        public Project Project
+        {
+            get { return _project; }
+            set { SetProperty(ref _project, value); }
+        }
+
+        public Mission()
+        {
+            IsCompleted = false;
+            Priority = Priority.No;
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace Uwp.Core.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if(value == null || value.GetType() == typeof(string)) return value;
+
             DateTime dateTime = (DateTime)value;
             return dateTime.ToString("MMMM, dd yyyy");
         }

@@ -18,6 +18,8 @@ namespace FocusTask.ViewModel
     {
         public MainPageViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService, IMessenger messengerService) : base(dataService, navigationService, dialogService, messengerService)
         {
+            SetupNavItems();
+
             SetupProjects();
 
             RegisterMessenger();
@@ -54,13 +56,24 @@ namespace FocusTask.ViewModel
         }
 
         #region Xử lý NavigationView
-        public ObservableCollection<NavItem> NavItems { get; set; } = new ObservableCollection<NavItem>
+        public ObservableCollection<NavItem> NavItems { get; set; }
+        private NavItem _selectedNavItem;
+        public NavItem SelectedNavItem
+        {
+            get { return _selectedNavItem; }
+            set { SetProperty(ref _selectedNavItem, value); }
+        }
+
+        private void SetupNavItems()
+        {
+            NavItems = new ObservableCollection<NavItem>
         {
             new NavItem
             {
                 Content = "My Day",
                 Icon = CommonHelper.GetAppResources("MyDayIcon") as string,
-                Page = typeof(MydayPageViewModel)
+                Page = typeof(MydayPageViewModel),
+                Missions = dataService.GetMissions()
             },
             new NavItem
             {
@@ -87,31 +100,46 @@ namespace FocusTask.ViewModel
                 Page = typeof(CompletedPageViewModel)
             }
         };
-        public NavItem SelectedNavItem { get; set; }
+        }
 
         private RelayCommand<NavItem> _navSelectionChangedCommand;
         public RelayCommand<NavItem> NavSelectionChangedCommand => _navSelectionChangedCommand ?? (_navSelectionChangedCommand = new RelayCommand<NavItem>((obj) =>
         {
-            var frame = messengerService.Send<MPFrameRequestMessage>().Response;
+            if(obj != null)
+            {
+                var frame = messengerService.Send<MPFrameRequestMessage>().Response;
 
-            navigationService.Navigate(frame, obj.Page);
+                navigationService.Navigate(frame, obj.Page);
+
+                SelectedProject = null;
+            }
         }));
 
         private RelayCommand<Project> _projectsSelectionChangedCommand;
         public RelayCommand<Project> ProjectsSelectionChangedCommand => _projectsSelectionChangedCommand ?? (_projectsSelectionChangedCommand = new RelayCommand<Project>((obj) =>
         {
-            var frame = messengerService.Send<MPFrameRequestMessage>().Response;
+            if(obj != null)
+            {
+                var frame = messengerService.Send<MPFrameRequestMessage>().Response;
 
-            SelectedProject = obj;
+                SelectedProject = obj;
 
-            navigationService.Navigate(frame, typeof(ProjectPageViewModel));
+                navigationService.Navigate(frame, typeof(ProjectPageViewModel));
+
+                SelectedNavItem = null;
+            }
         }));
         #endregion
 
         #region Xử lý Project
 
         public ObservableCollection<Project> Projects { get; set; }
-        public Project SelectedProject { get; set; }
+        private Project _selectedProject;
+        public Project SelectedProject
+        {
+            get { return _selectedProject; }
+            set { SetProperty(ref _selectedProject, value); }
+        }
         public Project EditedProject { get; set; }
         
         private void SetupProjects()

@@ -43,4 +43,9 @@
     <x:String x:Key="CheckboxFillGlyph">&#xe73b;</x:String>
     <x:String x:Key="AcceptGlyph">&#xe8fb;</x:String>
     <x:String x:Key="GiftGlyph">&#xF133;</x:String>
+
+    <x:String x:Key="DateNull">Select a date</x:String>
+
+    <x:Boolean x:Key="True">True</x:Boolean>
+    <x:Boolean x:Key="False">False</x:Boolean>
 </ResourceDictionary>

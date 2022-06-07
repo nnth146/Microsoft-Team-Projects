@@ -21,6 +21,20 @@
         <XamlUICommand x:Name="RemoveMissonCommand" Command="{Binding RemoveMissonCommand}" />
         <XamlUICommand x:Name="AddMissionCommand" Command="{Binding AddMissionCommand}" />
         <XamlUICommand x:Name="ProjectChosenCommand" Command="{Binding ProjectChosenCommand}" />
+        <XamlUICommand x:Name="CompletedMissionCommand" Command="{Binding CompletedMissionCommand}" />
+        <XamlUICommand x:Name="PrioritySelectionChangedCommand" Command="{Binding PrioritySelectionChangedCommand}" />
+        <XamlUICommand x:Name="TextChangedCommand" Command="{Binding TextChangedCommand}" />
+        <XamlUICommand x:Name="DueDateChangedCommand" Command="{Binding DueDateChangedCommand}" />
+        <XamlUICommand x:Name="ChangeProjectCommand" Command="{Binding ChangeProjectCommand}" />
+        <XamlUICommand x:Name="ReminderChangedCommand" Command="{Binding ReminderChangedCommand}" />
+
+        <MenuFlyout x:Name="MissionCommandFlyout">
+            <MenuFlyoutItem
+                Command="{Binding Command, Source={StaticResource RemoveMissonCommand}}"
+                CommandParameter="{Binding}"
+                Icon="Delete"
+                Text="Delete" />
+        </MenuFlyout>
 
         <Flyout
             x:Name="ChooseProjectFlyout"
@@ -34,7 +48,7 @@
                 SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ListViewItem Style="{StaticResource ProjectItemStyle}">
+                        <ListViewItem Style="{StaticResource ProjectItemStyle}" Tapped="HideChooseProjectFlyout_Event">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Tapped">
                                     <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource ProjectChosenCommand}}" CommandParameter="{Binding}" />
@@ -63,20 +77,28 @@
                 MaxWidth="200"
                 CornerRadius="4"
                 IsItemClickEnabled="True"
+                ItemsSource="{Binding Projects}"
                 SelectionMode="None">
-                <ListView.Items>
-                    <ListViewItem Style="{StaticResource ProjectItemStyle}">
-                        <StackPanel
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal"
-                            Spacing="8">
-                            <Grid CornerRadius="4">
-                                <FontIcon Foreground="{StaticResource Color01}" Glyph="{StaticResource CheckboxFillGlyph}" />
-                            </Grid>
-                            <TextBlock Text="Name of project" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView.Items>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Style="{StaticResource ProjectItemStyle}" Tapped="HideChangeProjectFlyout_Event">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource ChangeProjectCommand}}" CommandParameter="{Binding}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <Grid CornerRadius="4">
+                                    <FontIcon Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                                </Grid>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Flyout>
 
@@ -87,15 +109,28 @@
             <ListView
                 CornerRadius="4"
                 IsItemClickEnabled="True"
+                ItemsSource="{Binding Priorities}"
                 SelectionMode="None">
-                <ListView.Items>
-                    <ListViewItem Style="{StaticResource ProjectItemStyle}">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <FontIcon Foreground="{StaticResource LowColor}" Glyph="&#xe734;" />
-                            <TextBlock VerticalAlignment="Center" Text="No Priority" />
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView.Items>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Style="{StaticResource ProjectItemStyle}" Tapped="HidePriorityFlyout_Event">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource PrioritySelectionChangedCommand}}" CommandParameter="{Binding}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <FontIcon Foreground="{Binding Converter={StaticResource PriorityToColorBrush}}" Glyph="&#xe734;" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <Span>
+                                        <Run Text="{Binding}" />
+                                        <Run Text="Priority" />
+                                    </Span>
+                                </TextBlock>
+                            </StackPanel>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Flyout>
 
@@ -126,10 +161,12 @@
                 </Grid.RowDefinitions>
 
                 <CalendarView
+                    x:Name="DueDateCalendar"
                     CalendarIdentifier="GregorianCalendar"
                     IsGroupLabelVisible="True"
                     IsOutOfScopeEnabled="True"
-                    Language="en" />
+                    Language="en"
+                    SelectedDatesChanged="DueDateCalendar_SelectedDatesChanged" />
 
                 <Grid
                     Grid.Row="1"
@@ -143,6 +180,8 @@
                     <Button
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource PrimaryColor}"
+                        Click="HideDueFlyout_Event"
+                        Command="{Binding SaveDueDateCommand}"
                         Content="Save"
                         Foreground="{StaticResource WhiteColor}">
                         <Button.Resources>
@@ -156,27 +195,29 @@
                     <Button
                         Grid.Column="1"
                         HorizontalAlignment="Stretch"
+                        Click="HideDueFlyout_Event"
+                        Command="{Binding RemoveDueDateCommand}"
                         Content="Remove" />
                 </Grid>
             </Grid>
         </Flyout>
 
         <Flyout x:Name="ReminderFlyout" FlyoutPresenterStyle="{StaticResource NoPaddingFlyoutStyle}">
-            <Grid RowSpacing="20">
+            <Grid RowSpacing="8">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <CalendarView
+                    x:Name="ReminderCalendar"
                     CalendarIdentifier="GregorianCalendar"
                     IsGroupLabelVisible="True"
                     IsOutOfScopeEnabled="True"
                     Language="en"
+                    SelectedDatesChanged="ReminderCalendar_SelectedDatesChanged"
                     SelectionMode="Single" />
-                <Grid Grid.Row="1" ColumnSpacing="8">
-                    <TimePicker Padding="4,0,4,0" HorizontalAlignment="Stretch" />
-                </Grid>
+                
                 <Grid
                     Grid.Row="2"
                     Padding="4,0,4,4"
@@ -188,6 +229,8 @@
                     <Button
                         HorizontalAlignment="Stretch"
                         Background="{StaticResource PrimaryColor}"
+                        Click="HideReminderFlyout_Event"
+                        Command="{Binding SaveReminderCommand}"
                         Content="Save"
                         Foreground="{StaticResource WhiteColor}">
                         <Button.Resources>
@@ -200,6 +243,8 @@
                     <Button
                         Grid.Column="1"
                         HorizontalAlignment="Stretch"
+                        Click="HideReminderFlyout_Event"
+                        Command="{Binding RemoveReminderCommand}"
                         Content="Remove" />
                 </Grid>
             </Grid>
@@ -372,11 +417,38 @@
                             Padding="0"
                             VerticalAlignment="Top"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Command="{Binding CompletedMissionCommand}"
+                            CommandParameter="{Binding SelectedMission}">
                             <Image
+                                x:Name="CompletedIcon"
                                 Width="24"
                                 Height="24"
-                                Source="{StaticResource CheckIcon}" />
+                                DataContext="{Binding SelectedMission}"
+                                Source="{StaticResource CheckIcon}"
+                                Tag="{Binding IsCompleted}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:DataTriggerBehavior
+                                        Binding="{Binding ElementName=CompletedIcon, Path=Tag}"
+                                        ComparisonCondition="Equal"
+                                        Value="{StaticResource True}">
+                                        <core:ChangePropertyAction
+                                            PropertyName="Source"
+                                            TargetObject="{Binding ElementName=CompletedIcon}"
+                                            Value="{StaticResource CompletedIcon}" />
+                                    </core:DataTriggerBehavior>
+
+                                    <core:DataTriggerBehavior
+                                        Binding="{Binding ElementName=CompletedIcon, Path=Tag}"
+                                        ComparisonCondition="Equal"
+                                        Value="{StaticResource False}">
+                                        <core:ChangePropertyAction
+                                            PropertyName="Source"
+                                            TargetObject="{Binding ElementName=CompletedIcon}"
+                                            Value="{StaticResource CheckIcon}" />
+                                    </core:DataTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Image>
                         </Button>
 
                         <TextBox
@@ -384,7 +456,14 @@
                             VerticalAlignment="Center"
                             Background="Transparent"
                             BorderThickness="0"
-                            Text="Task Name" />
+                            DataContext="{Binding SelectedMission}"
+                            Text="{Binding Name, Mode=TwoWay}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="LostFocus">
+                                    <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource TextChangedCommand}}" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </TextBox>
 
                         <Button
                             Grid.Column="3"
@@ -395,8 +474,9 @@
                             BorderThickness="0"
                             Flyout="{StaticResource ChoosePriorityFlyout}">
                             <FontIcon
+                                DataContext="{Binding SelectedMission}"
                                 FontSize="20"
-                                Foreground="{StaticResource NoColor}"
+                                Foreground="{Binding Priority, Converter={StaticResource PriorityToColorBrush}}"
                                 Glyph="&#xe734;" />
                         </Button>
                     </Grid>
@@ -450,9 +530,11 @@
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Right"
                                     BorderThickness="0"
-                                    Content="Select a date"
+                                    Command="{Binding SetDisplayDueDateCommand}"
                                     Flyout="{StaticResource DueDateFlyout}"
-                                    Foreground="{StaticResource GrayColor}" />
+                                    Foreground="{StaticResource GrayColor}">
+                                    <TextBlock DataContext="{Binding SelectedMission}" Text="{Binding DateTime, Converter={StaticResource DateTimeToString}, TargetNullValue={StaticResource DateNull}}" />
+                                </Button>
                             </Grid>
 
                             <Grid
@@ -477,9 +559,12 @@
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Right"
                                     BorderThickness="0"
-                                    Content="Project Name"
                                     Flyout="{StaticResource ChangeProjectFlyout}"
-                                    Foreground="{StaticResource GrayColor}" />
+                                    Foreground="{StaticResource GrayColor}">
+                                    <Grid DataContext="{Binding SelectedMission}">
+                                        <TextBlock DataContext="{Binding Project}" Text="{Binding Name}" />
+                                    </Grid>
+                                </Button>
                             </Grid>
 
                             <Grid x:Name="ReminderPanel" Grid.Row="2">
@@ -500,9 +585,11 @@
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Right"
                                     BorderThickness="0"
-                                    Content="Select a date"
+                                    Command="{Binding SetDisplayReminderCommand}"
                                     Flyout="{StaticResource ReminderFlyout}"
-                                    Foreground="{StaticResource GrayColor}" />
+                                    Foreground="{StaticResource GrayColor}">
+                                    <TextBlock DataContext="{Binding SelectedMission}" Text="{Binding Reminder, Converter={StaticResource DateTimeToString}, TargetNullValue={StaticResource DateNull}}" />
+                                </Button>
                             </Grid>
 
                             <Grid x:Name="RepeatPanel" Grid.Row="3">
@@ -686,7 +773,6 @@
                             HorizontalAlignment="Left"
                             Foreground="{StaticResource PurpleColor}"
                             Glyph="&#xE710;" />
-                        <!--  TODO  -->
                         <TextBox
                             Height="42"
                             Padding="42,10,8,0"
@@ -694,12 +780,13 @@
                             BorderBrush="{StaticResource GrayColor}"
                             BorderThickness="1"
                             PlaceholderText="Enter name mission then press Enter to add Task"
-                            Resources="{Binding Source={StaticResource ResTextBox}, Path=Resources}"
+                            Resources="{Binding Resources, Source={StaticResource ResTextBox}}"
+                            Text="{Binding MissionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="Wrap">
                             <TextBox.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="Enter">
                                     <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior>
+                                        <core:EventTriggerBehavior EventName="Invoked">
                                             <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource AddMissionCommand}}" />
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
@@ -719,57 +806,64 @@
                                 Padding="0"
                                 BorderThickness="0"
                                 CornerRadius="4"
-                                DataContext="{Binding SelectedProject}"
                                 Flyout="{StaticResource ChooseProjectFlyout}">
-                                <FontIcon Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}" Glyph="{StaticResource CheckboxFillGlyph}" />
+                                <FontIcon
+                                    DataContext="{Binding SelectedProject}"
+                                    Foreground="{Binding Color, Converter={StaticResource StringToColorBrush}}"
+                                    Glyph="{StaticResource CheckboxFillGlyph}" />
                             </Button>
                         </StackPanel>
                     </Grid>
 
                     <!--  Uncompleted Tasks  -->
                     <ListView
-                        x:Name="UncompleteTasks"
+                        x:Name="UncompleteMissions"
                         Grid.Row="2"
                         IsItemClickEnabled="True"
+                        ItemsSource="{Binding Missions}"
                         SelectionMode="None">
-                        <ListView.Items>
-                            <ListViewItem Style="{StaticResource TaskItemStyle}">
-                                <interactivity:Interaction.Behaviors>
-                                    <core:EventTriggerBehavior EventName="Tapped">
-                                        <core:InvokeCommandAction Command="{Binding Source={StaticResource TaskItemClickCommand}, Path=Command}" CommandParameter="{Binding}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                                <Grid ColumnSpacing="16">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Button
-                                        Padding="0"
-                                        VerticalAlignment="Center"
-                                        Background="Transparent"
-                                        BorderThickness="0">
-                                        <Image
-                                            Width="24"
-                                            Height="24"
-                                            Source="{StaticResource CheckIcon}" />
-                                    </Button>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ListViewItem ContextFlyout="{StaticResource MissionCommandFlyout}" Style="{StaticResource TaskItemStyle}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource TaskItemClickCommand}}" CommandParameter="{Binding}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Grid ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button
+                                            Padding="0"
+                                            VerticalAlignment="Center"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Command="{Binding Command, Source={StaticResource CompletedMissionCommand}}"
+                                            CommandParameter="{Binding}">
+                                            <Image
+                                                Width="24"
+                                                Height="24"
+                                                Source="{StaticResource CheckIcon}" />
+                                        </Button>
 
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Text="Name"
-                                        TextTrimming="CharacterEllipsis" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Name}"
+                                            TextTrimming="CharacterEllipsis" />
 
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        VerticalAlignment="Center"
-                                        Foreground="{StaticResource GrayColor}"
-                                        Text="Apr, 22 2002" />
-                                </Grid>
-                            </ListViewItem>
-                        </ListView.Items>
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource GrayColor}"
+                                            Text="{Binding DateTime, Converter={StaticResource DateTimeToString}}" />
+                                    </Grid>
+                                </ListViewItem>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
 
                     <!--  Completed Tasks  -->
@@ -791,50 +885,55 @@
 
                         <!--  Task Completed  -->
                         <ListView
-                            x:Name="CompletedTasks"
-                            Grid.Row="1"
+                            x:Name="CompletedMissions"
+                            Grid.Row="2"
                             IsItemClickEnabled="True"
+                            ItemsSource="{Binding CompletedMissions}"
                             SelectionMode="None"
                             Visibility="{Binding ElementName=ShowCompleteButton, Path=IsChecked, Converter={StaticResource BooleanToVisibility}}">
-                            <ListView.Items>
-                                <ListViewItem Style="{StaticResource TaskItemStyle}">
-                                    <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="Tapped">
-                                            <core:InvokeCommandAction Command="{Binding Source={StaticResource TaskItemClickCommand}, Path=Command}" CommandParameter="{Binding}" />
-                                        </core:EventTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                    <Grid ColumnSpacing="16">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Button
-                                            Padding="0"
-                                            VerticalAlignment="Center"
-                                            Background="Transparent"
-                                            BorderThickness="0">
-                                            <Image
-                                                Width="24"
-                                                Height="24"
-                                                Source="{StaticResource CompletedIcon}" />
-                                        </Button>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ListViewItem ContextFlyout="{StaticResource MissionCommandFlyout}" Style="{StaticResource TaskItemStyle}">
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding Command, Source={StaticResource TaskItemClickCommand}}" CommandParameter="{Binding}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                        <Grid ColumnSpacing="16">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button
+                                                Padding="0"
+                                                VerticalAlignment="Center"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Command="{Binding Command, Source={StaticResource CompletedMissionCommand}}"
+                                                CommandParameter="{Binding}">
+                                                <Image
+                                                    Width="24"
+                                                    Height="24"
+                                                    Source="{StaticResource CompletedIcon}" />
+                                            </Button>
 
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="Name"
-                                            TextDecorations="Strikethrough"
-                                            TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextDecorations="Strikethrough"
+                                                TextTrimming="CharacterEllipsis" />
 
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            VerticalAlignment="Center"
-                                            Foreground="{StaticResource GrayColor}"
-                                            Text="Apr, 22 2002" />
-                                    </Grid>
-                                </ListViewItem>
-                            </ListView.Items>
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource GrayColor}"
+                                                Text="{Binding DateTime, Converter={StaticResource DateTimeToString}}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
                 </Grid>

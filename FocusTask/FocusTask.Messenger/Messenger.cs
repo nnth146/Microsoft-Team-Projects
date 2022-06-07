@@ -15,4 +15,24 @@ namespace FocusTask.Messenger
     public class ProjectsRequestMessage : RequestMessage<ObservableCollection<Project>> { }
     public class SelectedProjectRequestMessage : RequestMessage<Project> { }
     public class EditedProjectRequestMessage : RequestMessage<Project> { }
+
+    public class SetDisplayDueDateMessage
+    {
+        public DateTime DueDate { get; set; }
+
+        public SetDisplayDueDateMessage(DateTime dueDate)
+        {
+            DueDate = dueDate;
+        }
+    }
+
+    public class SetDisplayReminderMessage
+    {
+        public DateTime Reminder { get; set; }
+
+        public SetDisplayReminderMessage(DateTime reminder)
+        {
+            Reminder = reminder;
+        }
+    }
 }

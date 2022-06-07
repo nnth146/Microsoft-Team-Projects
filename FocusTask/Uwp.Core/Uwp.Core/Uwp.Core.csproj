@@ -136,6 +136,7 @@
     <Compile Include="Converter\DoubleToObject\DoubleToMoney.cs" />
     <Compile Include="Converter\NullToObject\NullToVisibility.cs" />
     <Compile Include="Converter\NullToObject\NullToVisibilityReverse.cs" />
+    <Compile Include="Converter\PriorityToColorBrushConverter.cs" />
     <Compile Include="Converter\StringToObject\StringToColorBrush.cs" />
     <Compile Include="Converter\StringToObject\StringToFluentIcon.cs" />
     <Compile Include="Helper\Database\LiteDBHelper.cs" />

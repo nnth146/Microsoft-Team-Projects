@@ -9,5 +9,6 @@
     <converter:BooleanToVisibilityReverse x:Key="BooleanToVisibilityReverse" />
     <converter:NullToVisibility x:Key="NullToVisibility" />
     <converter:NullToVisibilityReverse x:Key="NullToVisibilityReverse" />
-    <converter:ByteToBitmapImageConverter x:Key="ByteToBitmapImageConverter" />
+    <converter:ByteToBitmapImageConverter x:Key="ByteToBitmapImage" />
+    <converter:PriorityToColorBrushConverter x:Key="PriorityToColorBrush" />
 </ResourceDictionary>
