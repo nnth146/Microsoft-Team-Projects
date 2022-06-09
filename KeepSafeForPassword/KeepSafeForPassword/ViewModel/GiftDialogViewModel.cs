@@ -40,6 +40,7 @@ namespace KeepSafeForPassword.ViewModel
             IsActive = true;
 
             Items = await StoreHelper.Default.GetManagedConsumables();
+            OnPropertyChanged(nameof(Items));
 
             IsActive = false;
         }
@@ -86,7 +87,6 @@ namespace KeepSafeForPassword.ViewModel
                     break;
 
                 default:
-                    await dialogService.showMessageContentDialogAsync($"You already bought this consumable and must fulfill it.");
                     Debug.WriteLine("Product was not purchased due to an unknown error.");
                     break;
             }

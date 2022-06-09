@@ -9,7 +9,7 @@
   <Identity
     Name="39241Ps2303.KeepSafeForPassword"
     Publisher="CN=F2F7EEA9-5E4D-40B5-9CD5-1BDDFC8C691B"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="91a9b72c-8a1a-499e-a04f-15409d26c069" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
