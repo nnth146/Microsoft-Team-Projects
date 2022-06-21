@@ -1,0 +1,194 @@
+﻿<Page
+    x:Class="ExpenseManagement.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:ExpenseManagement.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Core.SR"
+    Background="{StaticResource color1}"
+    DataContext="{Binding Source={StaticResource VML}, Path=MainPage}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="ResButtonBackground" Color="{StaticResource color4}" />
+
+        <SolidColorBrush
+            x:Key="ResButtonBackgroundPointerOver"
+            Opacity="0.8"
+            Color="{StaticResource color4}" />
+
+        <SolidColorBrush x:Key="ResButtonForeground" Color="{StaticResource color3}" />
+
+        <sr:ResButton
+            x:Key="ResButton"
+            Background="{StaticResource ResButtonBackground}"
+            BackgroundPointerOver="{StaticResource ResButtonBackgroundPointerOver}"
+            BackgroundPressed="{StaticResource ResButtonBackground}"
+            Foreground="{StaticResource ResButtonForeground}"
+            ForegroundPointerOver="{StaticResource ResButtonForeground}"
+            ForegroundPressed="{StaticResource ResButtonForeground}" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListView
+                x:Name="ListViewBasic"
+                Grid.Row="1"
+                CornerRadius="0 8 8 0"
+                IsItemClickEnabled="True"
+                ItemClick="ListViewBasic_ItemClick"
+                ItemsSource="{Binding Basics}"
+                SelectedItem="{Binding SelectedBasic, Mode=TwoWay}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding BasicChangedCommand}" CommandParameter="{x:Bind containerFrame}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem
+                            Height="34"
+                            HorizontalContentAlignment="Stretch"
+                            IsEnabled="{Binding IsActive}">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <Image
+                                    Width="20"
+                                    Height="20"
+                                    Source="{Binding Icon}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource color2}"
+                                    Text="{Binding Name}" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Border
+                Grid.Row="2"
+                Height="1"
+                Margin="12,8"
+                Background="{StaticResource color2}" />
+            <ListView
+                x:Name="ListViewTransaction"
+                Grid.Row="3"
+                IsItemClickEnabled="True"
+                ItemClick="ListViewTransaction_ItemClick"
+                ItemsSource="{Binding Transactions}"
+                SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                        <core:InvokeCommandAction Command="{Binding TransactionChangeCommand}" CommandParameter="{x:Bind containerFrame}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem Height="34" HorizontalContentAlignment="Stretch">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid
+                                    Grid.Column="0"
+                                    Width="18"
+                                    Height="18"
+                                    Background="{Binding Color, Converter={StaticResource StringToColorBrush}}"
+                                    CornerRadius="4" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Foreground="{StaticResource color2}"
+                                    Text="{Binding Name}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Padding="0,2,0,0"
+                                    HorizontalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{StaticResource color2}"
+                                    Text="{Binding AmountSpending}"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="4" Padding="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    Command="{Binding AddTransactionCommand}"
+                    Content="Add transaction list"
+                    FontSize="14"
+                    Foreground="{StaticResource color3}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource color3}" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+
+                <Button
+                    Grid.Column="1"
+                    Margin="6,0"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    Command="{Binding EditTransactionCommand}"
+                    IsEnabled="{Binding EnabledTransaction}">
+                    <SymbolIcon Foreground="{StaticResource color3}" Symbol="Edit" />
+                </Button>
+
+                <Button
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    Command="{Binding DeleteTransactionCommand}"
+                    IsEnabled="{Binding EnabledTransaction}">
+                    <SymbolIcon Foreground="{StaticResource color3}" Symbol="Delete" />
+                </Button>
+
+                <Button
+                    Grid.Column="3"
+                    HorizontalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    Command="{Binding ShowSettingCommand}"
+                    CommandParameter="{x:Bind containerFrame}">
+                    <SymbolIcon Foreground="{StaticResource color3}" Symbol="Setting" />
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Frame
+            x:Name="containerFrame"
+            Grid.Column="1"
+            Background="{StaticResource color2}"
+            BorderBrush="{StaticResource borderColor}"
+            BorderThickness="1,0,0,0"
+            CornerRadius="8,0,0,8" />
+    </Grid>
+</Page>

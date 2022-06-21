@@ -1,0 +1,757 @@
+﻿<Page
+    x:Class="ExpenseManagement.View.ReportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:ExpenseManagement.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=ReportPage}"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource color9}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Padding="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                FontSize="14"
+                FontWeight="SemiBold"
+                Text="Reports" />
+            <Grid
+                Grid.Row="1"
+                Height="42"
+                Margin="0,16"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource color2}"
+                BorderBrush="{StaticResource startColor}"
+                BorderThickness="1"
+                ColumnSpacing="4"
+                CornerRadius="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="Monthly"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    BorderThickness="0"
+                    Click="Monthly_Click"
+                    Command="{Binding MonthlyChangedCommand}"
+                    Content="Monthly"
+                    CornerRadius="4"
+                    Foreground="{StaticResource color3}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource backgroundButton}" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource color3}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource color4}" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+                <Button
+                    x:Name="Annual"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="#FFF8F8"
+                    BorderThickness="0"
+                    Click="Annual_Click"
+                    Command="{Binding YearChangedCommand}"
+                    Content="Annual"
+                    CornerRadius="4"
+                    Foreground="{StaticResource color3}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource backgroundButton}" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource color3}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource color4}" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid x:Name="SelectedMonthly" RowSpacing="24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        Height="42"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource borderColor}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding PrevMonthCommand}">
+                            <FontIcon Glyph="&#xE76B;" />
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Black" />
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Text="{Binding TextMonthly}" />
+                                <TextBlock
+                                    Foreground="#979696"
+                                    Text="(01/5 - 31/5)"
+                                    Visibility="Collapsed" />
+                            </StackPanel>
+                            <Button.Flyout>
+                                <Flyout x:Name="MonthltFlyout" Placement="Bottom">
+                                    <StackPanel Spacing="8">
+                                        <DatePicker
+                                            BorderBrush="{StaticResource borderColor}"
+                                            BorderThickness="1"
+                                            DayVisible="False"
+                                            SelectedDate="{Binding Monthly, Mode=TwoWay}" />
+                                        <Button
+                                            x:Name="SaveMonth"
+                                            HorizontalAlignment="Stretch"
+                                            BorderBrush="{StaticResource borderColor}"
+                                            BorderThickness="1"
+                                            Click="SaveMonth_Click"
+                                            Command="{Binding MonthlyChangedCommand}"
+                                            Content="Save" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding NextMonthCommand}">
+                            <FontIcon Glyph="&#xE76C;" />
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Black" />
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnSpacing="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid RowSpacing="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource grayClor}"
+                                Text="Expense" />
+                            <Grid
+                                Grid.Row="1"
+                                Height="42"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderBrush="{StaticResource borderColor}"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                                <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource redColor}"
+                                        Text="-" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        MaxWidth="100"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource redColor}"
+                                        Text="{Binding MoneyExpense, Converter={StaticResource DoubleToString}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource grayClor}"
+                                Text="Income" />
+                            <Grid
+                                Grid.Row="1"
+                                Height="42"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderBrush="{StaticResource borderColor}"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                                <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource greenColor}"
+                                        Text="+" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        MaxWidth="100"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource greenColor}"
+                                        Text="{Binding MoneyIncome, Converter={StaticResource DoubleToString}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2" RowSpacing="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource grayClor}"
+                            Text="Money left in wallet"
+                            TextAlignment="Center" />
+                        <Grid
+                            Grid.Row="1"
+                            Width="150"
+                            Height="42"
+                            Background="Transparent"
+                            BorderBrush="{StaticResource borderColor}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource orangeColor}"
+                                    Text="{Binding Minus}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    MaxWidth="100"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource orangeColor}"
+                                    Text="{Binding MoneyReturn, Converter={StaticResource DoubleToString}}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid
+                    x:Name="SelectedAnnual"
+                    RowSpacing="24"
+                    Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        Height="42"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource borderColor}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding PrevYearCommand}">
+                            <FontIcon Glyph="&#xE76B;" />
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Black" />
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                        <Button
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Text="{Binding TextYear}" />
+                                <TextBlock
+                                    Foreground="#979696"
+                                    Text="(01/1 - 31/12)"
+                                    Visibility="Collapsed" />
+                            </StackPanel>
+                            <Button.Flyout>
+                                <Flyout x:Name="YearFlyout" Placement="Bottom">
+                                    <StackPanel Spacing="8">
+                                        <DatePicker
+                                            BorderBrush="{StaticResource borderColor}"
+                                            BorderThickness="1"
+                                            DayVisible="False"
+                                            MonthVisible="False"
+                                            SelectedDate="{Binding Year, Mode=TwoWay}" />
+                                        <Button
+                                            x:Name="SaveYear"
+                                            HorizontalAlignment="Stretch"
+                                            BorderBrush="{StaticResource borderColor}"
+                                            BorderThickness="1"
+                                            Click="SaveYear_Click"
+                                            Command="{Binding YearChangedCommand}"
+                                            Content="Save" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding NextYearCommand}">
+                            <FontIcon Glyph="&#xE76C;" />
+                            <Button.Resources>
+                                <ResourceDictionary>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Black" />
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                                </ResourceDictionary>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnSpacing="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid RowSpacing="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource grayClor}"
+                                Text="Expense" />
+                            <Grid
+                                Grid.Row="1"
+                                Height="42"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderBrush="{StaticResource borderColor}"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                                <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource redColor}"
+                                        Text="-" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource redColor}"
+                                        Text="{Binding MoneyExpense}" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource grayClor}"
+                                Text="Income" />
+                            <Grid
+                                Grid.Row="1"
+                                Height="42"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderBrush="{StaticResource borderColor}"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                                <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource greenColor}"
+                                        Text="+" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource greenColor}"
+                                        Text="{Binding MoneyIncome}" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2" RowSpacing="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Foreground="{StaticResource grayClor}"
+                            Text="Money left in wallet"
+                            TextAlignment="Center" />
+                        <Grid
+                            Grid.Row="1"
+                            Width="150"
+                            Height="42"
+                            Background="Transparent"
+                            BorderBrush="{StaticResource borderColor}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Grid HorizontalAlignment="Center" ColumnSpacing="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource orangeColor}"
+                                    Text="{Binding Minus}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource orangeColor}"
+                                    Text="{Binding MoneyReturn}" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid
+            Grid.Column="1"
+            Padding="12,50,12,12"
+            Background="{StaticResource color2}"
+            BorderBrush="{StaticResource borderColor}"
+            BorderThickness="1"
+            CornerRadius="8 0 0 8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid
+                Height="42"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource color2}"
+                BorderBrush="{StaticResource startColor}"
+                BorderThickness="1"
+                ColumnSpacing="4"
+                CornerRadius="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="Expense"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="{StaticResource color4}"
+                    BorderBrush="{StaticResource startColor}"
+                    BorderThickness="0"
+                    Click="Expense_Click"
+                    Content="Expense"
+                    CornerRadius="4"
+                    Foreground="{StaticResource color3}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource backgroundButton}" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource color3}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource color4}" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+                <Button
+                    x:Name="Income"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="#FFF8F8"
+                    BorderBrush="{StaticResource startColor}"
+                    BorderThickness="0"
+                    Click="Income_Click"
+                    Content="Income"
+                    CornerRadius="4"
+                    Foreground="{StaticResource color3}">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource backgroundButton}" />
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource color3}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource color4}" />
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+            <Grid
+                Grid.Row="2"
+                BorderBrush="{StaticResource borderColor}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <ListView
+                    IsItemClickEnabled="True"
+                    ItemClick="ListViewItemIcome_ItemClick"
+                    ItemsSource="{Binding GetIncomeSpendings}"
+                    Visibility="Collapsed">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image
+                                            Width="20"
+                                            Height="20"
+                                            Source="/Assets/icons/eat.png" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="Eating" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        Spacing="32">
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="2,500,000đ" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="38%" />
+                                    </StackPanel>
+                                    <Button
+                                        Grid.Column="3"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Stretch"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                        <FontIcon Glyph="&#xE76C;" />
+                                        <Button.Resources>
+                                            <ResourceDictionary>
+                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Black" />
+                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent" />
+                                            </ResourceDictionary>
+                                        </Button.Resources>
+                                    </Button>
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView
+                    x:Name="ListViewIcomeItem"
+                    IsItemClickEnabled="False"
+                    ItemsSource="{Binding ObjectIcomeSpendings}"
+                    SelectionMode="None"
+                    Visibility="Collapsed">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image
+                                            Width="20"
+                                            Height="20"
+                                            Source="{Binding IconCategory}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="{Binding NameCategory}" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        MaxWidth="160"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{Binding ColorStatus, Converter={StaticResource StringToColorBrush}}"
+                                        Text="{Binding Spending.Money, Converter={StaticResource DoubleToString}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="70,0,36,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding Spending.CreatedOn, Converter={StaticResource DateTimeToString}}" />
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView
+                    x:Name="ListViewExpenseItem"
+                    IsItemClickEnabled="False"
+                    ItemsSource="{Binding ObjectExpenseSpendings}"
+                    SelectionMode="None">
+                    <!--<ListView.Header>
+                        <Grid Padding="16,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Image
+                                    Width="20"
+                                    Height="20"
+                                    Source="/Assets/icons/eat.png" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Text="Eating" />
+                            </StackPanel>
+                            <Button
+                                x:Name="Cancel"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                BorderThickness="1"
+                                Click="Cancel_Click"
+                                Content="Cancel"
+                                CornerRadius="4" />
+                        </Grid>
+                    </ListView.Header>-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image
+                                            Width="20"
+                                            Height="20"
+                                            Source="{Binding IconCategory}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="{Binding NameCategory}" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        MaxWidth="160"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="{Binding ColorStatus, Converter={StaticResource StringToColorBrush}}"
+                                        Text="{Binding Spending.Money, Converter={StaticResource DoubleToString}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="70,0,36,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding Spending.CreatedOn, Converter={StaticResource DateTimeToString}}" />
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

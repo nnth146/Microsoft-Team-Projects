@@ -1,0 +1,40 @@
+﻿<ContentDialog
+    x:Class="ExpenseManagement.View.Dialog.WaitingDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ExpenseManagement.View.Dialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Generate Transaction"
+    Background="{StaticResource color4}"
+    CornerRadius="8">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock
+                x:Name="Second"
+                HorizontalAlignment="Center"
+                FontSize="18"
+                FontWeight="SemiBold"
+                Foreground="{StaticResource color3}"
+                />
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Foreground="Gray"
+                Text="Waiting to continue..." />
+        </StackPanel>
+
+        <TextBlock
+            Grid.Row="1"
+            MaxWidth="200"
+            Text=" If you don't want to wait, you can buy items in the settings"
+            TextAlignment="Center"
+            TextWrapping="Wrap" />
+    </Grid>
+</ContentDialog>

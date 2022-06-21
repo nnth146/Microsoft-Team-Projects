@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="color1">#4A3532</Color>
+    <Color x:Key="color2">#fff</Color>
+    <Color x:Key="color3">#7E0A58</Color>
+    <Color x:Key="color4">#FFD124</Color>
+    <Color x:Key="color5">#E74856</Color>
+    <Color x:Key="color6">#979696</Color>
+    <Color x:Key="color7">Transparent</Color>
+    <Color x:Key="color8">#4B4B4B</Color>
+    <Color x:Key="color9">#F4F1EF</Color>
+
+    <Color x:Key="redColor">#E71E1E</Color>
+    <Color x:Key="greenColor">#24880E</Color>
+    <Color x:Key="orangeColor">#ED7D2B</Color>
+
+    <Color x:Key="grayClor">#4B4B4B</Color>
+    <Color x:Key="calendar1">#EAEAEA</Color>
+    <Color x:Key="calendar2">#0065FC</Color>
+
+    <Color x:Key="startColor">#3F2B2B</Color>
+    <Color x:Key="endColor">#F1CC9E</Color>
+
+    <LinearGradientBrush x:Key="PrimaryColor">
+        <GradientStop Offset="0" Color="{StaticResource startColor}" />
+        <GradientStop Offset="1" Color="{StaticResource endColor}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ColorHover" Opacity="0.8">
+        <GradientStop Offset="0" Color="{StaticResource startColor}" />
+        <GradientStop Offset="1" Color="{StaticResource endColor}" />
+    </LinearGradientBrush>
+
+    <Color x:Key="borderColor">#cccccc</Color>
+    <Color x:Key="placeholderColor">#a3a3a3</Color>
+    <Color x:Key="backgroundButton">#FEE99A</Color>
+
+    <!--  Status  -->
+    <SolidColorBrush x:Key="Income">#009E5C</SolidColorBrush>
+    <SolidColorBrush x:Key="Expense">#E74856</SolidColorBrush>
+
+    <!--  Color Transaction  -->
+    <SolidColorBrush x:Key="transaction1">#AEBDC3</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction2">#768BFD</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction3">#67C3E8</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction4">#F4B357</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction5">#C540B5</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction6">#F4658C</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction7">#F7D550</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction8">#A0CE62</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction9">#FF7F55</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction10">#A66FF0</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction11">#1EACDC</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction12">#84E2AE</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction13">#8D4CE3</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction14">#4670F6</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction15">#E95ED3</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction16">#EC6B66</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction17">#A4A4A5</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction18">#B69A8F</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction19">#62E0C5</SolidColorBrush>
+    <SolidColorBrush x:Key="transaction20">#4E4E4E</SolidColorBrush>
+
+    <SolidColorBrush x:Key="OnlineColor">Green</SolidColorBrush>
+    <SolidColorBrush x:Key="OfflineColor">Gray</SolidColorBrush>
+
+</ResourceDictionary>
