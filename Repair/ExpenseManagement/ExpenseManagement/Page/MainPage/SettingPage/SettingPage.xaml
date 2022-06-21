@@ -1,0 +1,315 @@
+﻿<Page
+    x:Class="ExpenseManagement.View.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:ExpenseManagement.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sr="using:Uwp.Core.SR"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Source={StaticResource VML}, Path=SettingPage}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <XamlUICommand x:Name="PurchaseCommand" Command="{Binding PurchaseCommand}" />
+
+        <SolidColorBrush x:Key="ResButtonBackground" Color="{StaticResource color3}" />
+        <SolidColorBrush
+            x:Key="ResButtonBackgroundPointerOver"
+            Opacity="0.7"
+            Color="{StaticResource color3}" />
+        <SolidColorBrush x:Key="ResButtonForeground" Color="{StaticResource color4}" />
+        <sr:ResButton
+            x:Key="ResButton"
+            Background="{StaticResource ResButtonBackground}"
+            BackgroundPointerOver="{StaticResource ResButtonBackgroundPointerOver}"
+            BackgroundPressed="{StaticResource ResButtonBackground}"
+            Foreground="{StaticResource ResButtonForeground}"
+            ForegroundPointerOver="{StaticResource ResButtonForeground}"
+            ForegroundPressed="{StaticResource ResButtonForeground}" />
+    </Page.Resources>
+
+    <Grid
+        Margin="54"
+        BorderBrush="{StaticResource borderColor}"
+        BorderThickness="1"
+        CornerRadius="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid
+            Padding="8"
+            Background="{StaticResource PrimaryColor}"
+            BorderBrush="{StaticResource borderColor}"
+            BorderThickness="0,0,0,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Background="Transparent"
+                BorderThickness="0"
+                Click="Button_Click"
+                Foreground="White">
+                <SymbolIcon Symbol="Back" />
+            </Button>
+
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                FontSize="24"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Text="Setting" />
+        </Grid>
+
+
+        <Grid
+            Grid.Row="1"
+            Padding="8"
+            Background="{StaticResource PrimaryColor}">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                FontSize="16"
+                FontWeight="SemiBold"
+                Text="About" />
+
+            <TextBlock Grid.Row="1" Text="Expense Management" />
+
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                Spacing="6"
+                Visibility="Collapsed">
+                <TextBlock Text="Status:" />
+                <FontIcon
+                    FontSize="12"
+                    Foreground="{StaticResource OnlineColor}"
+                    Glyph="&#xE91F;" />
+                <TextBlock Text="Online" />
+
+            </StackPanel>
+
+            <TextBlock
+                Grid.Row="3"
+                MaxWidth="310"
+                HorizontalAlignment="Left"
+                TextWrapping="Wrap">
+                <Span>
+                    <Italic>
+                        <Run>
+                            <x:String>
+                                This app is completely free to everyone. However, there are some original limited modes. example as must be wait when creating transaction
+                            </x:String>
+                        </Run>
+                    </Italic>
+                </Span>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="4"
+                Margin="0,16,0,0"
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="SemiBold">
+                <Run>
+                    <x:String>
+                        We offer a number of options for you
+                    </x:String>
+                </Run>
+            </TextBlock>
+
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{StaticResource PrimaryColor}">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--#region In app purchase-->
+            <Grid Padding="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Generate Pro Item" />
+
+                    <TextBlock HorizontalAlignment="Center" Text="Generate transaction without waiting" />
+
+                    <TextBlock HorizontalAlignment="Center">
+                        <Span>
+                            <Run Text="Quantity available:" />
+                            <Run Text="{Binding Quantity}" />
+                        </Span>
+                    </TextBlock>
+                </StackPanel>
+
+                <GridView
+                    Grid.Row="1"
+                    Margin="0,16,0,0"
+                    IsItemClickEnabled="True"
+                    ItemsSource="{Binding Items}"
+                    SelectionMode="None">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid
+                                HorizontalAlignment="Center"
+                                ItemHeight="100"
+                                ItemWidth="100"
+                                MaximumRowsOrColumns="2" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <GridViewItem
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                CornerRadius="8"
+                                Style="{StaticResource GridViewItemExpanded}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:InvokeCommandAction Command="{StaticResource PurchaseCommand}" CommandParameter="{Binding}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                                <Grid Background="{StaticResource color4}">
+                                    <Grid.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource color3}" />
+                                        </Style>
+                                    </Grid.Resources>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                        <Run Text="{Binding Quantity}" />
+                                        <Run Text="Item" />
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Price}" />
+
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        Margin="0,0,0,8"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="12"
+                                        Text="Purchase Now!" />
+                                </Grid>
+                            </GridViewItem>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+
+            </Grid>
+
+            <!--#endregion-->
+
+            <!--#region Subcribtion-->
+
+            <Grid Grid.Column="1" Padding="16">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    Text="Get Premium" />
+
+                <Button
+                    Grid.Row="1"
+                    Margin="16"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    Command="{Binding PurchasePremiumCommand}"
+                    Resources="{Binding Source={StaticResource ResButton}, Path=Resources}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="16"
+                            Text="Add Features" />
+
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="+ Generate transaction without waiting" />
+                            <TextBlock Text="+ New features in the future" />
+                        </StackPanel>
+
+                        <Grid Grid.Row="2">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="18">
+                                <Run Text="Only " />
+                                <Run Text="{Binding SubcriptionPrice}" />
+                                <Run Text="/ 1 Year" />
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="3">
+                            <TextBlock HorizontalAlignment="Center" Text="Free trial 1 week!" />
+
+                            <TextBlock HorizontalAlignment="Center" Text="Purchase now!" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </Grid>
+
+            <!--#endregion-->
+        </Grid>
+    </Grid>
+</Page>
