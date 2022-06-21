@@ -22,14 +22,14 @@ namespace Uwp.Core.Helper
         }
 
         private StoreContext _storeContext;
-        private static readonly StoreHelper _instance = new StoreHelper();
+        private static StoreHelper _instance = new StoreHelper();
         public static StoreHelper Default => _instance;
 
         readonly MessageContentDialog messageDialog = new MessageContentDialog();
 
         #region Xử lý chung
 
-        public async Task Initiliaze()
+        public async void Setup()
         {
             Consumables = await GetManagedConsumables();
 
@@ -101,12 +101,10 @@ namespace Uwp.Core.Helper
                         balance += storeConsumableResult.BalanceRemaining;
                         continue;
                     case StoreConsumableStatus.NetworkError:
-                        string errorNetwork = "Can't get available add on becasuse network error! please check network and try again";
-                        await messageDialog.ShowMessageAsync(errorNetwork);
+                        
                         break;
                     case StoreConsumableStatus.ServerError:
-                        string errorServer = "Can't get available add on becasuse server error! please check network and try again";
-                        await messageDialog.ShowMessageAsync(errorServer);
+                        
                         break;
                 }
             }
@@ -258,7 +256,7 @@ namespace Uwp.Core.Helper
 
             if (result.ExtendedError != null)
             {
-                System.Diagnostics.Debug.WriteLine("Something went wrong while getting the add-ons. " +
+                Debug.WriteLine("Something went wrong while getting the add-ons. " +
                     "ExtendedError:" + result.ExtendedError);
                 return null;
             }
