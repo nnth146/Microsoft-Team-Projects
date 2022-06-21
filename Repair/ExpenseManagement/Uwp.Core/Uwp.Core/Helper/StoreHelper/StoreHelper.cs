@@ -28,7 +28,7 @@ namespace Uwp.Core.Helper
 
         #region Xử lý chung
 
-        public async Task Setup()
+        public async void Setup()
         {
             Consumables = await GetManagedConsumables();
 
