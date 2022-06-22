@@ -1,0 +1,25 @@
+﻿<ContentDialog
+    x:Class="FocusTask.View.Dialog.DeleteDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FocusTask.View.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Delete Project"
+    CornerRadius="8"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeleteDialog}"
+    PrimaryButtonText="Delete"
+    SecondaryButtonText="Cancel"
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource lightPurple}" />
+            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource whiteColor}" />
+        </ResourceDictionary>
+    </ContentDialog.Resources>
+    <StackPanel>
+        <TextBlock FontSize="13" Text="Are you sure you want to delete this project?" />
+        <TextBlock FontSize="13" Text="This action cannot be undone." />
+    </StackPanel>
+</ContentDialog>
