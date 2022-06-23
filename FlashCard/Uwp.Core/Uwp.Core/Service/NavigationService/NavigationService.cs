@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -22,27 +19,27 @@ namespace Uwp.Core.Service
         public void GoBack()
         {
             Frame.IsNavigationStackEnabled = true;
-            if(Frame.CanGoBack) Frame.GoBack();
+            if (Frame.CanGoBack) Frame.GoBack();
         }
 
         public void GoBack(object subFrame)
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = true;
-            if(frame.CanGoBack) frame.GoBack();
+            if (frame.CanGoBack) frame.GoBack();
         }
 
         public void GoForward()
         {
             Frame.IsNavigationStackEnabled = true;
-            if(Frame.CanGoForward) Frame.GoForward();
+            if (Frame.CanGoForward) Frame.GoForward();
         }
 
         public void GoForward(object subFrame)
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = true;
-            if(frame.CanGoForward) frame.GoForward();
+            if (frame.CanGoForward) frame.GoForward();
         }
 
         public void Navigate(Type page, object parameter)
@@ -147,14 +144,14 @@ namespace Uwp.Core.Service
         public void GoBack(NavigationTransitionInfo animation)
         {
             Frame.IsNavigationStackEnabled = true;
-            if(Frame.CanGoBack) Frame.GoBack(animation);
+            if (Frame.CanGoBack) Frame.GoBack(animation);
         }
 
         public void GoBack(object subFrame, NavigationTransitionInfo animation)
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = true;
-            if(frame.CanGoBack) frame.GoBack(animation);
+            if (frame.CanGoBack) frame.GoBack(animation);
         }
 
         public void GoBackToEnd(NavigationTransitionInfo animation)
@@ -235,20 +232,20 @@ namespace Uwp.Core.Service
         public void GoBackWithoutSaving()
         {
             Frame.IsNavigationStackEnabled = false;
-            if(Frame.CanGoBack) Frame.GoBack();
+            if (Frame.CanGoBack) Frame.GoBack();
         }
 
         public void GoForwardWithoutSaving()
         {
             Frame.IsNavigationStackEnabled = false;
-            if(Frame.CanGoForward) Frame.GoForward();
+            if (Frame.CanGoForward) Frame.GoForward();
         }
 
         public void GoBackWithoutSaving(object subFrame)
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = false;
-            if(frame.CanGoBack) frame.GoBack();
+            if (frame.CanGoBack) frame.GoBack();
         }
 
         public void GoBackToEndWithoutSaving()
@@ -293,7 +290,7 @@ namespace Uwp.Core.Service
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = false;
-            if(frame.CanGoForward) frame.GoForward();
+            if (frame.CanGoForward) frame.GoForward();
         }
 
         public void NavigateWithoutSaving(Type page)
@@ -355,14 +352,14 @@ namespace Uwp.Core.Service
         public void GoBackWithoutSaving(NavigationTransitionInfo animation)
         {
             Frame.IsNavigationStackEnabled = false;
-            if(Frame.CanGoBack) Frame.GoBack(animation);
+            if (Frame.CanGoBack) Frame.GoBack(animation);
         }
 
         public void GoBackWithoutSaving(object subFrame, NavigationTransitionInfo animation)
         {
             Frame frame = (Frame)subFrame;
             frame.IsNavigationStackEnabled = false;
-            if(frame.CanGoBack) frame.GoBack(animation);
+            if (frame.CanGoBack) frame.GoBack(animation);
         }
 
         public void GoBackToEndWithoutSaving(NavigationTransitionInfo animation)
