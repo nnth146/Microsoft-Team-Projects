@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <x:String x:Key="Icon Budget">ms-appx:///Assets/Icons/Icon Budget.png</x:String>
+    <x:String x:Key="Icon Calendar">ms-appx:///Assets/Icons/Icon Calendar.png</x:String>
+    <x:String x:Key="Icon Clothes">ms-appx:///Assets/Icons/Icon Clothes.png</x:String>
+    <x:String x:Key="Icon Cosmetic">ms-appx:///Assets/Icons/Icon Cosmetic.png</x:String>
+    <x:String x:Key="Icon Daily Spending">ms-appx:///Assets/Icons/Icon Daily Spending.png</x:String>
+    <x:String x:Key="Icon Eating">ms-appx:///Assets/Icons/Icon Eating.png</x:String>
+    <x:String x:Key="Icon Exchange Fee">ms-appx:///Assets/Icons/Icon Exchange Fee.png</x:String>
+    <x:String x:Key="Icon Medical">ms-appx:///Assets/Icons/Icon Medical.png</x:String>
+    <x:String x:Key="Icon Other 1">ms-appx:///Assets/Icons/Icon Other 1.png</x:String>
+    <x:String x:Key="Icon Other 2">ms-appx:///Assets/Icons/Icon Other 2.png</x:String>
+    <x:String x:Key="Icon Other 3">ms-appx:///Assets/Icons/Icon Other 3.png</x:String>
+    <x:String x:Key="Icon Other 4">ms-appx:///Assets/Icons/Icon Other 4.png</x:String>
+    <x:String x:Key="Icon Other 5">ms-appx:///Assets/Icons/Icon Other 5.png</x:String>
+    <x:String x:Key="Icon Other 6">ms-appx:///Assets/Icons/Icon Other 6.png</x:String>
+    <x:String x:Key="Icon Other 7">ms-appx:///Assets/Icons/Icon Other 7.png</x:String>
+    <x:String x:Key="Icon Other 8">ms-appx:///Assets/Icons/Icon Other 8.png</x:String>
+    <x:String x:Key="Icon Report">ms-appx:///Assets/Icons/Icon Report.png</x:String>
+    <x:String x:Key="Icon Transaction">ms-appx:///Assets/Icons/Icon Transaction.png</x:String>
+    <x:String x:Key="Icon Wallet">ms-appx:///Assets/Icons/Icon Wallet.png</x:String>
+    <x:String x:Key="Banner">ms-appx:///Assets/Images/image_banner.png</x:String>
+    <x:String x:Key="RobotBudget">ms-appx:///Assets/Images/robot_budget.png</x:String>
+    <x:String x:Key="RobotTransaction">ms-appx:///Assets/Images/robot_transactions.png</x:String>
+    <x:String x:Key="RobotReport">ms-appx:///Assets/Images/robot_reports.png</x:String>
+    <x:String x:Key="RobotCalendar">ms-appx:///Assets/Images/robot_calendar.png</x:String>
+</ResourceDictionary>

@@ -13,6 +13,8 @@ namespace NoteForYou.Messenger
     public class FrameNavigatedRequestMessage : RequestMessage<Frame> { }
     public class AddNotePageSubFrameRequestMessage : FrameNavigatedRequestMessage { }
 
+    public class MainPageSubFrameRequestMessage : FrameNavigatedRequestMessage { }
+
     public class GoBackBehavior { }
     public class AddNotePageGoBackBeHavior : GoBackBehavior { }
 
@@ -22,4 +24,6 @@ namespace NoteForYou.Messenger
     public class SelectedNoteRequestMessage : RequestMessage<Note> { }
 
     public class SaveChangeDb { }
+
+
 }

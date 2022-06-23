@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Uwp.Core.Helper;
+using Uwp.Core.StoreService;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -50,6 +51,8 @@ namespace NoteForYou
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+
+            StoreHelper.Default.Setup();
 
             //Configure Service
             ServiceHelper.ConfigureServices();

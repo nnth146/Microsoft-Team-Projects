@@ -1,4 +1,6 @@
 ﻿using Fluent.Icons;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using NoteForYou.Messenger;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +34,12 @@ namespace NoteForYou.View
         {
             this.InitializeComponent();
             this.SetupNavItems();
+
+            WeakReferenceMessenger.Default.Register<MainPageSubFrameRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(MainFrame);
+            });
+
         }
 
         public class NavItem
@@ -71,7 +79,12 @@ namespace NoteForYou.View
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            NavView.SelectedItem = NavItems[0];
+            
+        }
+
+        private void MainFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(BlankPage));
         }
     }
 }

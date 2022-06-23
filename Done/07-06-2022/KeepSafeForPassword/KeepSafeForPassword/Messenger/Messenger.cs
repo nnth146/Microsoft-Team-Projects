@@ -36,4 +36,5 @@ namespace KeepSafeForPassword.Messenger
     public class SecureNotesRequestMessage : RequestMessage<ObservableCollection<Password>> { }
     public class SeversRequestMessage : RequestMessage<ObservableCollection<Password>> { }
     public class WifisRequestMessage : RequestMessage<ObservableCollection<Password>> { }
+
 }

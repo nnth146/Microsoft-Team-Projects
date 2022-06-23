@@ -18,8 +18,16 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>7D59532A2A059600F072404630837981CEBC803F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
     <PackageCertificateKeyFile>NoteForYou_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -178,12 +186,17 @@
     <Compile Include="Pages\AddImageNotePage\AddImageNotePage.xaml.cs">
       <DependentUpon>AddImageNotePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AddOnPageViewModel.cs" />
     <Compile Include="ViewModel\AddSecureNoteDialogViewModel.cs" />
     <Compile Include="Pages\EditImageNotePage\EditImageNotePageViewModel.cs" />
     <Compile Include="ViewModel\EditSecureNoteDialogViewModel.cs" />
     <Compile Include="ViewModel\GiftDialogViewModel.cs" />
     <Compile Include="ViewModel\ShowSecureNoteDialogViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\WaitingDialogViewModel.cs" />
+    <Compile Include="View\AddOnPage.xaml.cs">
+      <DependentUpon>AddOnPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
     </Compile>
@@ -201,6 +214,9 @@
     </Compile>
     <Compile Include="Pages\EditImageNotePage\EditImageNotePage.xaml.cs">
       <DependentUpon>EditImageNotePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\WaitingDialog.xaml.cs">
+      <DependentUpon>WaitingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -371,6 +387,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AddOnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BlankPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -392,6 +412,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EditImageNotePage\EditImageNotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\WaitingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

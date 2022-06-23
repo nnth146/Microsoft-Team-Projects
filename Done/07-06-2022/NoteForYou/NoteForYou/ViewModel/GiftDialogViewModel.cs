@@ -41,6 +41,7 @@ namespace NoteForYou.ViewModel
             IsActive = true;
 
             Items = await StoreHelper.Default.GetManagedConsumables();
+            OnPropertyChanged(nameof(Items));
 
             IsActive = false;
         }

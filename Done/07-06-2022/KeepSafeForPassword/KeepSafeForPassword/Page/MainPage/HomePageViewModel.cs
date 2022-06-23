@@ -136,10 +136,11 @@ namespace KeepSafeForPassword.ViewModel
         }));
         #endregion
 
-        private RelayCommand _giveMeAGiftCommand;
-        public RelayCommand GiveMeAGiftCommand => _giveMeAGiftCommand ?? (_giveMeAGiftCommand = new RelayCommand(() =>
+        private RelayCommand _getAddOnCommand;
+        public RelayCommand GetAddOnCommand => _getAddOnCommand ?? (_getAddOnCommand = new RelayCommand(() =>
         {
-            dialogService.showAsync(typeof(GiftDialogViewModel));
+            var frame = messengerService.Send<HomePageFrameRequestMessage>().Response;
+            navigationService.Navigate(frame, typeof(AddOnPageViewModel));
         }));
     }
 }

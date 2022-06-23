@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Uwp.Core.StoreService;
 using UWP.Core.Helper;
 using UWP.Core.Service;
 
@@ -118,10 +119,27 @@ namespace KeepSafeForPassword.ViewModel
         public Password SelectedPassword { get { return _selectedPassword; } set { SetProperty(ref _selectedPassword, value); } }
 
         private RelayCommand<Password> _addPasswordCommand;
-        public RelayCommand<Password> AddPasswordCommand => _addPasswordCommand ?? (_addPasswordCommand = new RelayCommand<Password>((addedPassword) =>
+        public RelayCommand<Password> AddPasswordCommand => _addPasswordCommand ?? (_addPasswordCommand = new RelayCommand<Password>(async (addedPassword) =>
         {
-            Passwords.Insert(0, addedPassword); 
+            bool isPremium = StoreHelper.Default.IsPremium;
+            uint balance = StoreHelper.Default.Balance;
 
+            if (isPremium)
+            {
+                Passwords.Insert(0, addedPassword);
+                OpenAddSplitViewCommand.Execute(null);
+                return;
+            }
+            if (balance > 0)
+            {
+                StoreHelper.Default.FulfillConsumable();
+                Passwords.Insert(0, addedPassword);
+                OpenAddSplitViewCommand.Execute(null);
+                return;
+            }
+
+            await dialogService.showAsync(typeof(WaitingDialogViewModel));
+            Passwords.Insert(0, addedPassword);
             OpenAddSplitViewCommand.Execute(null);
         }));
 

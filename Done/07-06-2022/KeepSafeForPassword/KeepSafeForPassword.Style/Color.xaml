@@ -30,7 +30,7 @@
     <Color x:Key="borderColor">#ccc</Color>
 
     <Color x:Key="BorderColor">#B8B8B8</Color>
-    
+
     <SolidColorBrush x:Key="FocusColor" Opacity="0.67">#7E0A58</SolidColorBrush>
 
     <SolidColorBrush x:Key="ErrorColor">Red</SolidColorBrush>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Uwp.Core.Helper;
+using Uwp.Core.StoreService;
 using UWP.Core.Service;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -48,22 +49,49 @@ namespace NoteForYou.ViewModel
             }
         }));
         private RelayCommand<object> _addImageNoteCommand;
-        public RelayCommand<object> AddImageNoteCommand => _addImageNoteCommand ?? (_addImageNoteCommand = new RelayCommand<object>((subFrame) =>
+        public RelayCommand<object> AddImageNoteCommand => _addImageNoteCommand ?? (_addImageNoteCommand = new RelayCommand<object>(async (subFrame) =>
         {
             if(Image != null)
             {
-                ImageNote addedNote = new ImageNote
+
+                if (string.IsNullOrEmpty(Title) && string.IsNullOrWhiteSpace(Title))
                 {
-                    Image = Image,
-                    Title = Title
-                };
-                using (var db = new DataContext())
-                {
-                    db.ImageNotes.Add(addedNote);
-                    db.SaveChanges();
+                    return;
                 }
-                navigationService.GoBack(subFrame);
+
+                bool isPremium = StoreHelper.Default.IsPremium;
+                uint balance = StoreHelper.Default.Balance;
+
+                if (isPremium)
+                {
+                    AddImageNote(subFrame); 
+                    return;
+                }
+                if (balance > 0)
+                {
+                    StoreHelper.Default.FulfillConsumable();
+                    AddImageNote(subFrame);
+                    return;
+                }
+
+                await dialogService.showAsync(typeof(WaitingDialogViewModel));
+                AddImageNote(subFrame); 
             }
         }));
+
+        private void AddImageNote(object subFrame)
+        {
+            ImageNote addedNote = new ImageNote
+            {
+                Image = Image,
+                Title = Title
+            };
+            using (var db = new DataContext())
+            {
+                db.ImageNotes.Add(addedNote);
+                db.SaveChanges();
+            }
+            navigationService.GoBack(subFrame);
+        }
     }
 }

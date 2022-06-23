@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,20 +8,325 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Services.Store;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Uwp.Core.StoreService
 {
-    public class StoreHelper
+    public class StoreHelper : ObservableObject
     {
         public StoreHelper()
         {
             _storeContext = StoreContext.GetDefault();
         }
+
         private StoreContext _storeContext;
         private static StoreHelper _instance = new StoreHelper();
         public static StoreHelper Default => _instance;
+
+        #region Xử lý chung
+
+        public async void Setup()
+        {
+            Consumables = await GetManagedConsumables();
+
+            await GetConsumableBalance();
+
+            await SetupSubscriptionInfoAsync();
+        }
+
+        public async Task RequestPurchaseAsync(ItemDetails item)
+        {
+            StorePurchaseResult result = await _storeContext.RequestPurchaseAsync(item.StoreId);
+
+            if (result.ExtendedError != null)
+            {
+                await new MessageDialog(result.ExtendedError.Message).ShowAsync();
+                return;
+            }
+
+            string message;
+            switch (result.Status)
+            {
+                case StorePurchaseStatus.AlreadyPurchased:
+                    message = "Already Purchased!";
+                    await new MessageDialog(message).ShowAsync();
+                    break;
+                case StorePurchaseStatus.Succeeded:
+                    message = "Thank you very much!. Please wait a few minutes for the update ";
+                    await new MessageDialog(message).ShowAsync();
+                    break;
+                case StorePurchaseStatus.NetworkError:
+                    message = "Network Error!";
+                    await new MessageDialog(message).ShowAsync();
+                    break;
+                case StorePurchaseStatus.ServerError:
+                    message = "Server Error!";
+                    await new MessageDialog(message).ShowAsync();
+                    break;
+                case StorePurchaseStatus.NotPurchased:
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Xử lý consumable
+
+        public ObservableCollection<ItemDetails> Consumables = new ObservableCollection<ItemDetails>();
+
+        private uint _balance;
+        public uint Balance
+        {
+            get { return _balance; }
+            set { SetProperty(ref _balance, value); }
+        }
+
+        public async Task GetConsumableBalance()
+        {
+            uint balance = 0;
+            foreach (var item in Consumables)
+            {
+                var storeConsumableResult = await _storeContext.GetConsumableBalanceRemainingAsync(item.StoreId);
+                if (storeConsumableResult.ExtendedError != null)
+                {
+                    continue;
+                }
+                switch (storeConsumableResult.Status)
+                {
+                    case StoreConsumableStatus.InsufficentQuantity:
+                        continue;
+                    case StoreConsumableStatus.Succeeded:
+                        balance += storeConsumableResult.BalanceRemaining;
+                        continue;
+                    case StoreConsumableStatus.NetworkError:
+                        string errorNetwork = "Can't get available add on becasuse network error! please check network and try again";
+                        await new MessageDialog(errorNetwork).ShowAsync();
+                        continue;
+                    case StoreConsumableStatus.ServerError:
+                        string errorServer = "Can't get available add on becasuse server error! please check network and try again";
+                        await new MessageDialog(errorServer).ShowAsync();
+                        continue;
+                }
+            }
+
+            Balance = balance;
+        }
+
+        public async void FulfillConsumable()
+        {
+            if (_storeContext == null)
+            {
+                _storeContext = StoreContext.GetDefault();
+                // If your app is a desktop app that uses the Desktop Bridge, you
+                // may need additional code to configure the StoreContext object.
+                // For more info, see https://aka.ms/storecontext-for-desktop.
+            }
+
+            uint quantity = 1;
+
+            Guid trackingId = Guid.NewGuid();
+
+            StoreConsumableResult result;
+
+            foreach (var item in Consumables)
+            {
+                result = await _storeContext.ReportConsumableFulfillmentAsync(item.StoreId, quantity, trackingId);
+                switch (result.Status)
+                {
+                    case StoreConsumableStatus.Succeeded:
+                        await GetConsumableBalance();
+                        break;
+
+                    case StoreConsumableStatus.InsufficentQuantity:
+                        continue;
+
+                    case StoreConsumableStatus.NetworkError:
+                        string errorNetwork = "Can't get available add on becasuse network error! please check network and try again";
+                        await new MessageDialog(errorNetwork).ShowAsync();
+                        break;
+
+                    case StoreConsumableStatus.ServerError:
+                        string errorServer = "Can't get available add on becasuse server error! please check network and try again";
+                        await new MessageDialog(errorServer).ShowAsync();
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Xử lý subcription
+
+        public string subscriptionStoreId = "9NSL80JH02Q5";
+        public StoreProduct subscriptionStoreProduct;
+
+        private bool _isPremium;
+        public bool IsPremium
+        {
+            get { return _isPremium; }
+            set { SetProperty(ref _isPremium, value); }
+        }
+
+        public string subscriptionStorePrice = string.Empty;
+
+        public DateTimeOffset ExpirationDate;
+
+
+
+        public async Task RequestPurchaseSubcriptionAsync()
+        {
+            await PromptUserToPurchaseAsync();
+        }
+
+        public async Task SetupSubscriptionInfoAsync()
+        {
+            if (_storeContext == null)
+            {
+                _storeContext = StoreContext.GetDefault();
+                // If your app is a desktop app that uses the Desktop Bridge, you
+                // may need additional code to configure the StoreContext object.
+                // For more info, see https://aka.ms/storecontext-for-desktop.
+            }
+            bool userOwnsSubscription = await CheckIfUserHasSubscriptionAsync();
+            if (userOwnsSubscription)
+            {
+                // Unlock all the subscription add-on features here.
+                IsPremium = true;
+                return;
+            }
+
+            // Get the StoreProduct that represents the subscription add-on.
+            subscriptionStoreProduct = await GetSubscriptionProductAsync();
+            if (subscriptionStoreProduct == null)
+            {
+                return;
+            }
+
+            // Check if the first SKU is a trial and notify the customer that a trial is available.
+            // If a trial is available, the Skus array will always have 2 purchasable SKUs and the
+            // first one is the trial. Otherwise, this array will only have one SKU.
+            StoreSku sku = subscriptionStoreProduct.Skus[0];
+            if (sku.SubscriptionInfo.HasTrialPeriod)
+            {
+                // You can display the subscription trial info to the customer here. You can use 
+                // sku.SubscriptionInfo.TrialPeriod and sku.SubscriptionInfo.TrialPeriodUnit 
+                // to get the trial details.
+                subscriptionStorePrice = subscriptionStoreProduct.Skus[1].Price.FormattedPrice;
+            }
+            else
+            {
+                // You can display the subscription purchase info to the customer here. You can use 
+                // sku.SubscriptionInfo.BillingPeriod and sku.SubscriptionInfo.BillingPeriodUnit
+                // to provide the renewal details.
+                subscriptionStorePrice = sku.Price.FormattedPrice;
+            }
+
+            // Prompt the customer to purchase the subscription.
+        }
+
+        private async Task<bool> CheckIfUserHasSubscriptionAsync()
+        {
+            StoreAppLicense appLicense = await _storeContext.GetAppLicenseAsync();
+
+            // Check if the customer has the rights to the subscription.
+            foreach (var addOnLicense in appLicense.AddOnLicenses)
+            {
+                StoreLicense license = addOnLicense.Value;
+                if (license.SkuStoreId.StartsWith(subscriptionStoreId))
+                {
+                    if (license.IsActive)
+                    {
+                        // The expiration date is available in the license.ExpirationDate property.
+                        ExpirationDate = license.ExpirationDate;
+
+                        return true;
+                    }
+                }
+            }
+
+            // The customer does not have a license to the subscription.
+            return false;
+        }
+
+        private async Task<StoreProduct> GetSubscriptionProductAsync()
+        {
+            // Load the sellable add-ons for this app and check if the trial is still 
+            // available for this customer. If they previously acquired a trial they won't 
+            // be able to get a trial again, and the StoreProduct.Skus property will 
+            // only contain one SKU.
+            StoreProductQueryResult result =
+                await _storeContext.GetAssociatedStoreProductsAsync(new string[] { "Durable" });
+
+            if (result.ExtendedError != null)
+            {
+                System.Diagnostics.Debug.WriteLine("Something went wrong while getting the add-ons. " +
+                    "ExtendedError:" + result.ExtendedError);
+                return null;
+            }
+
+            // Look for the product that represents the subscription.
+            foreach (var item in result.Products)
+            {
+                StoreProduct product = item.Value;
+                if (product.StoreId == subscriptionStoreId)
+                {
+                    return product;
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine("The subscription was not found.");
+            return null;
+        }
+
+        private async Task PromptUserToPurchaseAsync()
+        {
+            // Request a purchase of the subscription product. If a trial is available it will be offered 
+            // to the customer. Otherwise, the non-trial SKU will be offered.
+            StorePurchaseResult result = await subscriptionStoreProduct.RequestPurchaseAsync();
+
+            // Capture the error message for the operation, if any.
+            string extendedError = string.Empty;
+            if (result.ExtendedError != null)
+            {
+                extendedError = result.ExtendedError.Message;
+            }
+
+            switch (result.Status)
+            {
+                case StorePurchaseStatus.Succeeded:
+                    // Show a UI to acknowledge that the customer has purchased your subscription 
+                    // and unlock the features of the subscription. 
+                    IsPremium = true;
+                    break;
+
+                case StorePurchaseStatus.NotPurchased:
+                    string errorPurchase = "The purchase did not complete. " +
+                        "The customer may have cancelled the purchase. ExtendedError: " + extendedError;
+                    await new MessageDialog(errorPurchase).ShowAsync();
+                    break;
+
+                case StorePurchaseStatus.ServerError:
+                case StorePurchaseStatus.NetworkError:
+                    string errorNetwork = "The purchase was unsuccessful due to a server or network error. " +
+                        "ExtendedError: " + extendedError;
+                    await new MessageDialog(errorNetwork).ShowAsync();
+                    break;
+
+                case StorePurchaseStatus.AlreadyPurchased:
+                    System.Diagnostics.Debug.WriteLine("The customer already owns this subscription." +
+                            "ExtendedError: " + extendedError);
+                    string errorAlreadyPurchased = "The customer already owns this subscription." +
+                            "ExtendedError: " + extendedError;
+                    await new MessageDialog(errorAlreadyPurchased).ShowAsync();
+                    break;
+            }
+        }
+        #endregion
+
+
+
 
         public ObservableCollection<ItemDetails>
             CreateProductListFromQueryResult(StoreProductQueryResult addOns, string description)
@@ -188,7 +494,7 @@ namespace Uwp.Core.StoreService
             }
             return result;
         }
-        
+
         public async void GetConsumableBalance(ItemDetails item)
         {
             StoreConsumableResult result = await _storeContext.GetConsumableBalanceRemainingAsync(item.StoreId);
@@ -221,8 +527,8 @@ namespace Uwp.Core.StoreService
                     break;
             }
         }
-        //Unmanage
-        public async void FulfillConsumable(ItemDetails item, UInt32 quantity)
+
+        public async Task FulfillConsumable(ItemDetails item, UInt32 quantity)
         {
             // This can be used to ensure this request is never double fulfilled. The server will
             // accept only one report for this specific GUID.

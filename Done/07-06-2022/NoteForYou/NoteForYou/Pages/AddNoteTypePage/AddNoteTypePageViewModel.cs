@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Uwp.Core.StoreService;
 using UWP.Core.Service;
 
 namespace NoteForYou.ViewModel
@@ -32,6 +33,28 @@ namespace NoteForYou.ViewModel
             {
                 return;
             }
+
+            bool isPremium = StoreHelper.Default.IsPremium;
+            uint balance = StoreHelper.Default.Balance;
+
+            if (isPremium)
+            {
+                SaveNote();
+                return;
+            }
+            if(balance > 0)
+            {
+                StoreHelper.Default.FulfillConsumable();
+                SaveNote();
+                return;
+            }
+
+            await dialogService.showAsync(typeof(WaitingDialogViewModel));
+            SaveNote();
+        }));
+
+        private async void SaveNote()
+        {
             var addedNote = new BasicNote
             {
                 Title = Title,
@@ -45,7 +68,7 @@ namespace NoteForYou.ViewModel
 
             messengerService.Send<NotesPageUpdateUIBehavior>();
             messengerService.Send<AddNotePageGoBackBeHavior>();
-        }));
+        }
 
         private RelayCommand _cancelCommand;
         public RelayCommand CancelCommand => _cancelCommand ?? (_cancelCommand = new RelayCommand(() =>

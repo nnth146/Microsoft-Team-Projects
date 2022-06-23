@@ -1,6 +1,7 @@
 ﻿using Fluent.Icons;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using NoteForYou.Messenger;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,10 +21,12 @@ namespace NoteForYou.ViewModel
             
         }
 
-        private RelayCommand _giveMeAGiftCommand;
-        public RelayCommand GiveMeAGiftCommand => _giveMeAGiftCommand ?? (_giveMeAGiftCommand = new RelayCommand(() =>
+        private RelayCommand _getAddOnCommand;
+        public RelayCommand GetAddOnCommand => _getAddOnCommand ?? (_getAddOnCommand = new RelayCommand(() =>
         {
-            dialogService.showAsync(typeof(GiftDialogViewModel));
+            var frame = messengerService.Send<MainPageSubFrameRequestMessage>().Response;
+
+            navigationService.NavigateOneTime(frame, typeof(AddOnPageViewModel));
         }));
     }
 }

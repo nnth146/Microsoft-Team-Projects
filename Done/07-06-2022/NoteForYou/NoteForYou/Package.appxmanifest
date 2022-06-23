@@ -9,7 +9,7 @@
   <Identity
     Name="55516HoangThuyLinh.NoteForYou"
     Publisher="CN=D595D0FA-3548-4B13-8296-7F71B2D60D6A"
-    Version="1.0.0.0" />
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec541466-c05b-450b-8e92-b347738c571a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

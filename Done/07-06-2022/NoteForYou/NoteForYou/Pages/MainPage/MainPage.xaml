@@ -31,17 +31,18 @@
 
         <controls:NavigationView.PaneFooter>
             <Button
-                Margin="4,0,4,0"
+                Margin="0,0,0,-8"
                 HorizontalAlignment="Stretch"
                 Background="LightCoral"
-                Command="{Binding GiveMeAGiftCommand}"
+                Command="{Binding GetAddOnCommand}"
                 Foreground="White">
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <TextBlock Text="Give me a gift" />
+                    <TextBlock Text="Get Add On" />
                 </StackPanel>
             </Button>
         </controls:NavigationView.PaneFooter>
-        <Frame x:Name="MainFrame" />
+
+        <Frame x:Name="MainFrame" Loaded="MainFrame_Loaded" />
 
     </controls:NavigationView>
 </Page>

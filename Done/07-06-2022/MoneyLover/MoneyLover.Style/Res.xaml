@@ -1,0 +1,51 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sr="using:Uwp.Core.SR">
+
+    <sr:ResButton
+        x:Key="ResButton1"
+        Background="{StaticResource ResButton1Background}"
+        BackgroundPointerOver="{StaticResource ResButton1Background80}"
+        BackgroundPressed="{StaticResource ResButton1Background80}"
+        Foreground="{StaticResource ResButton1Foreground}"
+        ForegroundPointerOver="{StaticResource ResButton1Foreground}"
+        ForegroundPressed="{StaticResource ResButton1Foreground}" />
+
+    <sr:ResNavigationView
+        x:Key="ResNavigationView"
+        ItemBackgroundPointerOver="{StaticResource NavigationViewItemBackgroundColor}"
+        ItemBackgroundSelected="{StaticResource NavigationViewItemBackgroundColor}"
+        ItemForeground="{StaticResource NavigationViewItemForegroundColor}"
+        ItemForegroundSelected="{StaticResource NavigationViewItemForegroundColor}" />
+
+
+    <sr:ResExpander
+        x:Key="ResExpander"
+        ChevronForeground="{StaticResource ResExpanderHeaderBackground}"
+        HeaderBackground="{StaticResource ResExpanderHeaderBackground}"
+        HeaderPadding="0" />
+
+    <sr:ResListView
+        x:Key="ResListView"
+        Background="White"
+        BackgroundPointerOver="{StaticResource ResListViewBackground}"
+        BackgroundSelected="{StaticResource ResListViewBackground}"
+        BackgroundSelectedPointerOver="{StaticResource ResListViewBackground}"
+        BackgroundSelectedPressed="{StaticResource ResListViewBackground}" />
+
+    <sr:ResButton
+        x:Key="ResSecondaryButton"
+        Foreground="{StaticResource ResButton1Foreground}"
+        ForegroundPointerOver="{StaticResource ResButton1Foreground}"
+        ForegroundPressed="{StaticResource ResButton1Foreground}" />
+
+    <sr:ResComboBox
+        x:Key="ResComboBox"
+        DropDownGlyphForeground="{StaticResource ResButton1Background}"
+        DropDownGlyphForegroundFocused="{StaticResource ResButton1Background80}"
+        DropDownGlyphForegroundFocusedPressed="{StaticResource ResButton1Background}" />
+
+    <sr:ResCalendarDatePicker x:Key="ResCalendarDatePicker" CalendarGlyphForeground="{StaticResource ResButton1Background}" />
+
+</ResourceDictionary>

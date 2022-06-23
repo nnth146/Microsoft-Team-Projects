@@ -94,7 +94,7 @@
                             <ItemsWrapGrid
                                 ItemHeight="70"
                                 ItemWidth="100"
-                                MaximumRowsOrColumns="1" />
+                                MaximumRowsOrColumns="2" />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>

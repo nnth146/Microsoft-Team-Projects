@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Uwp.Core.Helper;
+using Uwp.Core.StoreService;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -53,6 +54,8 @@ namespace KeepSafeForPassword
 
             //Config Service
             ServiceHelper.ConfigureServices();
+
+            StoreHelper.Default.Setup();
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
