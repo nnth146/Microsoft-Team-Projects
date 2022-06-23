@@ -35,7 +35,7 @@ namespace FlashCard.ViewModel
                         {
                             m.Reply(SelectedStudy);
                         });
-                        navigationService.Navigate(Frame, typeof(ViewStudyViewModel));
+                        
                         WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                     });
                 }

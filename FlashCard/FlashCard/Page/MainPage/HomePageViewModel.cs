@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Uwp.Core.Helper;
 using Uwp.Core.Service;
 using Uwp.Messenger;
@@ -19,6 +20,7 @@ namespace FlashCard.ViewModel
             WeakReferenceMessenger.Default.Register<ChangeMessage>(this, (r, m) =>
             {
                 ChangeItem = m.Study;
+                SelectedItemModel = m.Study;
             });
         }
 
@@ -42,7 +44,12 @@ namespace FlashCard.ViewModel
         public ObservableCollection<StudyModel> StudyModels { get; set; }
         public ObservableCollection<TopicModel> TopicModels { get; set; }
         public int FolderModelCount { get => FolderModels.Count; }
-        public object SelectedItemModel { get; set; }
+        private object _selectedItemModel;
+        public object SelectedItemModel
+        {
+            get { return _selectedItemModel; }
+            set { SetProperty(ref _selectedItemModel, value); }
+        }
         public object ChangeItem { get; set; }
 
         // Add new Folder Command Completed
@@ -145,7 +152,6 @@ namespace FlashCard.ViewModel
                             }
                             if (selectedItem.ToString() == "Uwp.SQLite.Model.StudyModel")
                             {
-                                WeakReferenceMessenger.Default.UnregisterAll(this);
                                 WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
                                 {
                                     m.Reply(selectedItem as StudyModel);
