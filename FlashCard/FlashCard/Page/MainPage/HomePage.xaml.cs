@@ -32,12 +32,6 @@ namespace FlashCard.View
             await addStudyDialog.ShowAsync();
         }
 
-        private async void DeteteAllItem_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteAllFolderDialog deleteAllItemDialog = new DeleteAllFolderDialog();
-            await deleteAllItemDialog.ShowAsync();
-        }
-
         private void LearnNow_Click(object sender, RoutedEventArgs e)
         {
             SubFrame.Navigate(typeof(ViewStudy));

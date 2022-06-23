@@ -42,6 +42,53 @@ namespace FlashCard.ViewModel
             }
         }
 
+        private RelayCommand<TopicModel> _deleteTopicCommand;
+        public RelayCommand<TopicModel> DeleteTopicCommand
+        {
+            get
+            {
+                if (_deleteTopicCommand == null)
+                {
+                    _deleteTopicCommand = new RelayCommand<TopicModel>(async (selectedTopic) =>
+                    {
+                        WeakReferenceMessenger.Default.Register<TopicsRequestMessage>(this, (r, m) =>
+                        {
+                            m.Reply(StudyModel.TopicModels);
+                        });
+                        WeakReferenceMessenger.Default.Register<TopicRequestMessage>(this, (r, m) =>
+                        {
+                            m.Reply(selectedTopic);
+                        });
+                        await dialogService.showAsync(typeof(DeleteTopicDialogViewModel));
+                        WeakReferenceMessenger.Default.Unregister<TopicsRequestMessage>(this);
+                        WeakReferenceMessenger.Default.Unregister<TopicRequestMessage>(this);
+                    });
+                }
+                return _deleteTopicCommand;
+            }
+        }
+
+        private RelayCommand _deleteAllTopicCommand;
+        public RelayCommand DeleteAllTopicCommand
+        {
+            get
+            {
+                if (_deleteAllTopicCommand == null)
+                {
+                    _deleteAllTopicCommand = new RelayCommand(async () =>
+                    {
+                        WeakReferenceMessenger.Default.Register<TopicsRequestMessage>(this, (r, m) =>
+                        {
+                            m.Reply(StudyModel.TopicModels);
+                        });
+                        await dialogService.showAsync(typeof(DeleteAllCardDialogViewModel));
+                        WeakReferenceMessenger.Default.Unregister<TopicsRequestMessage>(this);
+                    });
+                }
+                return _deleteAllTopicCommand;
+            }
+        }
+
         /*private RelayCommand _backFrameCommand;
         public RelayCommand BackFrameCommand
         {

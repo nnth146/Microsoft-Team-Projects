@@ -6,6 +6,7 @@
 
     <Color x:Key="TextColor">#111111</Color>
     <Color x:Key="SubTextColor">#616160</Color>
+    <Color x:Key="HomeColor">#E6E6E6</Color>
     <Color x:Key="BorderColor">#CCCCCC</Color>
 
     <Color x:Key="WhiteColor">#FFFFFF</Color>
@@ -17,5 +18,6 @@
 
     <Color x:Key="SecondaryColor">#0063B1</Color>
     <Color x:Key="TimeColor">#4D92C9</Color>
+
 
 </ResourceDictionary>

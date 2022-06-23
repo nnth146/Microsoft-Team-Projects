@@ -6,7 +6,7 @@
     xmlns:icons="using:Fluent.Icons"
     xmlns:local="using:FlashCard.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{StaticResource WhiteColor}"
     DataContext="{Binding Source={StaticResource VML}, Path=AddAndEditCard}"
     mc:Ignorable="d">
 
@@ -27,6 +27,7 @@
             FontWeight="SemiBold"
             Text="{Binding StudyModel.Name}" />
         <ListView
+            x:Name="ListViewTopics"
             Grid.Row="1"
             SelectionMode="None"
             ItemsSource="{Binding StudyModel.TopicModels}">
@@ -58,7 +59,8 @@
                                     <TextBlock
                                         FontSize="16"
                                         Foreground="{StaticResource SecondaryColor}"
-                                        Text="" />
+                                        Loaded="TextBlock_Loaded"
+                                        Tag="{Binding}" />
                                     <Button
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
@@ -140,24 +142,40 @@
                                     Grid.Column="2"
                                     Width="80"
                                     Height="80"
+                                    Padding="0"
                                     Command="{StaticResource AddImageCommand}"
                                     CommandParameter="{Binding}"
                                     BorderBrush="{StaticResource BorderColor}"
                                     BorderThickness="1"
                                     CornerRadius="8">
                                     <Grid>
-                                        <StackPanel Spacing="4" Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibilityReverse}}">
+                                        <StackPanel
+                                            Spacing="4"
+                                            BorderBrush="{StaticResource BorderColor}"
+                                            Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibilityReverse}}">
                                             <icons:FluentSymbolIcon Foreground="{StaticResource ButtonColor}" Symbol="ImageAdd24" />
                                             <TextBlock
                                                 Foreground="{StaticResource ButtonColor}"
                                                 Text="Image"
                                                 TextAlignment="Center" />
                                         </StackPanel>
-                                        <Image
-                                            MaxWidth="60"
-                                            MaxHeight="60"
-                                            Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
-                                            Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                                        <Border
+                                            BorderBrush="White"
+                                            HorizontalAlignment="Center"
+                                            CornerRadius="8"
+                                            VerticalAlignment="Top"
+                                            Canvas.ZIndex="1">
+                                            <Image
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Center"
+                                                IsTapEnabled="False"
+                                                IsRightTapEnabled="False"
+                                                IsHoldingEnabled="False"
+                                                IsDoubleTapEnabled="False"
+                                                Stretch="UniformToFill"
+                                                Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
+                                                Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                                        </Border>
                                     </Grid>
                                 </Button>
                             </Grid>

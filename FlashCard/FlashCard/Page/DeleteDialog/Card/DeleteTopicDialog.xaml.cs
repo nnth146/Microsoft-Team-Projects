@@ -4,16 +4,11 @@
 
 namespace FlashCard.View.Dialog
 {
-    public sealed partial class DeleteAllIStudyDialog : ContentDialog
+    public sealed partial class DeleteTopicDialog : ContentDialog
     {
-        public DeleteAllIStudyDialog()
+        public DeleteTopicDialog()
         {
             InitializeComponent();
-        }
-
-        private void HideDialog_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            Hide();
         }
     }
 }

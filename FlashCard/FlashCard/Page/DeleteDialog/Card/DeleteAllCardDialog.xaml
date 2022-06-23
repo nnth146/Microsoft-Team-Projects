@@ -1,12 +1,12 @@
 ﻿<ContentDialog
-    x:Class="FlashCard.View.Dialog.DeleteAllFolderDialog"
+    x:Class="FlashCard.View.Dialog.DeleteAllCardDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:FlashCard.View.Dialog"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     BorderBrush="{StaticResource BorderColor}"
-    DataContext="{Binding Source={StaticResource VML}, Path=DeleteAllFolderDialog}"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeleteAllCardDialog}"
     BorderThickness="1"
     CornerRadius="4"
     mc:Ignorable="d">
@@ -41,8 +41,8 @@
                 Height="32"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource PrimaryColor}"
-                Command="{Binding DeleteFolderCommand}"
                 Content="Delete All"
+                Command="{Binding DeleteAllCardCommand}"
                 CornerRadius="4"
                 Foreground="{StaticResource WhiteColor}">
                 <Button.Resources>

@@ -11,7 +11,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:Height="900"
     d:Width="1200"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Source={StaticResource VML}, Path=HomePage}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -20,11 +19,13 @@
         <XamlUICommand x:Name="AddNewStudyCommand" Command="{Binding AddNewStudyCommand}" />
         <XamlUICommand x:Name="EditFolderCommand" Command="{Binding EditFolderCommand}" />
         <XamlUICommand x:Name="DeleteFolderCommand" Command="{Binding DeleteFolderCommand}" />
+        <XamlUICommand x:Name="DeleteFolderAllCommand" Command="{Binding DeleteFolderAllCommand}" />
         <XamlUICommand x:Name="ChangeItemCommand" Command="{Binding ChangeItemCommand}" />
 
         <XamlUICommand x:Name="LearnNowCommand" Command="{Binding LearnNowCommand}" />
         <XamlUICommand x:Name="EditStudyCommand" Command="{Binding EditStudyCommand}" />
         <XamlUICommand x:Name="DeleteStudyCommand" Command="{Binding DeleteStudyCommand}" />
+        <XamlUICommand x:Name="DeleteAllStudyCommand" Command="{Binding DeleteAllStudyCommand}" />
 
         <MenuFlyout
             x:Key="FlashCardFlyout"
@@ -69,7 +70,7 @@
             <MenuFlyoutItem
                 Width="150"
                 Height="44"
-                Click="DeteteAllItem_Click"
+                Command="{StaticResource DeleteFolderAllCommand}"
                 Foreground="{StaticResource TextColor}"
                 Text="Delete All">
                 <MenuFlyoutItem.Icon>
@@ -121,8 +122,9 @@
             <MenuFlyoutItem
                 Width="150"
                 Height="44"
-                Click="DeteteAllItem_Click"
                 Foreground="{StaticResource TextColor}"
+                Command="{StaticResource DeleteAllStudyCommand}"
+                CommandParameter="{Binding}"
                 Text="Delete All">
                 <MenuFlyoutItem.Icon>
                     <icons:FluentIconElement Symbol="DeleteDismiss24" />
@@ -153,7 +155,7 @@
         <controls:NavigationView
             x:Name="NavView"
             Padding="0,12,0,0"
-            Background="White"
+            Background="{StaticResource HomeColor}"
             CornerRadius="0 8 8 0"
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"

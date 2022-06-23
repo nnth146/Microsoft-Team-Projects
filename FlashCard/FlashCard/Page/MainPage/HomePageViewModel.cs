@@ -1,7 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Uwp.Core.Helper;
 using Uwp.Core.Service;
 using Uwp.Messenger;
@@ -62,6 +61,7 @@ namespace FlashCard.ViewModel
                 {
                     _addNewFolderCommand = new RelayCommand(async () =>
                     {
+                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
                         WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
                         {
                             m.Reply(FolderModels);
@@ -128,6 +128,28 @@ namespace FlashCard.ViewModel
             }
         }
 
+        // Delete All Folder Command Completed
+        private RelayCommand _deleteFolderAllCommand;
+        public RelayCommand DeleteFolderAllCommand
+        {
+            get
+            {
+                if (_deleteFolderAllCommand == null)
+                {
+                    _deleteFolderAllCommand = new RelayCommand(async () =>
+                    {
+                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
+                        {
+                            m.Reply(FolderModels);
+                        });
+                        await dialogService.showAsync(typeof(DeleteAllFolderDialogViewModel));
+                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
+                    });
+                }
+                return _deleteFolderAllCommand;
+            }
+        }
+
         // Changed Folder Command
         private RelayCommand<object> _changeItemCommand;
         public RelayCommand<object> ChangeItemCommand
@@ -152,6 +174,7 @@ namespace FlashCard.ViewModel
                             }
                             if (selectedItem.ToString() == "Uwp.SQLite.Model.StudyModel")
                             {
+                                WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                                 WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
                                 {
                                     m.Reply(selectedItem as StudyModel);
@@ -296,6 +319,38 @@ namespace FlashCard.ViewModel
                     });
                 }
                 return _deleteStudyCommand;
+            }
+        }
+
+        // Delete All Study Command Completed
+        private RelayCommand<StudyModel> _deleteAllStudyCommand;
+        public RelayCommand<StudyModel> DeleteAllStudyCommand
+        {
+            get
+            {
+                if (_deleteAllStudyCommand == null)
+                {
+                    _deleteAllStudyCommand = new RelayCommand<StudyModel>(async (selectedStudy) =>
+                    {
+                        for (int i = 0; i < FolderModelCount; i++)
+                        {
+                            for (int j = 0; j < FolderModels[i].StudyModels.Count; j++)
+                            {
+                                if (FolderModels[i].StudyModels[j] == selectedStudy)
+                                {
+                                    StudyModels = FolderModels[i].StudyModels;
+                                }
+                            }
+                        }
+                        WeakReferenceMessenger.Default.Register<StudiesRequestMessage>(this, (r, m) =>
+                        {
+                            m.Reply(StudyModels);
+                        });
+                        await dialogService.showAsync(typeof(DeleteAllStudyDialogViewModel));
+                        WeakReferenceMessenger.Default.Unregister<StudiesRequestMessage>(this);
+                    });
+                }
+                return _deleteAllStudyCommand;
             }
         }
 

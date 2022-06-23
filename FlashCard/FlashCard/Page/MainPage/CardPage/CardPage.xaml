@@ -9,7 +9,7 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     d:DesignWidth="1200"
     DataContext="{Binding Source={StaticResource VML}, Path=CardPage}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{StaticResource WhiteColor}"
     mc:Ignorable="d">
 
     <Grid Padding="56,44" RowSpacing="44">
@@ -86,14 +86,15 @@
                     </Button.Resources>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Image
-                            Width="336"
-                            Height="336"
-                            Source="{Binding TopicModel.Image, Converter={StaticResource ByteToBitmapImageConverter}}"
-                            Visibility="{Binding TopicModel.hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                        <Grid Padding="20" Visibility="{Binding TopicModel.hasItem, Converter={StaticResource BooleanToVisibility}}">
+                            <Image
+                                Width="336"
+                                Height="336"
+                                Source="{Binding TopicModel.Image, Converter={StaticResource ByteToBitmapImageConverter}}" />
+                        </Grid>
                         <Grid Grid.Column="1" Height="400">
                             <TextBlock
                                 VerticalAlignment="Center"

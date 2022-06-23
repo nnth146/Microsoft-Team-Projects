@@ -4,9 +4,9 @@
 
 namespace FlashCard.View.Dialog
 {
-    public sealed partial class DeleteAllFolderDialog : ContentDialog
+    public sealed partial class DeleteAllStudyDialog : ContentDialog
     {
-        public DeleteAllFolderDialog()
+        public DeleteAllStudyDialog()
         {
             InitializeComponent();
         }

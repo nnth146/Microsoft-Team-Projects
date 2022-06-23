@@ -1,14 +1,12 @@
 ﻿<ContentDialog
-    x:Class="FlashCard.View.Dialog.DeleteAllFolderDialog"
+    x:Class="FlashCard.View.Dialog.DeleteTopicDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:FlashCard.View.Dialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    BorderBrush="{StaticResource BorderColor}"
-    DataContext="{Binding Source={StaticResource VML}, Path=DeleteAllFolderDialog}"
-    BorderThickness="1"
-    CornerRadius="4"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeleteTopicDialog}"
+    xmlns:icons="using:Fluent.Icons"
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
@@ -25,7 +23,7 @@
                 FontSize="20"
                 FontWeight="SemiBold"
                 Text="Notification" />
-            <TextBlock FontSize="14" Text="Are you sure about Deleting All Item?" />
+            <TextBlock FontSize="14" Text="Are you sure about Deleting Item?" />
         </StackPanel>
         <Grid
             Grid.Row="1"
@@ -41,8 +39,8 @@
                 Height="32"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource PrimaryColor}"
-                Command="{Binding DeleteFolderCommand}"
-                Content="Delete All"
+                Command="{Binding DeleteTopicCommand}"
+                Content="Delete"
                 CornerRadius="4"
                 Foreground="{StaticResource WhiteColor}">
                 <Button.Resources>

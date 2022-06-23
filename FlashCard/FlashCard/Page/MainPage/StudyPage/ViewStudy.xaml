@@ -6,19 +6,35 @@
     xmlns:icons="using:Fluent.Icons"
     xmlns:local="using:FlashCard.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{StaticResource WhiteColor}"
     DataContext="{Binding Source={StaticResource VML}, Path=ViewStudy}"
     mc:Ignorable="d">
 
     <Page.Resources>
+        <XamlUICommand x:Name="DeleteTopicCommand" Command="{Binding DeleteTopicCommand}" />
+        <XamlUICommand x:Name="DeleteAllTopicCommand" Command="{Binding DeleteAllTopicCommand}" />
+
         <MenuFlyout x:Name="StudyFlyout" Placement="BottomEdgeAlignedRight">
             <MenuFlyoutItem
                 Width="150"
                 Height="44"
                 Foreground="{StaticResource TextColor}"
+                Command="{StaticResource DeleteTopicCommand}"
+                CommandParameter="{Binding}"
                 Text="Delete">
                 <MenuFlyoutItem.Icon>
                     <icons:FluentIconElement Symbol="Delete24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource DeleteAllTopicCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Delete All">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="DeleteDismiss24" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
         </MenuFlyout>
@@ -85,11 +101,23 @@
                                 <Border Height="2" Background="{StaticResource PrimaryColor}" />
                             </StackPanel>
                             <Grid Grid.Column="1">
-                                <Image
-                                    MaxHeight="80"
-                                    MaxWidth="80"
-                                    Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
-                                    Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                                <Border
+                                    BorderBrush="White"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Center"
+                                    CornerRadius="8"
+                                    VerticalAlignment="Bottom"
+                                    Canvas.ZIndex="1">
+                                    <Image
+                                        HorizontalAlignment="Center"
+                                        IsTapEnabled="False"
+                                        IsRightTapEnabled="False"
+                                        IsHoldingEnabled="False"
+                                        IsDoubleTapEnabled="False"
+                                        Stretch="UniformToFill"
+                                        Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
+                                        Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                                </Border>
                             </Grid>
                             <StackPanel
                                 Grid.Column="2"
