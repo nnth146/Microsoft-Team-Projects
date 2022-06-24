@@ -119,43 +119,70 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Page\DeleteDialog\Card\DeleteAllCardDialog.xaml.cs">
+      <DependentUpon>DeleteAllCardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\DeleteDialog\Card\DeleteAllCardDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Study\DeleteAllStudyDialog.xaml.cs">
+      <DependentUpon>DeleteAllStudyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\DeleteDialog\Study\DeleteAllStudyDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Study\DeleteStudyDialog.xaml.cs">
+      <DependentUpon>DeleteStudyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\DeleteDialog\Study\DeleteStudyDialogViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\MainPageViewModel.cs" />
-    <Compile Include="View\AddAndEditCard.xaml.cs">
+    <Compile Include="Page\MainPage\Add_EditCard\AddAndEditCardViewModel.cs" />
+    <Compile Include="Page\MainPage\CardPage\CardPageViewModel.cs" />
+    <Compile Include="Page\MainPage\FolderPage\FolderPageViewModel.cs" />
+    <Compile Include="Page\MainPage\HomePageViewModel.cs" />
+    <Compile Include="Page\MainPage\StudyPage\ViewStudyViewModel.cs" />
+    <Compile Include="Page\MainPage\Add_EditCard\AddAndEditCard.xaml.cs">
       <DependentUpon>AddAndEditCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CardPage.xaml.cs">
+    <Compile Include="Page\MainPage\CardPage\CardPage.xaml.cs">
       <DependentUpon>CardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\AddFolderDialog.xaml.cs">
+    <Compile Include="Page\MainPage\EmptyItemPage\EmptyFlashCardViewModel.cs" />
+    <Compile Include="Page\AddDialog\Folder\AddFolderDialogViewModel.cs" />
+    <Compile Include="Page\AddDialog\Study\AddStudyDialogViewModel.cs" />
+    <Compile Include="Page\AddDialog\Folder\AddFolderDialog.xaml.cs">
       <DependentUpon>AddFolderDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\AddStudyDialog.xaml.cs">
+    <Compile Include="Page\AddDialog\Study\AddStudyDialog.xaml.cs">
       <DependentUpon>AddStudyDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\DeleteAllItemDialog.xaml.cs">
-      <DependentUpon>DeleteAllItemDialog.xaml</DependentUpon>
+    <Compile Include="Page\EditDialog\Folder\EditFolderDialogViewModel.cs" />
+    <Compile Include="Page\EditDialog\Study\EditStudyDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Folder\DeleteFolderDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Folder\DeleteAllFolderDialog.xaml.cs">
+      <DependentUpon>DeleteAllFolderDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\DeleteItemDialog.xaml.cs">
-      <DependentUpon>DeleteItemDialog.xaml</DependentUpon>
+    <Compile Include="Page\DeleteDialog\Folder\DeleteFolderDialog.xaml.cs">
+      <DependentUpon>DeleteFolderDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\EditFolderDialog.xaml.cs">
+    <Compile Include="Page\EditDialog\Folder\EditFolderDialog.xaml.cs">
       <DependentUpon>EditFolderDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\EditStudyDialog.xaml.cs">
+    <Compile Include="Page\EditDialog\Study\EditStudyDialog.xaml.cs">
       <DependentUpon>EditStudyDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EmptyFlashCard.xaml.cs">
+    <Compile Include="Page\MainPage\EmptyItemPage\EmptyFlashCard.xaml.cs">
       <DependentUpon>EmptyFlashCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FolderPage.xaml.cs">
+    <Compile Include="Page\MainPage\FolderPage\FolderPage.xaml.cs">
       <DependentUpon>FolderPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HomePage.xaml.cs">
+    <Compile Include="Page\MainPage\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ViewStudy.xaml.cs">
+    <Compile Include="Page\MainPage\StudyPage\ViewStudy.xaml.cs">
       <DependentUpon>ViewStudy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\DeleteDialog\Folder\DeleteAllFolderDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Card\DeleteTopicDialogViewModel.cs" />
+    <Compile Include="Page\DeleteDialog\Card\DeleteTopicDialog.xaml.cs">
+      <DependentUpon>DeleteTopicDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -224,54 +251,74 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AddAndEditCard.xaml">
+    <Page Include="Page\DeleteDialog\Card\DeleteAllCardDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeleteDialog\Study\DeleteAllStudyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeleteDialog\Study\DeleteStudyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\MainPage\Add_EditCard\AddAndEditCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CardPage.xaml">
+    <Page Include="Page\MainPage\CardPage\CardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\AddFolderDialog.xaml">
+    <Page Include="Page\AddDialog\Folder\AddFolderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\AddStudyDialog.xaml">
+    <Page Include="Page\AddDialog\Study\AddStudyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\DeleteAllItemDialog.xaml">
+    <Page Include="Page\DeleteDialog\Folder\DeleteAllFolderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\DeleteItemDialog.xaml">
+    <Page Include="Page\DeleteDialog\Folder\DeleteFolderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\EditFolderDialog.xaml">
+    <Page Include="Page\EditDialog\Folder\EditFolderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\EditStudyDialog.xaml">
+    <Page Include="Page\EditDialog\Study\EditStudyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EmptyFlashCard.xaml">
+    <Page Include="Page\MainPage\EmptyItemPage\EmptyFlashCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FolderPage.xaml">
+    <Page Include="Page\MainPage\FolderPage\FolderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HomePage.xaml">
+    <Page Include="Page\MainPage\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ViewStudy.xaml">
+    <Page Include="Page\MainPage\StudyPage\ViewStudy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Page\DeleteDialog\Card\DeleteTopicDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

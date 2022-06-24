@@ -1,0 +1,241 @@
+﻿<Page
+    x:Class="FlashCard.View.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:FlashCard.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Height="900"
+    d:Width="1200"
+    DataContext="{Binding Source={StaticResource VML}, Path=HomePage}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="AddNewStudyCommand" Command="{Binding AddNewStudyCommand}" />
+        <XamlUICommand x:Name="EditFolderCommand" Command="{Binding EditFolderCommand}" />
+        <XamlUICommand x:Name="DeleteFolderCommand" Command="{Binding DeleteFolderCommand}" />
+        <XamlUICommand x:Name="DeleteFolderAllCommand" Command="{Binding DeleteFolderAllCommand}" />
+        <XamlUICommand x:Name="ChangeItemCommand" Command="{Binding ChangeItemCommand}" />
+
+        <XamlUICommand x:Name="LearnNowCommand" Command="{Binding LearnNowCommand}" />
+        <XamlUICommand x:Name="EditStudyCommand" Command="{Binding EditStudyCommand}" />
+        <XamlUICommand x:Name="DeleteStudyCommand" Command="{Binding DeleteStudyCommand}" />
+        <XamlUICommand x:Name="DeleteAllStudyCommand" Command="{Binding DeleteAllStudyCommand}" />
+
+        <MenuFlyout
+            x:Key="FlashCardFlyout"
+            x:Name="FlashCardFlyout"
+            Placement="BottomEdgeAlignedRight">
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                Command="{StaticResource AddNewStudyCommand}"
+                CommandParameter="{Binding}"
+                CornerRadius="4"
+                Foreground="{StaticResource TextColor}"
+                Text="Add Study Set">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Foreground="{StaticResource PrimaryColor}" Symbol="AddCircle24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource EditFolderCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Edit">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Edit24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource DeleteFolderCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Delete">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Delete24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource DeleteFolderAllCommand}"
+                Foreground="{StaticResource TextColor}"
+                Text="Delete All">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="DeleteDismiss24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+
+        <MenuFlyout
+            x:Key="StudyFlyout"
+            x:Name="StudyFlyout"
+            Placement="BottomEdgeAlignedRight">
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                Command="{StaticResource LearnNowCommand}"
+                CommandParameter="{Binding}"
+                CornerRadius="4"
+                Foreground="{StaticResource TextColor}"
+                Text="Learn now">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Foreground="{StaticResource PrimaryColor}" Symbol="AddCircle24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource EditStudyCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Edit">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Edit24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource DeleteStudyCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Delete">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Delete24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Foreground="{StaticResource TextColor}"
+                Command="{StaticResource DeleteAllStudyCommand}"
+                CommandParameter="{Binding}"
+                Text="Delete All">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="DeleteDismiss24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+
+        <DataTemplate x:Key="NavItemTemplate">
+            <controls:NavigationViewItem
+                AutomationProperties.Name="{Binding Name}"
+                IsExpanded="True"
+                Loaded="NavigationViewItem_Loaded"
+                MenuItemsSource="{Binding StudyModels}"
+                Tag="{Binding}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Source="{Binding Icon}" />
+                    <TextBlock Margin="0,0,10,0" />
+                    <TextBlock
+                        MaxWidth="220"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+            </controls:NavigationViewItem>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <controls:NavigationView
+            x:Name="NavView"
+            Padding="0,12,0,0"
+            Background="{StaticResource HomeColor}"
+            CornerRadius="0 8 8 0"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            MenuItemTemplate="{StaticResource NavItemTemplate}"
+            MenuItemsSource="{Binding FolderModels}"
+            OpenPaneLength="320"
+            SelectedItem="{Binding SelectedItemModel, Mode=TwoWay}"
+            SelectionChanged="NavView_SelectionChanged">
+            <controls:NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    AutomationProperties.Name="Search"
+                    BorderBrush="{StaticResource BorderColor}"
+                    BorderThickness="1"
+                    ItemsSource="{Binding SearchedFolder}"
+                    PlaceholderText="Search"
+                    QueryIcon="Find"
+                    Text="{Binding SearchedText, Mode=TwoWay}"
+                    UpdateTextOnSelect="False">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="TextChanged">
+                            <core:InvokeCommandAction Command="{Binding SearchedTextChangeddCommand}" />
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                CornerRadius="4">
+                                <Grid VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+            </controls:NavigationView.AutoSuggestBox>
+
+            <controls:NavigationView.PaneHeader>
+                <Grid Margin="-24,40,16,0" Padding="0,16">
+                    <StackPanel
+                        Margin="0,0,0,8"
+                        HorizontalAlignment="Center"
+                        Spacing="8">
+                        <TextBlock
+                            FontSize="20"
+                            Foreground="{StaticResource PrimaryColor}"
+                            Text="Flash Card"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="{StaticResource SubTextColor}"
+                            Text="{StaticResource SubFlashCard}" />
+                    </StackPanel>
+                </Grid>
+            </controls:NavigationView.PaneHeader>
+
+            <controls:NavigationView.PaneFooter>
+                <Button
+                    Width="320"
+                    Height="44"
+                    Margin="0,0,0,-8"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Background="{StaticResource ButtonColor}"
+                    BorderThickness="0"
+                    Command="{Binding AddNewFolderCommand}">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ButtonColorOver}" />
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ButtonColorClick}" />
+                    </Button.Resources>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <icons:FluentSymbolIcon Foreground="{StaticResource WhiteColor}" Symbol="FolderAdd20" />
+                        <TextBlock Foreground="{StaticResource WhiteColor}" Text="Add Folder" />
+                    </StackPanel>
+                </Button>
+            </controls:NavigationView.PaneFooter>
+
+            <Frame x:Name="SubFrame" Loaded="SubFrame_Loaded" />
+
+        </controls:NavigationView>
+    </Grid>
+</Page>

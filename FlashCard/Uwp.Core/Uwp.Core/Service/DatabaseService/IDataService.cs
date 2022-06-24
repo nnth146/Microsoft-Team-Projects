@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using Uwp.SQLite.Model;
 
 namespace Uwp.Core.Service
 {
     public interface IDataService
     {
-        //Code
+        int SaveChanges();
+        ObservableCollection<FolderModel> GetFolders();
+        void AddNewFolder(FolderModel FolderModel);
+        void RemoveFolder(FolderModel FolderModel);
+        ObservableCollection<TopicModel> GetTopics();
+        void AddNewTopic(TopicModel TopicModel);
     }
 }
