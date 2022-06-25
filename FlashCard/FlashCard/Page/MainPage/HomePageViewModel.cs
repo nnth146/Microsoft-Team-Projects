@@ -17,15 +17,46 @@ namespace FlashCard.ViewModel
             TopicModels = dataService.GetTopics();
             FolderModels.CollectionChanged += FolderModels_CollectionChanged;
 
+            RegisterMessenger();
+        }
+
+        private void RegisterMessenger()
+        {
             WeakReferenceMessenger.Default.Register<ChangeMessage>(this, (r, m) =>
             {
                 ChangeItem = m.Study;
                 SelectedItemModel = m.Study;
             });
-        }
 
-        private void RegisterMessenger()
-        {
+            WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(FolderModels);
+            });
+
+            WeakReferenceMessenger.Default.Register<FolderRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(SelectedItemModel as FolderModel);
+            });
+
+            WeakReferenceMessenger.Default.Register<ContextFolderRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(ContextFolderModel);
+            });
+
+            WeakReferenceMessenger.Default.Register<StudiesRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(StudyModels);
+            });
+
+            WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(SelectedItemModel as StudyModel);
+            });
+
+            WeakReferenceMessenger.Default.Register<ContextStudyRequestMessage>(this, (r, m) =>
+            {
+                m.Reply(ContextStudyModel);
+            });
 
         }
 
@@ -48,13 +79,17 @@ namespace FlashCard.ViewModel
         public ObservableCollection<FolderModel> FolderModels { get; set; }
         public ObservableCollection<StudyModel> StudyModels { get; set; }
         public ObservableCollection<TopicModel> TopicModels { get; set; }
-        public int FolderModelCount { get => FolderModels.Count; }
+        public int FolderModelCount => FolderModels.Count; 
         private object _selectedItemModel;
         public object SelectedItemModel
         {
             get { return _selectedItemModel; }
             set { SetProperty(ref _selectedItemModel, value); }
         }
+
+        public FolderModel ContextFolderModel { get; set; }
+        public StudyModel ContextStudyModel { get; set; }
+
         public object ChangeItem { get; set; }
 
         // Add new Folder Command Completed
@@ -67,13 +102,7 @@ namespace FlashCard.ViewModel
                 {
                     _addNewFolderCommand = new RelayCommand(async () =>
                     {
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(FolderModels);
-                        });
                         await dialogService.showAsync(typeof(AddFolderDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
                     });
                 }
                 return _addNewFolderCommand;
@@ -90,17 +119,8 @@ namespace FlashCard.ViewModel
                 {
                     _editFolderCommand = new RelayCommand<FolderModel>(async (selectedFolder) =>
                     {
-                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(FolderModels);
-                        });
-                        WeakReferenceMessenger.Default.Register<FolderRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedFolder);
-                        });
+                        ContextFolderModel = selectedFolder;
                         await dialogService.showAsync(typeof(EditFolderDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Unregister<FolderRequestMessage>(this);
                     });
                 }
                 return _editFolderCommand;
@@ -117,17 +137,8 @@ namespace FlashCard.ViewModel
                 {
                     _deleteFolderCommand = new RelayCommand<FolderModel>(async (selectedFolder) =>
                     {
-                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(FolderModels);
-                        });
-                        WeakReferenceMessenger.Default.Register<FolderRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedFolder);
-                        });
+                        ContextFolderModel = selectedFolder;
                         await dialogService.showAsync(typeof(DeleteFolderDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Unregister<FolderRequestMessage>(this);
                     });
                 }
                 return _deleteFolderCommand;
@@ -144,12 +155,7 @@ namespace FlashCard.ViewModel
                 {
                     _deleteFolderAllCommand = new RelayCommand(async () =>
                     {
-                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(FolderModels);
-                        });
                         await dialogService.showAsync(typeof(DeleteAllFolderDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
                     });
                 }
                 return _deleteFolderAllCommand;
@@ -168,25 +174,17 @@ namespace FlashCard.ViewModel
                     {
                         if (selectedItem != null)
                         {
+                            SelectedItemModel = selectedItem;
                             Frame frame = WeakReferenceMessenger.Default.Send<MPFrameRequestMessage>().Response;
                             if (selectedItem.ToString() == "Uwp.SQLite.Model.FolderModel")
                             {
-                                WeakReferenceMessenger.Default.Register<FolderRequestMessage>(this, (r, m) =>
-                                {
-                                    m.Reply(selectedItem as FolderModel);
-                                });
+                                navigationService.GoBackToEnd(frame);
                                 navigationService.Navigate(frame, typeof(FolderPageViewModel));
-                                WeakReferenceMessenger.Default.Unregister<FolderRequestMessage>(this);
                             }
                             if (selectedItem.ToString() == "Uwp.SQLite.Model.StudyModel")
                             {
-                                WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
-                                WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                                {
-                                    m.Reply(selectedItem as StudyModel);
-                                });
+                                navigationService.GoBackToEnd(frame);
                                 navigationService.Navigate(frame, typeof(ViewStudyViewModel));
-                                WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                             }
                         }
                     });
@@ -205,17 +203,8 @@ namespace FlashCard.ViewModel
                 {
                     _addNewStudyCommand = new RelayCommand<FolderModel>(async (selectedFolder) =>
                     {
-                        WeakReferenceMessenger.Default.Register<FoldersRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(FolderModels);
-                        });
-                        WeakReferenceMessenger.Default.Register<FolderRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedFolder);
-                        });
+                        ContextFolderModel = selectedFolder;
                         await dialogService.showAsync(typeof(AddStudyDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Unregister<FolderRequestMessage>(this);
                     });
                 }
                 return _addNewStudyCommand;
@@ -232,20 +221,11 @@ namespace FlashCard.ViewModel
                 {
                     _learnNowCommand = new RelayCommand<StudyModel>((selectedStudy) =>
                     {
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedStudy);
-                        });
+                        ContextStudyModel = selectedStudy;
                         SelectedItemModel = selectedStudy;
                         OnPropertyChanged(nameof(SelectedItemModel));
-                        WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                         Frame frame = WeakReferenceMessenger.Default.Send<MPFrameRequestMessage>().Response;
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedStudy);
-                        });
                         navigationService.Navigate(frame, typeof(CardPageViewModel));
-                        WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                     });
                 }
                 return _learnNowCommand;
@@ -272,18 +252,10 @@ namespace FlashCard.ViewModel
                                 }
                             }
                         }
-                        WeakReferenceMessenger.Default.UnregisterAll(this);
-                        WeakReferenceMessenger.Default.Register<StudiesRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(StudyModels);
-                        });
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedStudy);
-                        });
+
+                        ContextStudyModel = selectedStudy;
+
                         await dialogService.showAsync(typeof(EditStudyDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FolderRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Unregister<StudiesRequestMessage>(this);
                     });
                 }
                 return _editStudyCommand;
@@ -310,18 +282,10 @@ namespace FlashCard.ViewModel
                                 }
                             }
                         }
-                        WeakReferenceMessenger.Default.UnregisterAll(this);
-                        WeakReferenceMessenger.Default.Register<StudiesRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(StudyModels);
-                        });
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(selectedStudy);
-                        });
+
+                        ContextStudyModel=selectedStudy;
+
                         await dialogService.showAsync(typeof(DeleteStudyDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<FoldersRequestMessage>(this);
-                        WeakReferenceMessenger.Default.Unregister<StudiesRequestMessage>(this);
                     });
                 }
                 return _deleteStudyCommand;
@@ -348,12 +312,7 @@ namespace FlashCard.ViewModel
                                 }
                             }
                         }
-                        WeakReferenceMessenger.Default.Register<StudiesRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(StudyModels);
-                        });
                         await dialogService.showAsync(typeof(DeleteAllStudyDialogViewModel));
-                        WeakReferenceMessenger.Default.Unregister<StudiesRequestMessage>(this);
                     });
                 }
                 return _deleteAllStudyCommand;

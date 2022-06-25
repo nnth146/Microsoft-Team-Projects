@@ -77,12 +77,7 @@ namespace FlashCard.ViewModel
                     _saveCommand = new RelayCommand(() =>
                     {
                         dataService.SaveChanges();
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(StudyModel);
-                        });
                         navigationService.Navigate(Frame, typeof(ViewStudyViewModel));
-                        WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                     });
                 }
                 return _saveCommand;

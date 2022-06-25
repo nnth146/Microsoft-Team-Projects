@@ -13,7 +13,7 @@ namespace FlashCard.ViewModel
         public DeleteStudyDialogViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService) : base(dataService, navigationService, dialogService)
         {
             StudyModels = WeakReferenceMessenger.Default.Send<StudiesRequestMessage>().Response;
-            StudyModel = WeakReferenceMessenger.Default.Send<StudyRequestMessage>().Response;
+            StudyModel = WeakReferenceMessenger.Default.Send<ContextStudyRequestMessage>().Response;
         }
 
         public ObservableCollection<StudyModel> StudyModels { get; set; }

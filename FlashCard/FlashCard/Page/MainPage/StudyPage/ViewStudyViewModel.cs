@@ -30,12 +30,7 @@ namespace FlashCard.ViewModel
                 {
                     _editTopicCommand = new RelayCommand(() =>
                     {
-                        WeakReferenceMessenger.Default.Register<StudyRequestMessage>(this, (r, m) =>
-                        {
-                            m.Reply(StudyModel);
-                        });
                         navigationService.Navigate(Frame, typeof(AddAndEditCardViewModel));
-                        WeakReferenceMessenger.Default.Unregister<StudyRequestMessage>(this);
                     });
                 }
                 return _editTopicCommand;

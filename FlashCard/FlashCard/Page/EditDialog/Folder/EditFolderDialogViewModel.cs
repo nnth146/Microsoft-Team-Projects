@@ -13,7 +13,7 @@ namespace FlashCard.ViewModel
         public EditFolderDialogViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService) : base(dataService, navigationService, dialogService)
         {
             FolderModels = WeakReferenceMessenger.Default.Send<FoldersRequestMessage>().Response;
-            FolderModel = WeakReferenceMessenger.Default.Send<FolderRequestMessage>().Response;
+            FolderModel = WeakReferenceMessenger.Default.Send<ContextFolderRequestMessage>().Response;
             NameFolder = FolderModel.Name;
             DescriptionFolder = FolderModel.Description;
         }

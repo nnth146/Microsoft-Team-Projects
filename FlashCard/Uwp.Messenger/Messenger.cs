@@ -7,9 +7,11 @@ namespace Uwp.Messenger
 {
     public class FoldersRequestMessage : RequestMessage<ObservableCollection<FolderModel>> { }
     public class FolderRequestMessage : RequestMessage<FolderModel> { }
+    public class ContextFolderRequestMessage : RequestMessage<FolderModel> { }
 
     public class StudiesRequestMessage : RequestMessage<ObservableCollection<StudyModel>> { }
     public class StudyRequestMessage : RequestMessage<StudyModel> { }
+    public class ContextStudyRequestMessage : RequestMessage<StudyModel> { }
 
     public class TopicsRequestMessage : RequestMessage<ObservableCollection<TopicModel>> { }
     public class TopicRequestMessage : RequestMessage<TopicModel> { }
