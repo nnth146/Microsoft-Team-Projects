@@ -19,5 +19,6 @@ namespace FocusTask.VML
         public ProjectPageViewModel ProjectPage => Ioc.Default.GetService<ProjectPageViewModel>();
         public TomorrowPageViewModel TomorrowPage => Ioc.Default.GetService<TomorrowPageViewModel>();
         public UpcomingPageViewModel UpcomingPage => Ioc.Default.GetService<UpcomingPageViewModel>();
+        public SettingPageViewModel SettingPage => Ioc.Default.GetService<SettingPageViewModel>();
     }
 }

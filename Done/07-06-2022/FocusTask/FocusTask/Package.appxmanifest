@@ -9,7 +9,7 @@
   <Identity
     Name="55144MsBeanBean.FocusTask"
     Publisher="CN=97112669-D055-4FA7-BDDE-720872892E14"
-    Version="1.0.2.0" />
+    Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="371b3e55-cc3d-450c-8b7d-d519eb529e93" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

@@ -45,7 +45,7 @@
             <TextBlock HorizontalAlignment="Center">
                 <Span>
                     <Run Text="Version:" />
-                    <Run Text="1.0.1" />
+                    <Run Text="1.0.3" />
                 </Span>
             </TextBlock>
 
