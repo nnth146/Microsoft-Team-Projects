@@ -21,5 +21,6 @@ namespace FlashCard.VML
         public DeleteAllStudyDialogViewModel DeleteAllStudyDialog => Ioc.Default.GetService<DeleteAllStudyDialogViewModel>();
         public DeleteTopicDialogViewModel DeleteTopicDialog => Ioc.Default.GetService<DeleteTopicDialogViewModel>();
         public DeleteAllCardDialogViewModel DeleteAllCardDialog => Ioc.Default.GetService<DeleteAllCardDialogViewModel>();
+        public SettingPageViewModel SettingPage => Ioc.Default.GetService<SettingPageViewModel>();
     }
 }

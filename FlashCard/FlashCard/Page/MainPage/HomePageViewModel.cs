@@ -16,11 +16,17 @@ namespace FlashCard.ViewModel
             FolderModels = dataService.GetFolders();
             TopicModels = dataService.GetTopics();
             FolderModels.CollectionChanged += FolderModels_CollectionChanged;
+
             WeakReferenceMessenger.Default.Register<ChangeMessage>(this, (r, m) =>
             {
                 ChangeItem = m.Study;
                 SelectedItemModel = m.Study;
             });
+        }
+
+        private void RegisterMessenger()
+        {
+
         }
 
         private void FolderModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -379,6 +385,12 @@ namespace FlashCard.ViewModel
         public RelayCommand<FolderModel> SuggestionChosenCommand => _suggestionChosenCommand ?? (_suggestionChosenCommand = new RelayCommand<FolderModel>((selectedFolder) =>
         {
             SearchedText = selectedFolder.Name;
+        }));
+
+        private RelayCommand<object> _settingCommand;
+        public RelayCommand<object> SettingCommand => _settingCommand ?? (_settingCommand = new RelayCommand<object>((frame) =>
+        {
+            navigationService.NavigateOneTime(frame, typeof(SettingPageViewModel));
         }));
     }
 }
