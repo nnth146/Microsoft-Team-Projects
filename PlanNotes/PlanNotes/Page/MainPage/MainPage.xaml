@@ -1,0 +1,203 @@
+﻿<Page
+    x:Class="PlanNotes.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlanNotes.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:icons="using:Fluent.Icons"
+    mc:Ignorable="d"
+    d:Height="720"
+    d:Width="1200"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <!--<DataTemplate x:Key="NavItemTemplate">
+            <controls:NavigationViewItem
+                AutomationProperties.Name="{Binding Name}"
+                IsExpanded="True"
+                MenuItemsSource="{Binding Children}"
+                Tag="{Binding}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Source="{Binding Icon}" />
+                    <TextBlock Margin="0,0,10,0" />
+                    <TextBlock
+                        MaxWidth="220"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+            </controls:NavigationViewItem>
+        </DataTemplate>-->
+    </Page.Resources>
+
+    <Grid>
+        <controls:NavigationView
+            x:Name="NavigationViewPlane"
+            Padding="0,12,0,0"
+            Loaded="NavigationViewPlane_Loaded"
+            CornerRadius="0 8 8 0"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            SelectionChanged="NavigationViewPlane_SelectionChanged"
+            OpenPaneLength="320">
+
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="Today" Tag="Today">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="ms-appx:///Assets/Icon/Today.png" VerticalAlignment="Center" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Tomorrow" Tag="Tomorrow">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="ms-appx:///Assets/Icon/Tomorrow.png" VerticalAlignment="Center" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="NextWeek" Tag="NextWeek">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="ms-appx:///Assets/Icon/NextWeek.png" VerticalAlignment="Center" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItem Content="Completed" Tag="Completed">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="ms-appx:///Assets/Icon/Completed.png" VerticalAlignment="Center" />
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                <controls:NavigationViewItemSeparator />
+            </controls:NavigationView.MenuItems>
+
+            <controls:NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    AutomationProperties.Name="Search"
+                    BorderThickness="1"
+                    PlaceholderText="Search"
+                    BorderBrush="{StaticResource Color3}"
+                    QueryIcon="Find"
+                    UpdateTextOnSelect="False">
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate>
+                            <ListViewItem
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                CornerRadius="4">
+                                <Grid VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center" />
+                                </Grid>
+                            </ListViewItem>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
+            </controls:NavigationView.AutoSuggestBox>
+
+            <controls:NavigationView.PaneHeader>
+                <TextBlock
+                    FontSize="14"
+                    Text="Plane Notes"
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold" />
+            </controls:NavigationView.PaneHeader>
+
+            <!--<controls:NavigationView.PaneCustomContent>
+                <Grid BorderThickness="0,0,0,1" BorderBrush="{StaticResource Color3}">
+                    <ListView>
+                        <ListView.Items>
+                            <ListViewItem>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <icons:FluentSymbolIcon Symbol="WeatherSunny24" Foreground="{StaticResource TodayColor}" />
+                                    <TextBlock Text="Today" />
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <icons:FluentSymbolIcon Symbol="WeatherPartlyCloudyDay24" Foreground="{StaticResource TomorrowColor}" />
+                                    <TextBlock Text="Tomorrow" />
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <icons:FluentSymbolIcon Symbol="CalendarDay24" Foreground="{StaticResource NextWeekColor}" />
+                                    <TextBlock Text="Next week" />
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <icons:FluentSymbolIcon Symbol="CheckboxChecked24" Foreground="{StaticResource CompletedColor}" />
+                                    <TextBlock Text="Completed" />
+                                </StackPanel>
+                            </ListViewItem>
+                        </ListView.Items>
+                    </ListView>
+                </Grid>
+            </controls:NavigationView.PaneCustomContent>-->
+
+            <controls:NavigationView.PaneFooter>
+                <Grid BorderThickness="0,1,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        BorderBrush="{StaticResource Color3}"
+                        Height="44"
+                        BorderThickness="0"
+                        Margin="0,0,0,-8"
+                        Click="AddFolder_Click"
+                        CornerRadius="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <icons:FluentSymbolIcon Symbol="AddCircle20" />
+                            <TextBlock Text="Add Pane" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        IsEnabled="False"
+                        CornerRadius="0"
+                        BorderThickness="0"
+                        Grid.Column="1"
+                        Height="44"
+                        Margin="0,0,0,-8">
+                        <icons:FluentSymbolIcon Symbol="FolderAdd20" />
+                    </Button>
+                </Grid>
+            </controls:NavigationView.PaneFooter>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Padding="16,10" Background="{StaticResource Color6}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Text="{StaticResource Welcome}"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        FontWeight="SemiBold" />
+                    <Button
+                        HorizontalAlignment="Right"
+                        Grid.Column="1"
+                        Content="Get Add Ons"
+                        Background="Transparent"
+                        BorderThickness="1"
+                        BorderBrush="{StaticResource Color5}"
+                        CornerRadius="4">
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ButtonEvent}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ButtonEvent}" />
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+                <Frame
+                    x:Name="SubFrame"
+                    Grid.Row="1"
+                    Loaded="SubFrame_Loaded" />
+            </Grid>
+
+        </controls:NavigationView>
+    </Grid>
+</Page>

@@ -119,11 +119,45 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Page\AddPage\Folder\AddFolderDialog.xaml.cs" />
+    <Compile Include="Page\AddPage\Note\AddNoteDialog.xaml.cs" />
+    <Compile Include="Page\AddPage\Plan\AddPlaneDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Folder\DeleteAllFolderDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Folder\DeleteFolderDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Note\DeleteAllNoteDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Note\DeleteNoteDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Plan\DeleteAllPlaneDialog.xaml.cs" />
+    <Compile Include="Page\DeletePage\Plan\DeletePlaneDialog.xaml.cs" />
+    <Compile Include="Page\EditPage\Folder\EditFolderDialog.xaml.cs" />
+    <Compile Include="Page\EditPage\Note\ViewAndEditNoteDialog.xaml.cs" />
+    <Compile Include="Page\EditPage\Plan\EditPlaneDialog.xaml.cs" />
+    <Compile Include="Page\MainPage\MainPage.xaml.cs" />
+    <Compile Include="Page\ViewPage\CompletedPage\CompletedPage.xaml.cs" />
+    <Compile Include="Page\ViewPage\FolderPage\FolderPage.xaml.cs" />
+    <Compile Include="Page\ViewPage\NextWeekPage\NextWeekPage.xaml.cs" />
+    <Compile Include="Page\ViewPage\PlanPage\PlanePage.xaml.cs" />
+    <Compile Include="Page\ViewPage\TodayPage\TodayPage.xaml.cs" />
+    <Compile Include="Page\ViewPage\TomorrowPage\TomorrowPage.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\MainPageViewModel.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Page\MainPage\MainPageViewModel.cs" />
+    <Compile Include="Page\ViewPage\CompletedPage\CompletedPageViewModel.cs" />
+    <Compile Include="Page\ViewPage\FolderPage\FolderPageViewModel.cs" />
+    <Compile Include="Page\ViewPage\NextWeekPage\NextWeekPageViewModel.cs" />
+    <Compile Include="Page\ViewPage\PlanPage\PlanePageViewModel.cs" />
+    <Compile Include="Page\ViewPage\TodayPage\TodayPageViewModel.cs" />
+    <Compile Include="Page\ViewPage\TomorrowPage\TomorrowPageViewModel.cs" />
+    <Compile Include="Page\AddPage\Folder\AddFolderDialogViewModel.cs" />
+    <Compile Include="Page\AddPage\Note\AddNoteDialogViewModel.cs" />
+    <Compile Include="Page\AddPage\Plan\AddPlaneDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Folder\DeleteAllFolderDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Folder\DeleteFolderDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Note\DeleteAllNoteDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Note\DeleteNoteDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Plan\DeleteAllPlaneDialogViewModel.cs" />
+    <Compile Include="Page\DeletePage\Plan\DeletePlaneDialogViewModel.cs" />
+    <Compile Include="Page\EditPage\Folder\EditFolderDialogViewModel.cs" />
+    <Compile Include="Page\EditPage\Plan\EditPlaneDialogViewModel.cs" />
+    <Compile Include="Page\EditPage\Note\ViewAndEditNoteDialogViewModel.cs" />
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +166,12 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icon\Completed.png" />
+    <Content Include="Assets\Icon\Folder.png" />
+    <Content Include="Assets\Icon\NextWeek.png" />
+    <Content Include="Assets\Icon\Plane.png" />
+    <Content Include="Assets\Icon\Today.png" />
+    <Content Include="Assets\Icon\Tomorrow.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -185,12 +225,88 @@
       <Name>Uwp.Style</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Page Include="View\MainPage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Page\AddPage\Folder\AddFolderDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
+    <Page Include="Page\AddPage\Note\AddNoteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\AddPage\Plan\AddPlaneDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Folder\DeleteAllFolderDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Folder\DeleteFolderDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Note\DeleteAllNoteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Note\DeleteNoteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Plan\DeleteAllPlaneDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\DeletePage\Plan\DeletePlaneDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\EditPage\Folder\EditFolderDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\EditPage\Note\ViewAndEditNoteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\EditPage\Plan\EditPlaneDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\MainPage\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\CompletedPage\CompletedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\FolderPage\FolderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\NextWeekPage\NextWeekPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\PlanPage\PlanePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\TodayPage\TodayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\ViewPage\TomorrowPage\TomorrowPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Image\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
