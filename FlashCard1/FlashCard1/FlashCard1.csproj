@@ -166,14 +166,20 @@
       <DependentUpon>EditTopicDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TopicPage\Dialog\EditTopicDialogViewModel.cs" />
+    <Compile Include="Pages\TopicPage\Dialog\NotifyLimitedCardDialog.xaml.cs">
+      <DependentUpon>NotifyLimitedCardDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TopicPage\Dialog\PremiumDialog.xaml.cs">
       <DependentUpon>PremiumDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TopicPage\Dialog\PremiumDialogViewModel.cs" />
     <Compile Include="Pages\TopicPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TopicPage\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreHelper\ItemDetails.cs" />
+    <Compile Include="StoreHelper\StoreHelper.cs" />
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\TopicPage\Dialog\EditTopicDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TopicPage\Dialog\NotifyLimitedCardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

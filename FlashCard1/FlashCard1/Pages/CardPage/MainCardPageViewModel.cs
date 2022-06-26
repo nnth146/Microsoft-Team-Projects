@@ -1,6 +1,7 @@
 ﻿using FlashCard1.Messages;
 using FlashCard1.Pages.CardPage.Dialog;
 using FlashCard1.Pages.LearningPage;
+using FlashCard1.Pages.TopicPage.Dialog;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Uwp.Core.Helper;
 using Uwp.HCore.Service.Database;
 using Uwp.HCore.Service.Navigation;
 using Uwp.Model.Model;
@@ -152,10 +154,26 @@ namespace FlashCard1.Pages.CardPage
         private RelayCommand _openAddCardPageDialogCommand;
         public RelayCommand OpenAddCardPageDialogCommand => _openAddCardPageDialogCommand ?? (_openAddCardPageDialogCommand = new RelayCommand(async() =>
         {
-            ContentDialog dialog = new AddCardDialog();
-            await dialog.ShowAsync();
-            Cards = _dataService.GetCardData(ATopic.Id);
-            ShowEmptyScreen();
+            bool isPremium = StoreHelper.Default.IsUnlockAllFeatures;
+
+            if(Cards.Count < 20 || isPremium)
+            {
+                ContentDialog dialog = new AddCardDialog();
+                await dialog.ShowAsync();
+                Cards = _dataService.GetCardData(ATopic.Id);
+                ShowEmptyScreen();
+            }
+            else
+            {
+                NotifyLimitedCardDialog limitedDialog = new NotifyLimitedCardDialog();
+                await limitedDialog.ShowAsync();
+
+                if(limitedDialog.Result == ContentDialogResult.Primary)
+                {
+                    PremiumDialog premiumDialog = new PremiumDialog();
+                    await premiumDialog.ShowAsync();
+                }
+            }
         }));
         #endregion
 
@@ -194,35 +212,52 @@ namespace FlashCard1.Pages.CardPage
         {
             ContentDialog dialog = new AskLearnDialog();
             await dialog.ShowAsync();
-
             if(Choices != null)
             {
-                int choice = Choices.ElementAt(1).Value;
-                if(choice == 0)
+                bool isPremium = StoreHelper.Default.IsUnlockAllFeatures;
+                if (Choices["LH"] == 1 && !isPremium)
                 {
-                    _navigationService.Navigate(typeof(MainLearningPage));
-                }
-                else if (choice == 1 || choice == 2 || choice == 3 || choice == 4)
-                {
-                    if(checkAllProgess() == true)
+                    NotifyLimitedCardDialog notifyLimitedCardDialog = new NotifyLimitedCardDialog();
+                    await notifyLimitedCardDialog.ShowAsync();
+                    if (notifyLimitedCardDialog.Result == ContentDialogResult.Primary)
                     {
-                        _navigationService.Navigate(typeof(MainLearningPage));
+                        PremiumDialog premiumDialog = new PremiumDialog();
+                        await premiumDialog.ShowAsync();
                     }
-                    else
-                    {
-                        Flyout flyout = new Flyout();
-                        TextBlock text = new TextBlock();
-                        text.Text = "Please reset to continue learning !!";
-                        flyout.Content = text;
-                        flyout.ShowAt(btn);
-                    }
-                    
+
+                    return;
                 }
 
+                GoToLearnCard(btn);
             }
             
         },
          (btn) => (DoesShowEmptyScreen == false)));
+
+        private void GoToLearnCard(Button btn)
+        {
+            int choice = Choices.ElementAt(1).Value;
+            if (choice == 0)
+            {
+                _navigationService.Navigate(typeof(MainLearningPage));
+            }
+            else if (choice == 1 || choice == 2 || choice == 3 || choice == 4)
+            {
+                if (checkAllProgess() == true)
+                {
+                    _navigationService.Navigate(typeof(MainLearningPage));
+                }
+                else
+                {
+                    Flyout flyout = new Flyout();
+                    TextBlock text = new TextBlock();
+                    text.Text = "Please reset to continue learning !!";
+                    flyout.Content = text;
+                    flyout.ShowAt(btn);
+                }
+
+            }
+        }
 
         private bool checkAllProgess()
         {

@@ -9,5 +9,6 @@ namespace FlashCard1.Messages
 {
     public class SendObjectMessage : RequestMessage<object>
     {
+
     }
 }

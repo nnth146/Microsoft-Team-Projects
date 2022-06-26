@@ -22,14 +22,23 @@ namespace FlashCard1.VML
         {
             Ioc.Default.ConfigureServices(new ServiceCollection().
                 AddSingleton<INavigationService, NavigationService>()
-                .AddSingleton<IDataService, DataService>().AddTransient<MainPageViewModel>()
-                .AddSingleton<IDataService, DataService>().AddTransient<AddTopicDialogViewModel>()
-                .AddSingleton<IDataService, DataService>().AddTransient<EditTopicDialogViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddTransient<MainPageViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddTransient<AddTopicDialogViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddTransient<EditTopicDialogViewModel>()
                 .AddSingleton<INavigationService, NavigationService>()
-                .AddSingleton<IDataService,DataService>().AddTransient<MainCardPageViewModel>()
-                .AddSingleton<IDataService, DataService>().AddTransient<AddCardDialogViewModel>()
-                .AddSingleton<IDataService, DataService>().AddTransient<EditCardDialogViewModel>()
-                .AddSingleton<IDataService, DataService>().AddSingleton<INavigationService, NavigationService>().AddTransient<MainLearnPageViewModel>()
+                .AddSingleton<IDataService,DataService>()
+                .AddTransient<MainCardPageViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddTransient<AddCardDialogViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddTransient<EditCardDialogViewModel>()
+                .AddSingleton<IDataService, DataService>()
+                .AddSingleton<INavigationService, NavigationService>()
+                .AddTransient<MainLearnPageViewModel>()
+                .AddTransient<PremiumDialogViewModel>()
                 .BuildServiceProvider());
         }
 
@@ -54,7 +63,7 @@ namespace FlashCard1.VML
 
         #region ViewModel of LearnPage
         public MainLearnPageViewModel MainLearnPage => Ioc.Default.GetService<MainLearnPageViewModel>();
-
+        public PremiumDialogViewModel PremiumDialog => Ioc.Default.GetService<PremiumDialogViewModel>();
         #endregion
     }
 }

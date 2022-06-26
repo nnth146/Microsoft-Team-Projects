@@ -64,7 +64,6 @@ namespace FlashCard1.Pages.LearningPage
 
             DoesShow = Choices.ElementAt(0).Value == 0 ? true : false;
 
-
             // Thiết lập màu chế độ light
             CheckBackground = true;
             ColorBackground = "White";
