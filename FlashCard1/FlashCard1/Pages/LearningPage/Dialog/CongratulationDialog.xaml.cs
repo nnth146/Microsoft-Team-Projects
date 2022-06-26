@@ -1,6 +1,4 @@
-﻿using FlashCard1.Messages;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,25 +15,18 @@ using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FlashCard1.Pages.CardPage.Dialog
+namespace FlashCard1.Pages.LearningPage.Dialog
 {
-    public sealed partial class ResetAllDialog : ContentDialog
+    public sealed partial class CongratulationDialog : ContentDialog
     {
-        public ResetAllDialog()
+        public CongratulationDialog()
         {
             this.InitializeComponent();
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Goback(object sender, RoutedEventArgs e)
         {
-            ResetAllDialog1.Hide();
-        }
-
-        private void Accepte_Reset(object sender, RoutedEventArgs e)
-        {
-            WeakReferenceMessenger.Default.Send(new SubChangeMessage(true));
-            ResetAllDialog1.Hide();
+            CongratulationDialog1.Hide();
         }
     }
 }

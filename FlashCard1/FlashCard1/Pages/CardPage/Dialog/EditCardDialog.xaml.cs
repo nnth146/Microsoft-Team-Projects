@@ -1,8 +1,12 @@
-﻿using System;
+﻿using FlashCard1.Messages;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Uwp.Model.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -17,11 +21,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace FlashCard1.Pages.CardPage.Dialog
 {
-    public sealed partial class AddCardDialog : ContentDialog
-    {
-        public AddCardDialog()
+    public sealed partial class EditCardDialog : ContentDialog
+    {   
+
+        public Card Item { get; set; }
+        public EditCardDialog()
         {
             this.InitializeComponent();
+            Item = WeakReferenceMessenger.Default.Send<SendCardMessage>().Response;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -46,6 +53,14 @@ namespace FlashCard1.Pages.CardPage.Dialog
             RichEditBox editBox = sender as RichEditBox;
             editBox.Document.GetText(Windows.UI.Text.TextGetOptions.AdjustCrlf, out string text);
             editBox.Tag = text;
+        }
+
+        private void EditCardDialog1_Loaded(object sender, RoutedEventArgs e)
+        {
+            string back = Item.DesBack;
+            string front = Item.DesFront;
+            RichBack.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, back);
+            RichFront.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, front);
         }
     }
 }

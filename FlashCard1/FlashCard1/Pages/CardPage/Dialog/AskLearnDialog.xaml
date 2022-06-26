@@ -14,7 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical"
                     Spacing="16">
@@ -22,13 +22,10 @@
                        TextAlignment="Center"
                        Style="{StaticResource LargeText}"
                        />
-            <ComboBox Width="285">
-                <ComboBoxItem>
-                    <x:String>Normal (Front to Back)</x:String>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <x:String>Fliped (Back to Front)</x:String>
-                </ComboBoxItem>
+            <ComboBox Width="285" 
+                      x:Name="ComboboxMode"
+                      SelectionChanged="ComboboxMode_SelectionChanged">
+                
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="1">
@@ -37,7 +34,7 @@
                        Style="{StaticResource LargeText}"
                        TextWrapping="Wrap"
                        Width="270"/>
-            <controls:RadioButtons>
+            <controls:RadioButtons SelectionChanged="RadioButtons_SelectionChanged">
                 <RadioButton Content="All cards" IsChecked="True"/>
                 <RadioButton Content="Not learnt"/>
                 <RadioButton Content="Random 20 not learnt"/>

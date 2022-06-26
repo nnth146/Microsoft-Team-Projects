@@ -125,6 +125,7 @@
     <Compile Include="Converter\ByteToObject\ByteToBitmapImageConverter.cs" />
     <Compile Include="Converter\DateTimeToObject\DateTimeToString.cs" />
     <Compile Include="Converter\DoubleToObject\DoubleToMoney.cs" />
+    <Compile Include="Converter\IntToObject\IntToObject.cs" />
     <Compile Include="Helper\CommonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Database\DataService.cs" />
@@ -141,6 +142,12 @@
   <ItemGroup>
     <Content Include="Document\AppConfig.txt" />
     <Content Include="Document\NugetPackage.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Uwp.Model\Uwp.Model.csproj">
+      <Project>{50471F9E-A09C-4EE7-8D83-38C7C6ED8492}</Project>
+      <Name>Uwp.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

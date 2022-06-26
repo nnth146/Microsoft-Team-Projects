@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace Uwp.HCore.Converter.BooleanToObject
+namespace Uwp.HCore.Converter.IntToObject
 {
-    public class BooleanToVisibilityReverse : IValueConverter
+    public class IntToObject : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            bool isVisibility = (bool)value;
-            return isVisibility ? Visibility.Collapsed : Visibility.Visible;
+            int number = (int)value;
+            return (number > 0) ? number / 20 : 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            Visibility visibility = (Visibility)value;
-            return visibility == Visibility.Collapsed ? true : false;
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Uwp.HCore.Converter.ByteToObject
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             byte[] imageBytes = (byte[])value;
-            return ConvertByteToImage(imageBytes);
+            return ConvertByteToImage(imageBytes).Result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -31,11 +31,12 @@ namespace Uwp.HCore.Converter.ByteToObject
                 {
                     writer.WriteBytes(imageBytes);
                     await writer.StoreAsync();
-                    await image.SetSourceAsync(randomAccessStream);
+                    image.SetSourceAsync(randomAccessStream);
                 }
             }
 
             return image;
         }
+        
     }
 }

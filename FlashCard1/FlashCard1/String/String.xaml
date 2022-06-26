@@ -20,5 +20,6 @@
 
     <x:String x:Key="Image1">ms-appx:///Assets/Image/pumpkin.png</x:String>
     <x:String x:Key="Image2">ms-appx:///Assets/Image/pumpkin1.png</x:String>
+    <x:String x:Key="Image3">ms-appx:///Assets/Image/amazing.png</x:String>
     
 </ResourceDictionary>

@@ -119,13 +119,27 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\TopicModel.cs" />
+    <Compile Include="Messages\ChangeMessage.cs" />
+    <Compile Include="Messages\KeyValueMessage.cs" />
+    <Compile Include="Messages\SendCardMessage.cs" />
+    <Compile Include="Messages\SendKeyValueMessage.cs" />
+    <Compile Include="Messages\SendObjectMessage.cs" />
+    <Compile Include="Messages\SubChangeMessage.cs" />
+    <Compile Include="Model\Colors.cs" />
     <Compile Include="Pages\CardPage\Dialog\AddCardDialog.xaml.cs">
       <DependentUpon>AddCardDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CardPage\Dialog\AddCardDialogViewModel.cs" />
     <Compile Include="Pages\CardPage\Dialog\AskLearnDialog.xaml.cs">
       <DependentUpon>AskLearnDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CardPage\Dialog\DeleteCardDialog.xaml.cs">
+      <DependentUpon>DeleteCardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CardPage\Dialog\EditCardDialog.xaml.cs">
+      <DependentUpon>EditCardDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CardPage\Dialog\EditCardDialogViewModel.cs" />
     <Compile Include="Pages\CardPage\Dialog\ResetAllDialog.xaml.cs">
       <DependentUpon>ResetAllDialog.xaml</DependentUpon>
     </Compile>
@@ -133,23 +147,32 @@
       <DependentUpon>MainCardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CardPage\MainCardPageViewModel.cs" />
+    <Compile Include="Pages\LearningPage\Dialog\CongratulationDialog.xaml.cs">
+      <DependentUpon>CongratulationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LearningPage\MainLearningPage.xaml.cs">
       <DependentUpon>MainLearningPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Topic\Dialog\AddTopicDialog.xaml.cs">
+    <Compile Include="Pages\LearningPage\MainLearnPageViewModel.cs" />
+    <Compile Include="Pages\TopicPage\Dialog\AddTopicDialog.xaml.cs">
       <DependentUpon>AddTopicDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Topic\Dialog\AddTopicDialogViewModel.cs" />
-    <Compile Include="Pages\Topic\Dialog\EditTopicDialog.xaml.cs">
+    <Compile Include="Pages\TopicPage\Dialog\AddTopicDialogViewModel.cs" />
+    <Compile Include="Pages\TopicPage\Dialog\DeleteTopicDialog.xaml.cs">
+      <DependentUpon>DeleteTopicDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TopicPage\Dialog\DeleteTopicDialogViewModel.cs" />
+    <Compile Include="Pages\TopicPage\Dialog\EditTopicDialog.xaml.cs">
       <DependentUpon>EditTopicDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Topic\Dialog\PremiumDialog.xaml.cs">
+    <Compile Include="Pages\TopicPage\Dialog\EditTopicDialogViewModel.cs" />
+    <Compile Include="Pages\TopicPage\Dialog\PremiumDialog.xaml.cs">
       <DependentUpon>PremiumDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Topic\MainPage.xaml.cs">
+    <Compile Include="Pages\TopicPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Topic\MainPageViewModel.cs" />
+    <Compile Include="Pages\TopicPage\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -171,6 +194,7 @@
     <Content Include="Assets\Icon\Icon7.png" />
     <Content Include="Assets\Icon\Icon8.png" />
     <Content Include="Assets\Icon\Icon9.png" />
+    <Content Include="Assets\Image\amazing.png" />
     <Content Include="Assets\Image\pumpkin.png" />
     <Content Include="Assets\Image\pumpkin1.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -199,6 +223,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CardPage\Dialog\DeleteCardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CardPage\Dialog\EditCardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CardPage\Dialog\ResetAllDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,23 +239,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\LearningPage\Dialog\CongratulationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LearningPage\MainLearningPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Topic\Dialog\AddTopicDialog.xaml">
+    <Page Include="Pages\TopicPage\Dialog\AddTopicDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Topic\Dialog\EditTopicDialog.xaml">
+    <Page Include="Pages\TopicPage\Dialog\DeleteTopicDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Topic\Dialog\PremiumDialog.xaml">
+    <Page Include="Pages\TopicPage\Dialog\EditTopicDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Topic\MainPage.xaml">
+    <Page Include="Pages\TopicPage\Dialog\PremiumDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TopicPage\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

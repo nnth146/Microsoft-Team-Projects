@@ -23,7 +23,7 @@ Install-Package Microsoft.EntityFrameworkCore.Design -Version 3.1.21
 
 <-- Migration -->
 dotnet ef migrations remove Migrationv1 -s Uwp.Console.Extension -p Uwp.Model
-dotnet ef migrations add Migrationv1 -s Uwp.Console.Extension -p Uwp.Model
+dotnet ef migrations add Migrationv1 -s Uwp.DummyConsole -p Uwp.Model
 dotnet ef database update Migrationv1 -s Uwp.Console.Extension -p Uwp.Model
 
 <-- LiteDB -->

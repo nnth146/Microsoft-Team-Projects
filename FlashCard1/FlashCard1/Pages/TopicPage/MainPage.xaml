@@ -1,35 +1,44 @@
 ﻿<Page
-    x:Class="FlashCard1.Pages.Topic.MainPage"
+    x:Class="FlashCard1.Pages.TopicPage.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FlashCard1.Pages.Topic"
+    xmlns:local="using:FlashCard1.Pages.TopicPage"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converter="using:Uwp.HCore.Converter.BooleanToObject"
     DataContext="{Binding Source={StaticResource VML}, Path=Main}"
     mc:Ignorable="d"
     d:Width="1200"
     d:Height="720"
     Background="White">
-
+    
     <interactivity:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
             <core:InvokeCommandAction Command="{Binding MainPageLoadedCommand}"/>
         </core:EventTriggerBehavior>
     </interactivity:Interaction.Behaviors>
-    
+
     <Page.Resources>
-        <XamlUICommand x:Name="EditXamlUICommand"/>
-        <XamlUICommand x:Name="DeleteXamlUICommand"/>
+        
+        <XamlUICommand x:Name="EditXamlUICommand" Command="{Binding OpenEditTopicDialogCommand}"/>
+        <XamlUICommand x:Name="DeleteXamlUICommand" Command="{Binding OpenDeleteTopicDialogCommand}"/>
+        <XamlUICommand x:Name="SearchTextChanged" Command="{Binding AutoSuggestTextChangedCommand}"/>
+
+        <converter:BooleanToVisibility x:Key="Converter1"/>
+        <converter:BooleanToVisibilityReverse x:Key="Converter2"/>
     </Page.Resources>
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
+        <!--#region Header-->
         <Grid Grid.Row="0"
               Background="{StaticResource ColorPrimary}"
               Padding="16 8"
@@ -51,7 +60,10 @@
             </Button>
 
             <Grid Grid.Column="1">
-                <AutoSuggestBox Background="White" QueryIcon="Find"/>
+                <AutoSuggestBox Background="White" 
+                                QueryIcon="Find"
+                                PlaceholderText="Search"
+                                TextChanged="AutoSuggestBox_TextChanged"/>
             </Grid>
             <Button Grid.Column="2" 
                     Background="Transparent"
@@ -61,16 +73,22 @@
                 <controls:ImageIcon Width="24" Source="{Binding Source={StaticResource Icon2}}"/>
             </Button>
         </Grid>
-
+        <!--#endregion-->
+        
+        <!--#region Content-->
+        
+        <!--Hiển thị khi không có item-->
         <Grid Grid.Row="1"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"
-              Visibility="Collapsed">
+              Visibility="{Binding DoesShow, Converter={StaticResource Converter2}}">
             <Image Width="300" Source="{Binding Source={StaticResource Image1}}"/>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <GridView Padding="8" ItemsSource="{Binding Topics}">
+        <!--Hiển thị khi có item-->
+        <Grid Grid.Row="1" Visibility="{Binding DoesShow,Converter={StaticResource Converter1}}">
+            <GridView Padding="8" ItemsSource="{Binding Topics}"
+                      SelectedItem="{Binding SelectedTopicItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="SelectionChanged">
                         <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
@@ -99,14 +117,15 @@
                                     <MenuFlyoutItem Text="Delete" Icon="Delete" CommandParameter="{Binding }" Command="{StaticResource DeleteXamlUICommand}"/>
                                 </MenuFlyout>
                             </GridViewItem.ContextFlyout>
+                            
                             <Grid Height="100" 
                                     Width="150"
-                                    Background="{Binding color}"
+                                    Background="{Binding Color}"
                                     Padding="8"
                                     CornerRadius="4"
                                     BorderBrush="#f7f7f7"
                                     BorderThickness="1">
-                                <TextBlock Text="{Binding name}"/>
+                                <TextBlock Text="{Binding Name}"/>
                                 <Grid VerticalAlignment="Bottom"
                                     HorizontalAlignment="Right"
                                     >
@@ -114,7 +133,7 @@
                                              Width="22"
                                              Height="22"
                                              />
-                                    <TextBlock Text="{Binding amount}" 
+                                    <TextBlock Text="{Binding Cards.Count}" 
                                        Foreground="White"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
@@ -126,8 +145,9 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
 
-               
+
             </GridView>
         </Grid>
+        <!--#endregion-->
     </Grid>
 </Page>

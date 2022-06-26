@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlashCard1.Messages;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,21 +17,24 @@ using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FlashCard1.Pages.Topic.Dialog
+namespace FlashCard1.Pages.CardPage.Dialog
 {
-    public sealed partial class EditTopicDialog : ContentDialog
+    public sealed partial class DeleteCardDialog : ContentDialog
     {
-        public EditTopicDialog()
+        public DeleteCardDialog()
         {
             this.InitializeComponent();
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Accept_Delete(object sender, RoutedEventArgs e)
         {
+            WeakReferenceMessenger.Default.Send(new ChangeMessage(true));
+            DeleteCardDialog1.Hide();
         }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            DeleteCardDialog1.Hide();
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿using FlashCard1.Pages.LearningPage;
+﻿using FlashCard1.Messages;
+using FlashCard1.Pages.LearningPage;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,29 +24,51 @@ namespace FlashCard1.Pages.CardPage.Dialog
 {
     public sealed partial class AskLearnDialog : ContentDialog
     {
+
+        public List<string> ComboboxItems { get; set; }
+
+        public IDictionary<string, int> Choices { get; set; }
+
+        public int SeletedComboboxIndex { get; set; }
+        public int SeletedButtonRadiusIndex { get; set; }
         public AskLearnDialog()
         {
             this.InitializeComponent();
-        }
+            Choices = new Dictionary<string, int>();
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
+            ComboboxItems = new List<string>();
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
+            ComboboxItems.Add("Normal (Front to Back)");
+            ComboboxItems.Add("Fliped (Back to Front)");
+            ComboboxMode.ItemsSource = ComboboxItems;
+            ComboboxMode.SelectedIndex = 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             AskLearnDialog1.Hide();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            Choices.Add("LH", SeletedComboboxIndex);
+            Choices.Add("Option", SeletedButtonRadiusIndex);
+
+            WeakReferenceMessenger.Default.Send(new KeyValueMessage(Choices));
             AskLearnDialog1.Hide();
-            Frame frame = Window.Current.Content as Frame;
-            frame.Navigate(typeof(MainLearningPage));
         }
+
+        private void ComboboxMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SeletedComboboxIndex = ComboboxMode.SelectedIndex;
+        }
+
+        private void RadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RadioButtons radioButtons = sender as RadioButtons;
+            SeletedButtonRadiusIndex = radioButtons.SelectedIndex; 
+        }
+
     }
 }

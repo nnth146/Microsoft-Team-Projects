@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace FlashCard1.Pages.Topic.Dialog
+namespace FlashCard1.Pages.TopicPage.Dialog
 {
     public sealed partial class PremiumDialog : ContentDialog
     {
@@ -31,8 +31,6 @@ namespace FlashCard1.Pages.Topic.Dialog
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
-
-
         private void CloseDialog(object sender, RoutedEventArgs e)
         {
             PremiumDialog1.Hide();
