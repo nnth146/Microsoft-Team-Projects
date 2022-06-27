@@ -29,7 +29,7 @@ namespace Uwp.Core.Helper
         private const string _durableAddOnKind = "Durable";
         private const string _unmanagedConsumableAddOnKind = "UnmanagedConsumable";
 
-        public string SubscriptionStoreId = "";
+        public string SubscriptionStoreId = "9PNLZJLCP3J3";
         public StoreProduct SubscriptionStoreProduct;
         public bool IsUnlockAllFeatures = false;
         public string SubscriptionStorePrice = "Loading";
