@@ -33,22 +33,37 @@ namespace FlashCard.ViewModel
             {
                 if (_addTopicCommand == null)
                 {
-                    _addTopicCommand = new RelayCommand(() =>
+                    _addTopicCommand = new RelayCommand(async () =>
                     {
-                        TopicModel TopicModel = new TopicModel();
-                        TopicModel.Name = "";
-                        TopicModel.Defination = "";
-                        TopicModel.Image = null;
-                        TopicModel.hasItem = false;
-                        TopicModel.isFavorite = false;
-                        TopicModel.StudyModelId = StudyModel.StudyModelId;
-                        Debug.WriteLine("Study Model Id: " + TopicModel.StudyModelId);
-                        StudyModel.TopicModels.Add(TopicModel);
-                        study.TopicModels = StudyModel.TopicModels;
+                        bool isPremium = StoreHelper.Default.IsUnlockAllFeatures;
+
+                        if(isPremium || TopicCount < 10)
+                        {
+                            AddTopic();
+                        }
+                        else
+                        {
+                            string message = "This is premium feature. Please update to unlock full features";
+                            await dialogService.showMessageDialogAsync(message);
+                        }
                     });
                 }
                 return _addTopicCommand;
             }
+        }
+
+        private void AddTopic()
+        {
+            TopicModel TopicModel = new TopicModel();
+            TopicModel.Name = "";
+            TopicModel.Defination = "";
+            TopicModel.Image = null;
+            TopicModel.hasItem = false;
+            TopicModel.isFavorite = false;
+            TopicModel.StudyModelId = StudyModel.StudyModelId;
+            Debug.WriteLine("Study Model Id: " + TopicModel.StudyModelId);
+            StudyModel.TopicModels.Add(TopicModel);
+            study.TopicModels = StudyModel.TopicModels;
         }
 
         private RelayCommand<TopicModel> _deleteTopicCommand;

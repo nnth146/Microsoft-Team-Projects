@@ -19,10 +19,7 @@ namespace FlashCard.View
 
         private void TextBlock_Loaded(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<TopicModel> TopicModels = ListViewTopics.ItemsSource as ObservableCollection<TopicModel>;
-            TextBlock textBlock = sender as TextBlock;
-            TopicModel Topic = textBlock.Tag as TopicModel;
-            textBlock.Text = (TopicModels.IndexOf(Topic) + 1).ToString();
+            
         }
     }
 }

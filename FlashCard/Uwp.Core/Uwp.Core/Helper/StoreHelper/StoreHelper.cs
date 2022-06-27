@@ -28,7 +28,7 @@ namespace Uwp.Core.Helper
         private const string _unmanagedConsumableAddOnKind = "UnmanagedConsumable";
         */
 
-        public string SubscriptionStoreId = "";
+        public string SubscriptionStoreId = "9NFKNHWGQSL5";
         public StoreProduct SubscriptionStoreProduct;
         public bool IsUnlockAllFeatures = false;
         public string SubscriptionStorePrice = "Loading";
