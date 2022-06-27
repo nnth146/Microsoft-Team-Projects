@@ -1,0 +1,34 @@
+
+<-- MainProject -->
+Install-Package Microsoft.UI.Xaml
+Install-Package Microsoft.Extensions.DependencyInjection
+Install-Package Microsoft.Xaml.Behaviors.Uwp.Managed
+Install-Package Microsoft.Toolkit.Mvvm
+Install-Package Fluent.Icons
+
+Install-Package Telerik.UI.for.UniversalWindowsPlatform
+
+Install-Package Microsoft.Toolkit.Uwp.UI.Controls
+
+<-- Uwp.Style -->
+Install-Package Fluent.Icons
+Install-Package Microsoft.UI.Xaml
+
+<-- Uwp.Messenger -->
+Install-Package Microsoft.Toolkit.Mvvm
+
+<-- Uwp.SQLite.Model -->
+Install-Package Microsoft.Toolkit.Mvvm
+Install-Package Microsoft.EntityFrameworkCore.Sqlite -Version 3.1.25
+
+<-- Uwp.Console.Extension --> 
+Install-Package Microsoft.EntityFrameworkCore.Tools -Version 3.1.25
+Install-Package Microsoft.EntityFrameworkCore.Design -Version 3.1.25
+
+<-- Migration -->
+dotnet ef migrations remove Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
+dotnet ef migrations add Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
+dotnet ef database update Migrationv1 -s Uwp.Console.Extension -p Uwp.SQLite.Model
+
+<-- LiteDB T?m th?i không còn s? d?ng-->
+Install-Package LiteDB
