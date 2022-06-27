@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <x:String x:Key="SubFlashCard">Easy to memorize with flashcard</x:String>
+    <x:String x:Key="FunnyFlashCard">Funny Flash Card</x:String>
+    <x:String x:Key="Everything">Easily memorize everything</x:String>
+    <x:String x:Key="CreateFolder">Create a new Folder</x:String>
+    <x:String x:Key="EditFolder">Edit a Folder</x:String>
+    <x:String x:Key="CreateStudy">Create a new Study Set</x:String>
+    <x:String x:Key="EditStudy">Edit a Study Set</x:String>
+
+</ResourceDictionary>

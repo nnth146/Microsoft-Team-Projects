@@ -3,10 +3,6 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using NoteForYou.Messenger;
 using NoteForYou.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Uwp.Core.Helper;
 using UWP.Core.Service;
 using Windows.Storage;
@@ -31,7 +27,7 @@ namespace NoteForYou.ViewModel
         public string Title { get; set; }
         public byte[] Image { get; set; }
         public bool HasImage => Image != null;
-        
+
         public ImageNote SelectedNote { get; set; }
 
         private RelayCommand _addImageCommand;

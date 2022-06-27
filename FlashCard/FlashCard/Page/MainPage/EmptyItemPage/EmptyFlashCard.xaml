@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="FlashCard.View.EmptyFlashCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FlashCard.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{StaticResource WhiteColor}"
+    mc:Ignorable="d">
+
+    <Grid
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Image
+            Width="400"
+            Height="400"
+            Source="ms-appx:///Assets/Image/EmptyItem.png" />
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Spacing="8">
+            <TextBlock
+                FontSize="28"
+                Foreground="{StaticResource PrimaryColor}"
+                Text="{StaticResource FunnyFlashCard}"
+                TextAlignment="Center" />
+            <TextBlock
+                FontSize="28"
+                Foreground="{StaticResource PrimaryColor}"
+                Text="{StaticResource Everything}" />
+        </StackPanel>
+    </Grid>
+</Page>

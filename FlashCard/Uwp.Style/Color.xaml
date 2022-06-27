@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="PrimaryColor">#FF8C00</Color>
+    <Color x:Key="PrimaryColorOver">#F58D0E</Color>
+    <Color x:Key="PrimaryColorPressed">#E98206</Color>
+
+    <Color x:Key="TextColor">#111111</Color>
+    <Color x:Key="SubTextColor">#616160</Color>
+    <Color x:Key="HomeColor">#E6E6E6</Color>
+    <Color x:Key="BorderColor">#CCCCCC</Color>
+
+    <Color x:Key="WhiteColor">#FFFFFF</Color>
+    <Color x:Key="LightWhiteColor">#F3F3F3</Color>
+
+    <Color x:Key="ButtonColor">#00B7C3</Color>
+    <Color x:Key="ButtonColorOver">#11D8E5</Color>
+    <Color x:Key="ButtonColorClick">#16C5D0</Color>
+
+    <Color x:Key="SecondaryColor">#0063B1</Color>
+    <Color x:Key="TimeColor">#4D92C9</Color>
+
+
+</ResourceDictionary>

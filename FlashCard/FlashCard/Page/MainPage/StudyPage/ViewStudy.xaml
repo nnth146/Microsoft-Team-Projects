@@ -1,0 +1,162 @@
+﻿<Page
+    x:Class="FlashCard.View.ViewStudy"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:local="using:FlashCard.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{StaticResource WhiteColor}"
+    DataContext="{Binding Source={StaticResource VML}, Path=ViewStudy}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="DeleteTopicCommand" Command="{Binding DeleteTopicCommand}" />
+        <XamlUICommand x:Name="DeleteAllTopicCommand" Command="{Binding DeleteAllTopicCommand}" />
+
+        <MenuFlyout x:Name="StudyFlyout" Placement="BottomEdgeAlignedRight">
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Foreground="{StaticResource TextColor}"
+                Command="{StaticResource DeleteTopicCommand}"
+                CommandParameter="{Binding}"
+                Text="Delete">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Delete24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Command="{StaticResource DeleteAllTopicCommand}"
+                CommandParameter="{Binding}"
+                Foreground="{StaticResource TextColor}"
+                Text="Delete All">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="DeleteDismiss24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </Page.Resources>
+
+    <Grid Padding="56,44" RowSpacing="26">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Spacing="20">
+            <!--<Button
+                Command="{Binding BackFrameCommand}"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0"
+                VerticalAlignment="Center">
+                <icons:FluentSymbolIcon Symbol="ArrowLeft24" />
+            </Button>-->
+            <TextBlock
+                FontSize="28"
+                FontWeight="SemiBold"
+                TextTrimming="CharacterEllipsis"
+                Text="{Binding StudyModel.Name}" />
+        </StackPanel>
+        <ListView
+            Grid.Row="1"
+            ContextFlyout="{StaticResource StudyFlyout}"
+            IsItemClickEnabled="False"
+            ItemsSource="{Binding StudyModel.TopicModels}"
+            SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0,4,0,4" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                        <Grid
+                            Padding="20,11"
+                            BorderBrush="{StaticResource BorderColor}"
+                            BorderThickness="2"
+                            ColumnSpacing="12"
+                            CornerRadius="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Term" />
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource SubTextColor}"
+                                    Text="{Binding Name}" />
+                                <Border Height="2" Background="{StaticResource PrimaryColor}" />
+                            </StackPanel>
+                            <Grid Grid.Column="1">
+                                <Border
+                                    BorderBrush="White"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Center"
+                                    CornerRadius="8"
+                                    VerticalAlignment="Bottom"
+                                    Canvas.ZIndex="1">
+                                    <Image
+                                        HorizontalAlignment="Center"
+                                        IsTapEnabled="False"
+                                        IsRightTapEnabled="False"
+                                        IsHoldingEnabled="False"
+                                        IsDoubleTapEnabled="False"
+                                        Stretch="UniformToFill"
+                                        Source="{Binding Image, Converter={StaticResource ByteToBitmapImageConverter}}"
+                                        Visibility="{Binding hasItem, Converter={StaticResource BooleanToVisibility}}" />
+                                </Border>
+                            </Grid>
+                            <StackPanel
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Spacing="8">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Defination"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="{StaticResource SubTextColor}"
+                                    Text="{Binding Defination}"
+                                    TextAlignment="Right" />
+                                <Border Height="2" Background="{StaticResource PrimaryColor}" />
+                            </StackPanel>
+                        </Grid>
+                    </ListViewItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button
+            Grid.Row="2"
+            Width="120"
+            Height="36"
+            HorizontalAlignment="Right"
+            Background="{StaticResource ButtonColor}"
+            Content="Edit"
+            Command="{Binding EditTopicCommand}"
+            FontSize="16"
+            Foreground="{StaticResource WhiteColor}">
+            <Button.Resources>
+                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ButtonColorOver}" />
+                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ButtonColorClick}" />
+                <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource WhiteColor}" />
+                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource WhiteColor}" />
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Page>
