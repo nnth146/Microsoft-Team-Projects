@@ -21,9 +21,9 @@ namespace Uwp.Core.Helper
         {
             //Lấy tên project thủ công. Không thể lấy tên tự động
             _projectName = "4sTodo";
-            _viewNameSpace = _projectName + ".View";
-            _viewModelNameSpace = _projectName + ".ViewModel";
-            _viewDialogNameSpace = _projectName + ".View.Dialog";
+            _viewNameSpace = "_4sTodo" + ".View";
+            _viewModelNameSpace = "_4sTodo" + ".ViewModel";
+            _viewDialogNameSpace = "_4sTodo" + ".View.Dialog";
 
             _typeViewList = GetTypesInNamespace(Assembly.Load(_projectName), _viewNameSpace);
             _typeDialogList = GetTypesInNamespace(Assembly.Load(_projectName), _viewDialogNameSpace);

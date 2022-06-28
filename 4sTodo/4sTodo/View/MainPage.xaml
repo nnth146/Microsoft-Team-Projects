@@ -5,10 +5,67 @@
     xmlns:local="using:_4sTodo.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls" 
+    DataContext="{Binding Source={StaticResource VML}, Path=Main}"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    d:Height="720"
+    d:Width="1200"
+    Background="{ThemeResource ThumbBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <XamlUICommand x:Name="NavigationViewSelectionChangedXamlUiCommand" Command="{Binding SelectionChangedCommand}"/>
+    </Page.Resources>
+    <Grid Background="{StaticResource ColorPrimary}">
+        <controls:NavigationView IsBackButtonVisible="Collapsed"
+                                 PaneDisplayMode="Left"
+                                 IsSettingsVisible="False"
+                                 ExpandedModeThresholdWidth="500"
+                                 IsTabStop="False"
+                                 SelectionChanged="NavigationView_SelectionChanged" >
+            <controls:NavigationView.PaneCustomContent>
+                <Image Height="77" Source="{Binding Source={StaticResource Banner}}"/>
+            </controls:NavigationView.PaneCustomContent>
 
+            <controls:NavigationView.MenuItems>
+                
+                <controls:NavigationViewItem Content="Home" 
+                                             FontSize="14"
+                                             FontWeight="SemiBold"
+                                             Foreground="White">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="{Binding Source={StaticResource Icon10}}"/>
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+                
+                
+                
+                <controls:NavigationViewItem Content="Report" 
+                                             FontSize="14"
+                                             FontWeight="SemiBold"
+                                             Foreground="White">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="{Binding Source={StaticResource Icon11}}"/>
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+            </controls:NavigationView.MenuItems>
+         
+        <controls:NavigationView.FooterMenuItems>
+                <controls:NavigationViewItem Content="Premium" 
+                                             FontSize="14"
+                                             FontWeight="SemiBold"
+                                             Foreground="White">
+                    <controls:NavigationViewItem.Icon>
+                        <controls:ImageIcon Source="{Binding Source={StaticResource Icon13}}"/>
+                    </controls:NavigationViewItem.Icon>
+                </controls:NavigationViewItem>
+            </controls:NavigationView.FooterMenuItems>
+            <Frame x:Name="SFrame" Loaded="SFrame_Loaded">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </controls:NavigationView>
     </Grid>
 </Page>

@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="_4sTodo.View.WattingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_4sTodo.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    DataContext="{Binding Source={StaticResource VML}, Path=WattingPage}"
+    mc:Ignorable="d"
+    Background="{StaticResource ColorPrimary}">
+
+    <Grid HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          RowSpacing="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Image Height="500" Source="{Binding Source={StaticResource Logo}}"/>
+        <Button Visibility="Visible" Grid.Row="1" Resources="{Binding Source={StaticResource ResButtonOrange}, Path=Resources}"
+                Width="120"
+                CornerRadius="12"
+                HorizontalAlignment="Center"
+                Command="{Binding NavigateHomePageCommand}">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="8">
+                <controls:ImageIcon Height="16" Source="{Binding Source={StaticResource Icon4}}"/>
+                <TextBlock Text="News" Style="{StaticResource NormallText}"
+                           Foreground="White"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Page>

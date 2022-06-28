@@ -119,10 +119,47 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\PlaceToSave.cs" />
+    <Compile Include="Model\TagOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AddSubTaskDialogViewModel.cs" />
+    <Compile Include="ViewModel\AddTaskDialogViewModel.cs" />
+    <Compile Include="ViewModel\HomePageViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\PremiumDialogViewModel.cs" />
+    <Compile Include="ViewModel\ReportPageViewModel.cs" />
+    <Compile Include="ViewModel\SubTaskPageViewModel.cs" />
+    <Compile Include="ViewModel\TaskPageViewModel.cs" />
+    <Compile Include="ViewModel\WattingPageViewModel.cs" />
+    <Compile Include="View\Dialog\AddSubTaskDialog.xaml.cs">
+      <DependentUpon>AddSubTaskDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\AddTaskDialog.xaml.cs">
+      <DependentUpon>AddTaskDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\PremiumDialog.xaml.cs">
+      <DependentUpon>PremiumDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubTaskPage.xaml.cs">
+      <DependentUpon>SubTaskPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskPage.xaml.cs">
+      <DependentUpon>TaskPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WattingPage.xaml.cs">
+      <DependentUpon>WattingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
@@ -132,6 +169,22 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icon\Icon1.png" />
+    <Content Include="Assets\Icon\Icon10.png" />
+    <Content Include="Assets\Icon\Icon11.png" />
+    <Content Include="Assets\Icon\Icon12.png" />
+    <Content Include="Assets\Icon\Icon13.png" />
+    <Content Include="Assets\Icon\Icon14.png" />
+    <Content Include="Assets\Icon\Icon2.png" />
+    <Content Include="Assets\Icon\Icon3.png" />
+    <Content Include="Assets\Icon\Icon4.png" />
+    <Content Include="Assets\Icon\Icon5.png" />
+    <Content Include="Assets\Icon\Icon6.png" />
+    <Content Include="Assets\Icon\Icon7.png" />
+    <Content Include="Assets\Icon\Icon8.png" />
+    <Content Include="Assets\Icon\Icon9.png" />
+    <Content Include="Assets\Image\Banner.png" />
+    <Content Include="Assets\Image\Logo.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -187,7 +240,43 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\Dialog\AddSubTaskDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\AddTaskDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\DeleteDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\PremiumDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubTaskPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WattingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

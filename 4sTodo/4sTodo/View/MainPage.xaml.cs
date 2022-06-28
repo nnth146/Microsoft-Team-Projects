@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Uwp.Messenger;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +27,29 @@ namespace _4sTodo.View
         public MainPage()
         {
             this.InitializeComponent();
+
+            WeakReferenceMessenger.Default.Register<SendObjectMessage>(this, (r, m) =>
+            {
+                m.Reply(SFrame);
+            });
+
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+            WeakReferenceMessenger.Default.UnregisterAll(DataContext);
+        }
+
+        private void SFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            SFrame.Navigate(typeof(WattingPage));
+        }
+
+        private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            NavigationViewSelectionChangedXamlUiCommand.Command.Execute(args.SelectedItem);
         }
     }
 }

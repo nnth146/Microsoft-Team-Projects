@@ -1,5 +1,72 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:res="using:Uwp.Core.SR">
+
+    <res:ResButton x:Name="ResButtonOrange" Background="#F29D1E" 
+                   BackgroundPressed="#F29D1E"
+                   BackgroundPointerOver="#F3C989"
+                   Foreground="White"
+                   ForegroundPointerOver="White"
+                   ForegroundPressed="White"/>
     
+    <res:ResButton x:Name="ResButtonRed" Background="#F24E1E" 
+                   BackgroundPressed="#F24E1E"
+                   BackgroundPointerOver="#F39174"
+                   Foreground="White"
+                   ForegroundPointerOver="White"
+                   ForegroundPressed="White"/>
+    
+    <res:ResButton x:Name="ResButtonBlue" Background="#40ACE9" 
+                   BackgroundPressed="#40ACE9"
+                   BackgroundPointerOver="#9CD1EF"
+                   Foreground="White"
+                   ForegroundPointerOver="White"
+                   ForegroundPressed="White"/>
+    
+    <res:ResButton x:Name="ResButtonGreen" Background="#78D458" 
+                   BackgroundPressed="#78D458"
+                   BackgroundPointerOver="#B5E4A5"
+                   Foreground="White"
+                   ForegroundPointerOver="White"
+                   ForegroundPressed="White"
+                   />
+    <res:ResExpander x:Name="ResTaskExpander" HeaderBackground="White" 
+                     HeaderBorderBrush="#F24E1E"
+                     HeaderBorderThickness="0, 12,0,0"
+                     HeaderBorderPressedBrush="#F24E1E"
+                     HeaderBorderPointerOverBrush="#F24E1E"
+                    />
+
+    <res:ResCheckBox x:Name="ResCheckBox" CheckBackgroundFillChecked="#78D458"
+                     CheckBackgroundFillCheckedPointerOver="#78D458"
+                     CheckBackgroundFillCheckedPressed="#78D458"
+                     />
+    <res:ResExpander x:Name="ResSubTaskExpander" HeaderBackground="White"/>
+
+    <!--#region TextBlock Style-->
+    <Style TargetType="TextBlock" x:Key="LargestText">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="LargeText" BasedOn="{StaticResource LargestText}">
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+    
+    <Style TargetType="TextBlock" x:Key="NormallText">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+    
+    <Style TargetType="TextBlock" x:Key="MediumText" BasedOn="{StaticResource NormallText}">
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SmallText">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="#333"/>
+    </Style>
+
+    <!--#endregion-->
 </ResourceDictionary>
