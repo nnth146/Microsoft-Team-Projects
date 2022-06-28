@@ -98,6 +98,7 @@
             Width="200"
             HorizontalAlignment="Center"
             Background="{StaticResource ColorPrimary}"
+            Command="{Binding PurchaseCommand}"
             CornerRadius="15">
             <Button.Resources>
                 <ResourceDictionary Source="{Binding Source={StaticResource ButtonAcceptResource}}" />
