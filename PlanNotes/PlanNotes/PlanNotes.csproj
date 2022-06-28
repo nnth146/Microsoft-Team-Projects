@@ -158,6 +158,18 @@
     <Compile Include="Page\EditPage\Folder\EditFolderDialogViewModel.cs" />
     <Compile Include="Page\EditPage\Plan\EditPlaneDialogViewModel.cs" />
     <Compile Include="Page\EditPage\Note\ViewAndEditNoteDialogViewModel.cs" />
+    <Compile Include="Page\AddPage\CheckList\AddCheckListDialogViewModel.cs" />
+    <Compile Include="Page\AddPage\CheckList\AddCheckListDialog.xaml.cs">
+      <DependentUpon>AddCheckListDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AddNoteFolderDialogViewModel.cs" />
+    <Compile Include="ViewModel\ShowNoteDialogViewModel.cs" />
+    <Compile Include="View\Dialog\AddNoteFolderDialog.xaml.cs">
+      <DependentUpon>AddNoteFolderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\ShowNoteDialog.xaml.cs">
+      <DependentUpon>ShowNoteDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +208,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.1.2</Version>
@@ -302,11 +317,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Page\AddPage\CheckList\AddCheckListDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\AddNoteFolderDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\ShowNoteDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Image\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

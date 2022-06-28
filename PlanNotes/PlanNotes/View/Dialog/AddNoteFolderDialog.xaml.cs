@@ -4,9 +4,9 @@
 
 namespace PlanNotes.View.Dialog
 {
-    public sealed partial class EditFolderDialog : ContentDialog
+    public sealed partial class AddNoteFolderDialog : ContentDialog
     {
-        public EditFolderDialog()
+        public AddNoteFolderDialog()
         {
             InitializeComponent();
         }

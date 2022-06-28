@@ -51,6 +51,9 @@ namespace Uwp.SQLite.Model.Migrations
                     NoteName = table.Column<string>(nullable: true),
                     NoteDescription = table.Column<string>(nullable: true),
                     NoteDueDate = table.Column<DateTime>(nullable: false),
+                    AmountStep = table.Column<int>(nullable: false),
+                    StepCompleted = table.Column<int>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
                     NoteCreate_On = table.Column<DateTime>(nullable: false),
                     FolderId = table.Column<int>(nullable: false)
                 },
@@ -73,6 +76,8 @@ namespace Uwp.SQLite.Model.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CheckListName = table.Column<string>(nullable: true),
                     CheckListCreate_On = table.Column<DateTime>(nullable: false),
+                    Percent = table.Column<double>(nullable: false),
+                    HasStep = table.Column<bool>(nullable: false),
                     NoteId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

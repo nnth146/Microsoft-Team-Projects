@@ -24,5 +24,8 @@ namespace PlanNotes.VML
         public EditFolderDialogViewModel EditFolderDialog => Ioc.Default.GetService<EditFolderDialogViewModel>();
         public EditPlaneDialogViewModel EditPlaneDialog => Ioc.Default.GetService<EditPlaneDialogViewModel>();
         public ViewAndEditNoteDialogViewModel ViewAndEditNoteDialog => Ioc.Default.GetService<ViewAndEditNoteDialogViewModel>();
+        public AddCheckListDialogViewModel AddCheckListDialog => Ioc.Default.GetService<AddCheckListDialogViewModel>();
+        public ShowNoteDialogViewModel ShowNoteDialog => Ioc.Default.GetService<ShowNoteDialogViewModel>();
+        public AddNoteFolderDialogViewModel AddNoteFolderDialog => Ioc.Default.GetService<AddNoteFolderDialogViewModel>();
     }
 }

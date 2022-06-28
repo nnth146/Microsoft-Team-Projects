@@ -7,13 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:icons="using:Fluent.Icons"
     mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource VML}, Path=FolderPage}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="{StaticResource Color6}" />
-        <!--  Change to NaN  -->
         <Thickness x:Key="FlyoutContentThemePadding">0</Thickness>
-        <!--  Change to 0  -->
+
+        <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{StaticResource Color3}" />
+        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{StaticResource Color3}" />
+        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{StaticResource Color3}" />
 
         <Style x:Key="FlyoutStyle" TargetType="FlyoutPresenter">
             <Setter Property="RequestedTheme" Value="Light" />
@@ -64,24 +67,32 @@
             </Setter>
         </Style>
 
+        <XamlUICommand x:Name="DeleteNoteCommand" Command="{Binding DeleteNoteCommand}" />
+        <XamlUICommand x:Name="ShowAndEditNoteCommand" Command="{Binding ShowAndEditNoteCommand}" />
+        <XamlUICommand x:Name="CompletedNoteCommand" Command="{Binding CompletedNoteCommand}" />
+
         <MenuFlyout
             x:Key="NoteFlyout"
             x:Name="NoteFlyout"
             Placement="BottomEdgeAlignedRight">
             <MenuFlyoutItem
                 Width="150"
+                Command="{StaticResource ShowAndEditNoteCommand}"
+                CommandParameter="{Binding}"
                 Height="44"
-                Text="Delete">
+                Text="Show and Edit">
                 <MenuFlyoutItem.Icon>
-                    <icons:FluentIconElement Symbol="Delete24" />
+                    <icons:FluentIconElement Symbol="EyeShow24" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutItem
                 Width="150"
                 Height="44"
-                Text="Delete All">
+                Command="{StaticResource DeleteNoteCommand}"
+                CommandParameter="{Binding}"
+                Text="Delete">
                 <MenuFlyoutItem.Icon>
-                    <icons:FluentIconElement Symbol="DeleteDismiss24" />
+                    <icons:FluentIconElement Symbol="Delete24" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
         </MenuFlyout>
@@ -93,928 +104,118 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid RowSpacing="4">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Text="Name of Folder"
-                    FontSize="20"
-                    FontWeight="SemiBold" />
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <TextBlock Text="2" FontSize="14" />
-                    <TextBlock Text=" Uncoleted Notes - " FontSize="14" />
-                    <TextBlock Text="30" FontSize="14" />
-                    <TextBlock Text=" Completed Notes" FontSize="14" />
-                </StackPanel>
-            </Grid>
-            <Button
-                Grid.Column="1"
-                HorizontalAlignment="Right"
-                Background="{StaticResource Color6}"
-                BorderThickness="1"
-                CornerRadius="4"
-                BorderBrush="{StaticResource Color3}">
-                <Button.Flyout>
-                    <Flyout Placement="BottomEdgeAlignedLeft" FlyoutPresenterStyle="{StaticResource FlyoutStyle}">
-                        <ListView x:Name="ListViewSort" CornerRadius="4">
-                            <ListView.Items>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBlock Text="Sort by Plan" />
-                                    </StackPanel>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBlock Text="Sort by Folder" />
-                                    </StackPanel>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <TextBlock Text="Sort by Due date" />
-                                    </StackPanel>
-                                </ListViewItem>
-                            </ListView.Items>
-                        </ListView>
-                    </Flyout>
-                </Button.Flyout>
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock Text="Sort by Plan" VerticalAlignment="Center" />
-                    <icons:FluentSymbolIcon
-                        Symbol="ChevronDown16"
-                        Margin="0,0,0,2"
-                        VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
+        <Grid RowSpacing="4">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Text="{Binding Folder.FolderName}"
+                FontSize="20"
+                FontWeight="SemiBold" />
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="1"
+                Spacing="4">
+                <TextBlock Text="{Binding UnCompleted}" FontSize="14" />
+                <TextBlock Text="Uncompleted Notes -" FontSize="14" />
+                <TextBlock Text="{Binding Completed}" FontSize="14" />
+                <TextBlock Text="Completed Notes" FontSize="14" />
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1" MaxHeight="420">
-            <ListView>
+            <ListView ItemsSource="{Binding Folder.FolderNotes}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Margin" Value="0,4,0,4" />
                         <Setter Property="CornerRadius" Value="8" />
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.Header>
-                    <TextBlock
-                        Text="Plan 1"
-                        FontWeight="SemiBold"
-                        FontSize="18"
-                        Margin="0,0,0,4" />
-                </ListView.Header>
-                <ListView.Items>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem
+                            ContextFlyout="{StaticResource NoteFlyout}"
+                            Style="{StaticResource ListViewItemExpanded}"
                             CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
+                            Padding="0"
+                            Margin="0,4,0,4"
+                            HorizontalContentAlignment="Stretch"
+                            HorizontalAlignment="Stretch">
+                            <Grid
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource Color3}"
+                                Padding="12,8"
+                                CornerRadius="8"
+                                ColumnSpacing="16">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Button
+                                <icons:FluentSymbolIcon Symbol="DocumentOnePage24" Foreground="{StaticResource Color5}" />
+                                <TextBlock
+                                    Text="{Binding NoteName}"
+                                    Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
+                                    Foreground="{StaticResource Color5}"
+                                    TextTrimming="CharacterEllipsis" />
+                                <Grid Grid.Column="2" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button
+                                        VerticalAlignment="Center"
+                                        CornerRadius="4"
+                                        Padding="0"
+                                        Command="{StaticResource CompletedNoteCommand}"
+                                        CommandParameter="{Binding}"
+                                        BorderThickness="1"
+                                        BorderBrush="{StaticResource Color3}">
+                                        <Grid>
+                                            <StackPanel
+                                                Width="130"
+                                                Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibility}}"
+                                                Padding="8"
+                                                Background="{StaticResource Color6}"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <icons:FluentSymbolIcon Symbol="CheckboxChecked24" />
+                                                <TextBlock Text="{Binding NoteDueDate, Converter={StaticResource DateTimeToString}}" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                Width="130"
+                                                Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibilityReverse}}"
+                                                Padding="8"
+                                                Background="{StaticResource Color1}"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                                <icons:FluentSymbolIcon Symbol="BorderOutside24" />
+                                                <TextBlock Text="{Binding NoteDueDate, Converter={StaticResource DateTimeToString}}" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <StackPanel
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        Grid.Column="1">
+                                        <TextBlock Text="{Binding StepCompleted}" Foreground="{StaticResource Color5}" />
+                                        <TextBlock Text="/" Foreground="{StaticResource Color5}" />
+                                        <TextBlock Text="{Binding AmountStep}" Foreground="{StaticResource Color5}" />
+                                    </StackPanel>
+                                    <icons:FluentSymbolIcon
+                                        Symbol="CheckboxChecked24"
+                                        Grid.Column="2"
+                                        Foreground="{StaticResource Color5}"
+                                        VerticalAlignment="Center" />
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        CornerRadius="8"
-                        HorizontalContentAlignment="Stretch"
-                        ContextFlyout="{StaticResource NoteFlyout}"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    Click="Check_Click"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            x:Name="Unchecked"
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            x:Name="Checked"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="CheckboxChecked24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem
-                        Padding="0"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <Grid
-                            BorderThickness="1"
-                            BorderBrush="{StaticResource Color3}"
-                            Padding="12,8"
-                            CornerRadius="8"
-                            ColumnSpacing="16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <icons:FluentSymbolIcon Symbol="DocumentOnePage24" />
-                            <TextBlock
-                                Text="Name of note"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                TextTrimming="CharacterEllipsis" />
-                            <Grid Grid.Column="2" ColumnSpacing="8">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    VerticalAlignment="Center"
-                                    CornerRadius="4"
-                                    Padding="0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource Color3}">
-                                    <Grid>
-                                        <StackPanel
-                                            Visibility="Collapsed"
-                                            Padding="8"
-                                            Background="{StaticResource Color6}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Padding="8"
-                                            Background="{StaticResource Color1}"
-                                            VerticalAlignment="Center"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                            <icons:FluentSymbolIcon Symbol="BorderOutside24" />
-                                            <TextBlock Text="June, 22 2022" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                                <StackPanel
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Grid.Column="1">
-                                    <TextBlock Text="17" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="30" />
-                                </StackPanel>
-                                <icons:FluentSymbolIcon
-                                    Symbol="CheckboxChecked24"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center" />
-                            </Grid>
-                        </Grid>
-                    </ListViewItem>
-                </ListView.Items>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Grid>
         <Button
@@ -1023,6 +224,7 @@
             Height="68"
             CornerRadius="8"
             Grid.Row="2"
+            Command="{Binding AddNoteCommand}"
             Background="{StaticResource Color6}"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Stretch">

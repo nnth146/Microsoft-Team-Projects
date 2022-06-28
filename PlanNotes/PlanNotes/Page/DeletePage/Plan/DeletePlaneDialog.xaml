@@ -9,6 +9,7 @@
     BorderThickness="1"
     CornerRadius="4"
     BorderBrush="{StaticResource Color3}"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeletePlaneDialog}"
     x:Name="DeletePlan">
 
     <ContentDialog.Resources>
@@ -25,7 +26,7 @@
                 FontSize="20"
                 FontWeight="SemiBold"
                 Text="Notification" />
-            <TextBlock FontSize="14" Text="Are you sure about Deleting All Item?" />
+            <TextBlock FontSize="14" Text="Are you sure about Deleting Item?" />
         </StackPanel>
         <Grid
             Grid.Row="1"
@@ -41,8 +42,9 @@
                 Height="32"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Color6}"
-                Content="Delete All"
+                Content="Delete"
                 Click="Hide_Click"
+                Command="{Binding DeletePlanCommand}"
                 CornerRadius="4">
                 <Button.Resources>
                     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource Color6}" />

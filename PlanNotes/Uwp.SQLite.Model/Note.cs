@@ -22,6 +22,9 @@ namespace Uwp.SQLite.Model
             }
             set { _noteCheckLists = value; }
         }
+        public int AmountStep { get; set; }
+        public int StepCompleted { get; set; }
+        public bool IsCompleted { get; set; }
         public DateTime NoteCreate_On { get; set; }
         public int FolderId { get; set; }
         public Folder Folder { get; set; }

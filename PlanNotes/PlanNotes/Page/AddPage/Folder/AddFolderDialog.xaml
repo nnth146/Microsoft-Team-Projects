@@ -8,6 +8,7 @@
     BorderThickness="1"
     CornerRadius="4"
     BorderBrush="{StaticResource Color3}"
+    DataContext="{Binding Source={StaticResource VML}, Path=AddFolderDialog}"
     x:Name="AddFolder"
     mc:Ignorable="d">
 
@@ -30,7 +31,8 @@
             Grid.Row="1"
             Width="264"
             Header="Name (Required)"
-            PlaceholderText="Enter name of plan"
+            PlaceholderText="Enter name of Folder"
+            Text="{Binding NameFolder, Mode=TwoWay}"
             BorderThickness="1"
             BorderBrush="{StaticResource Color3}" />
         <Grid Grid.Row="2" ColumnSpacing="8">
@@ -40,6 +42,7 @@
             </Grid.ColumnDefinitions>
             <Button
                 Content="Add"
+                Command="{Binding AddFolderCommand}"
                 Click="Hide_Click"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Color6}"

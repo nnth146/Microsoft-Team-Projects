@@ -9,6 +9,7 @@
     xmlns:icons="using:Fluent.Icons"
     mc:Ignorable="d"
     d:Height="720"
+    DataContext="{Binding Source={StaticResource VML}, Path=MainPage}"
     d:Width="1200"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -30,6 +31,21 @@
                 </StackPanel>
             </controls:NavigationViewItem>
         </DataTemplate>-->
+
+        <MenuFlyout
+            x:Key="PlanFlyout"
+            x:Name="PlanFlyout"
+            Placement="BottomEdgeAlignedRight">
+            <MenuFlyoutItem
+                Width="150"
+                Height="44"
+                Click="DeletePlan_Click"
+                Text="Delete">
+                <MenuFlyoutItem.Icon>
+                    <icons:FluentIconElement Symbol="Delete24" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
     </Page.Resources>
 
     <Grid>
@@ -142,7 +158,7 @@
                         Height="44"
                         BorderThickness="0"
                         Margin="0,0,0,-8"
-                        Click="AddFolder_Click"
+                        Click="AddPlan_Click"
                         CornerRadius="0"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch">
@@ -152,13 +168,20 @@
                         </StackPanel>
                     </Button>
                     <Button
-                        IsEnabled="False"
+                        x:Name="AddFolder"
+                        Click="AddFolder_Click"
                         CornerRadius="0"
                         BorderThickness="0"
                         Grid.Column="1"
                         Height="44"
                         Margin="0,0,0,-8">
-                        <icons:FluentSymbolIcon Symbol="FolderAdd20" />
+                        <Grid>
+                            <icons:FluentSymbolIcon Symbol="FolderAdd20" x:Name="IconAddFolder1" />
+                            <icons:FluentSymbolIcon
+                                Symbol="FolderAdd20"
+                                x:Name="IconAddFolder2"
+                                Foreground="{StaticResource Color5}" />
+                        </Grid>
                     </Button>
                 </Grid>
             </controls:NavigationView.PaneFooter>

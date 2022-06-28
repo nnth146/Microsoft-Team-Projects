@@ -13,5 +13,15 @@ namespace PlanNotes.View
         {
             InitializeComponent();
         }
+
+        private void ListViewSort_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FilterFlyout.Hide();
+        }
+
+        private void ListViewNotes_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ListViewNotes.SelectedItem = null;
+        }
     }
 }

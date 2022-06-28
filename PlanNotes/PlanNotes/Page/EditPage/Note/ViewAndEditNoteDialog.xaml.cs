@@ -10,10 +10,5 @@ namespace PlanNotes.View.Dialog
         {
             InitializeComponent();
         }
-
-        private void Hide_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            ViewAndEditNote.Hide();
-        }
     }
 }

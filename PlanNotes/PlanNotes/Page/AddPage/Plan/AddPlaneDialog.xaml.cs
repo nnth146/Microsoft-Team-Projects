@@ -14,7 +14,7 @@ namespace PlanNotes.View.Dialog
 
         private void Hide_Click(object sender, RoutedEventArgs e)
         {
-
+            AddPlan.Hide();
         }
     }
 }

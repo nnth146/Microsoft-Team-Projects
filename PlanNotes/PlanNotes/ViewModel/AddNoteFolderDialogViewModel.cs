@@ -9,14 +9,12 @@ using Uwp.SQLite.Model;
 
 namespace PlanNotes.ViewModel
 {
-    public class AddNoteDialogViewModel : ViewModelBase
+    public class AddNoteFolderDialogViewModel : ViewModelBase
     {
-        public AddNoteDialogViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService) : base(dataService, navigationService, dialogService)
+        public AddNoteFolderDialogViewModel(IDataService dataService, INavigationService navigationService, IDialogService dialogService) : base(dataService, navigationService, dialogService)
         {
+            SelectedFolder = WeakReferenceMessenger.Default.Send<FolderRequestMessage>().Response;
             Notes = WeakReferenceMessenger.Default.Send<NotesRequestMessage>().Response;
-            dateTime = WeakReferenceMessenger.Default.Send<DateTimeRequestMessage>().Response;
-            Folders = dataService.GetFolders();
-            SelectedFolder = Folders[0];
         }
 
         public ObservableCollection<Note> Notes { get; set; }
@@ -25,7 +23,6 @@ namespace PlanNotes.ViewModel
 
         public string NoteName { get; set; }
         public string NoteDesctiption { get; set; }
-        public DateTime dateTime { get; set; }
 
 
         // RelayCommand
@@ -35,13 +32,14 @@ namespace PlanNotes.ViewModel
             Note note = new Note();
             note.NoteName = string.IsNullOrEmpty(NoteName) ? "NoteName..." : NoteName;
             note.NoteDescription = string.IsNullOrEmpty(NoteDesctiption) ? "NoteDesCription..." : NoteDesctiption;
-            note.NoteDueDate = dateTime;
+            note.NoteDueDate = DateTime.Now.ToLocalTime();
             note.NoteCreate_On = DateTime.Now.ToLocalTime();
             note.AmountStep = 0;
             note.StepCompleted = 0;
             note.IsCompleted = false;
             note.FolderId = SelectedFolder.FolderId;
             Notes.Add(note);
+            dataService.AddNewNote(note);
             dialogService.HideCurrentDialog();
         }));
 

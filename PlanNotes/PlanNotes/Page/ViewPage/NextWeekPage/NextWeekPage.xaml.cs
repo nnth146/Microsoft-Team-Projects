@@ -1,5 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -13,24 +12,17 @@ namespace PlanNotes.View
         public NextWeekPage()
         {
             InitializeComponent();
-            isVisibility = true;
         }
 
-        private bool isVisibility;
-
-        private void Check_Click(object sender, RoutedEventArgs e)
+        private void ListViewNotes_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            isVisibility = !isVisibility;
-            if (isVisibility)
-            {
-                Unchecked.Visibility = Visibility.Collapsed;
-                Checked.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Checked.Visibility = Visibility.Collapsed;
-                Unchecked.Visibility = Visibility.Visible;
-            }
+
+            ListViewNotes.SelectedItem = null;
+        }
+
+        private void ListViewSort_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FilterFlyout.Hide();
         }
     }
 }

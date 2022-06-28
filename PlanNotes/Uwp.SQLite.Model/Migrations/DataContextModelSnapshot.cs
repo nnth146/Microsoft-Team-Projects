@@ -28,8 +28,14 @@ namespace Uwp.SQLite.Model.Migrations
                     b.Property<string>("CheckListName")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("HasStep")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("NoteId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("Percent")
+                        .HasColumnType("REAL");
 
                     b.HasKey("CheckListId");
 
@@ -66,7 +72,13 @@ namespace Uwp.SQLite.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AmountStep")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("FolderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsCompleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("NoteCreate_On")
@@ -80,6 +92,9 @@ namespace Uwp.SQLite.Model.Migrations
 
                     b.Property<string>("NoteName")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("StepCompleted")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("NoteId");
 
@@ -142,7 +157,7 @@ namespace Uwp.SQLite.Model.Migrations
             modelBuilder.Entity("Uwp.SQLite.Model.Folder", b =>
                 {
                     b.HasOne("Uwp.SQLite.Model.Plan", "Plan")
-                        .WithMany("PlanFolder")
+                        .WithMany("PlanFolders")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

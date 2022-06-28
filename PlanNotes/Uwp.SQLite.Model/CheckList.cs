@@ -24,6 +24,8 @@ namespace Uwp.SQLite.Model
             }
         }
         public DateTime CheckListCreate_On { get; set; }
+        public double Percent { get; set; }
+        public bool HasStep { get; set; }
         public int NoteId { get; set; }
         public Note Note { get; set; }
     }

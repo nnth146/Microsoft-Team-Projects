@@ -6,12 +6,64 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    BorderThickness="1"
+    DataContext="{Binding Source={StaticResource VML}, Path=DeleteFolderDialog}"
+    CornerRadius="4"
+    BorderBrush="{StaticResource Color3}"
+    x:Name="DeleteFolder">
 
-    <Grid>
+    <ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+    </ContentDialog.Resources>
+
+    <Grid Background="{StaticResource WhiteColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Padding="24" Spacing="12">
+            <TextBlock
+                FontSize="20"
+                FontWeight="SemiBold"
+                Text="Notification" />
+            <TextBlock FontSize="14" Text="Are you sure about Deleting Note?" />
+        </StackPanel>
+        <Grid
+            Grid.Row="1"
+            Padding="24"
+            HorizontalAlignment="Stretch"
+            Background="{StaticResource LightWhiteColor}"
+            ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Height="32"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource Color6}"
+                Content="Delete"
+                Command="{Binding DeleteFolderCommand}"
+                CornerRadius="4">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource Color6}" />
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource Color6}" />
+                </Button.Resources>
+            </Button>
+
+            <Button
+                Grid.Column="1"
+                Height="32"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource WhiteColor}"
+                Content="Cancel"
+                Command="{Binding HideDialogCommand}"
+                CornerRadius="4">
+                <Button.Resources>
+                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource WhiteColor}" />
+                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource WhiteColor}" />
+                </Button.Resources>
+            </Button>
+        </Grid>
     </Grid>
 </ContentDialog>

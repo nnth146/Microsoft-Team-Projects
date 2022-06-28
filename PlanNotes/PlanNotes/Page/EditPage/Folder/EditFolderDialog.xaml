@@ -8,6 +8,7 @@
     BorderThickness="1"
     CornerRadius="4"
     BorderBrush="{StaticResource Color3}"
+    DataContext="{Binding Source={StaticResource VML}, Path=EditFolderDialog}"
     x:Name="EditFolder"
     mc:Ignorable="d">
 
@@ -30,7 +31,8 @@
             Grid.Row="1"
             Width="264"
             Header="Name (Required)"
-            PlaceholderText="Enter name of plan"
+            PlaceholderText="Enter name of Folder"
+            Text="{Binding Folder.FolderName}"
             BorderThickness="1"
             BorderBrush="{StaticResource Color3}" />
         <Grid Grid.Row="2" ColumnSpacing="8">
@@ -40,8 +42,8 @@
             </Grid.ColumnDefinitions>
             <Button
                 Content="Save"
-                Click="Hide_Click"
                 HorizontalAlignment="Stretch"
+                Command="{Binding EditFolderCommand}"
                 Background="{StaticResource Color6}"
                 CornerRadius="4"
                 BorderThickness="1"
@@ -54,7 +56,7 @@
             <Button
                 Content="Cancel"
                 Grid.Column="1"
-                Click="Hide_Click"
+                Command="{Binding HideDialogCommand}"
                 HorizontalAlignment="Stretch"
                 CornerRadius="4"
                 BorderThickness="1"

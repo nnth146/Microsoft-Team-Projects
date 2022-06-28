@@ -8,6 +8,7 @@
     BorderThickness="1"
     CornerRadius="4"
     BorderBrush="{StaticResource Color3}"
+    DataContext="{Binding Source={StaticResource VML}, Path=AddNoteDialog}"
     x:Name="AddNote"
     mc:Ignorable="d">
 
@@ -17,10 +18,11 @@
 
     <Grid RowSpacing="16">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock
             Text="Add Note"
@@ -31,25 +33,46 @@
             Grid.Row="1"
             Width="264"
             Header="Name (Required)"
-            PlaceholderText="Enter name of plan"
+            Text="{Binding NoteName, Mode=TwoWay}"
+            PlaceholderText="Enter name of note"
             BorderThickness="1"
             BorderBrush="{StaticResource Color3}" />
-        <TextBox
+        <ComboBox
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
             Grid.Row="2"
+            SelectedItem="{Binding SelectedFolder, Mode=TwoWay}"
+            ItemsSource="{Binding Folders}"
+            Width="264">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <ComboBoxItem
+                        Padding="0"
+                        HorizontalContentAlignment="Stretch"
+                        HorizontalAlignment="Stretch">
+                        <TextBlock Text="{Binding FolderName}" />
+                    </ComboBoxItem>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox
+            Grid.Row="3"
             Width="264"
+            TextWrapping="Wrap"
+            Text="{Binding NoteDesctiption, Mode=TwoWay}"
             Height="268"
             Header="Description"
             PlaceholderText="Text"
             BorderThickness="1"
             BorderBrush="{StaticResource Color3}" />
-        <Grid Grid.Row="3" ColumnSpacing="8">
+        <Grid Grid.Row="4" ColumnSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button
                 Content="Add"
-                Click="Hide_Click"
+                Command="{Binding AddNoteCommand}"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource Color6}"
                 CornerRadius="4"
@@ -63,7 +86,7 @@
             <Button
                 Content="Cancel"
                 Grid.Column="1"
-                Click="Hide_Click"
+                Command="{Binding HideDialogCommand}"
                 HorizontalAlignment="Stretch"
                 CornerRadius="4"
                 BorderThickness="1"

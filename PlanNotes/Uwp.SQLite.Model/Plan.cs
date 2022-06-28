@@ -7,18 +7,18 @@ namespace Uwp.SQLite.Model
     {
         public int PlanId { get; set; }
         public string PlanName { get; set; }
-        private ObservableCollection<Folder> _planFolder { get; set; }
-        public ObservableCollection<Folder> PlanFolder
+        private ObservableCollection<Folder> _planFolders { get; set; }
+        public ObservableCollection<Folder> PlanFolders
         {
             get
             {
-                if (_planFolder == null)
+                if (_planFolders == null)
                 {
-                    _planFolder = new ObservableCollection<Folder>();
+                    _planFolders = new ObservableCollection<Folder>();
                 }
-                return _planFolder;
+                return _planFolders;
             }
-            set { _planFolder = value; }
+            set { _planFolders = value; }
         }
         public DateTime PlanCreate_On { get; set; }
     }

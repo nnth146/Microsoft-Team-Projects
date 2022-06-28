@@ -1,6 +1,8 @@
-﻿using PlanNotes.View;
+﻿using Microsoft.EntityFrameworkCore;
+using PlanNotes.View;
 using System;
 using Uwp.Core.Helper;
+using Uwp.SQLite.Model;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -22,6 +24,10 @@ namespace PlanNotes
         {
             InitializeComponent();
             Suspending += OnSuspending;
+            using (var db = new DataContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

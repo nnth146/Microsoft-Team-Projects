@@ -4,11 +4,16 @@
 
 namespace PlanNotes.View.Dialog
 {
-    public sealed partial class EditFolderDialog : ContentDialog
+    public sealed partial class ShowNoteDialog : ContentDialog
     {
-        public EditFolderDialog()
+        public ShowNoteDialog()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewNote.Hide();
         }
     }
 }

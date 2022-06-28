@@ -4,9 +4,9 @@
 
 namespace PlanNotes.View.Dialog
 {
-    public sealed partial class EditFolderDialog : ContentDialog
+    public sealed partial class AddCheckListDialog : ContentDialog
     {
-        public EditFolderDialog()
+        public AddCheckListDialog()
         {
             InitializeComponent();
         }
